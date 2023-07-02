@@ -13,22 +13,57 @@
 [data-theme="dark"] {
   --background: #000;
   --foreground: #fff;
+
+  --gradient-bg: #131313d6;
+  --gradient-1: #4d4ddbd6;
+  --gradient-2: #a2f6e6d6;
+  --gradient-3: #4d4ddbd6;
 }
 
 [data-theme="light"] {
   --background: #fff;
   --foreground: #000;
+
+  --gradient-bg: #ffffffd6;
+  --gradient-1: #fa9348d6;
+  --gradient-2: #a2f6e6d6;
+  --gradient-3: #fa9348d6;
 }
 
 [data-theme="pink"] {
   --background: #ff00ff;
   --foreground: #000;
+
+  --gradient-bg: #ff00ffd6;
+  --gradient-1: #fff;
+  --gradient-2: #a2f6e6d6;
+  --gradient-3: #fff;
 }
 
 $background: var(--background);
 $foreground: var(--foreground);
 
+$gradient-bg: var(--gradient-bg);
+$gradient-1: var(--gradient-1);
+$gradient-2: var(--gradient-2);
+$gradient-3: var(--gradient-3);
+
+.main {
+}
+
 .background {
   background-color: $background;
   color: $foreground;
+}
+
+// temporary gradient
+.gradient-box {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  height: 80svh;
+  width: 90vw;
+  border-radius: 20px;
+  overflow: hidden;
+  transform: translateX(-50%);
 }
