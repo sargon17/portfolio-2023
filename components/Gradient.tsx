@@ -1,13 +1,23 @@
 "use client";
+import { type } from "os";
 import React from "react";
 import { useLayoutEffect, useState, useRef } from "react";
 
 type GradientParams = {
   className?: string;
   styles?: object;
+  animate?: boolean;
+  animateParams?: object;
+  animateStagger?: number[];
 };
 
-export default function Gradient({ className, styles }: GradientParams) {
+export default function Gradient({
+  className,
+  styles,
+  animate = true,
+  animateParams = { duration: 100, fill: "forwards", delay: 10 },
+  animateStagger = [0.05, -0.1, 0.05],
+}: GradientParams) {
   const baseClass = "gradient";
   const gradientClass = className ? `${baseClass} ${className}` : baseClass;
   const gradientStyles = styles ? styles : {};
@@ -35,52 +45,43 @@ export default function Gradient({ className, styles }: GradientParams) {
   }, [isMouseOver]);
 
   useLayoutEffect(() => {
+    // if animate is false, don't animate
+    if (!animate) return;
     // on mouse move move the gradient
-    if (gradient1.current && gradient2.current && gradient3.current) {
-      const { x, y } = mousePosition;
-      const { width, height } = gradContainer.current.getBoundingClientRect();
-      const xPercent = x / width;
-      const yPercent = y / height;
-      const xTransform = xPercent * 100;
-      const yTransform = yPercent * 100;
+    if (gradient1.current && gradient2.current && gradient3.current && gradContainer.current) {
+      const { xTransform, yTransform } = getMouseTransform();
 
-      gradient1.current.animate(
-        [
-          { transform: `translate(${xTransform * 0.1}%, ${yTransform * 0.1}%)` },
-          { transform: `translate(${xTransform * 0.1}%, ${yTransform * 0.1}%)` },
-        ],
-        {
-          duration: 100,
-          fill: "forwards",
-          delay: 10,
-        }
-      );
-
-      gradient2.current.animate(
-        [
-          { transform: `translate(${xTransform * -0.2}%, ${yTransform * -0.2}%)` },
-          { transform: `translate(${xTransform * -0.2}%, ${yTransform * -0.2}%)` },
-        ],
-        {
-          duration: 100,
-          fill: "forwards",
-          delay: 10,
-        }
-      );
-
-      gradient3.current.animate(
-        [
-          { transform: `translate(${xTransform * 0.3}%, ${yTransform * 0.3}%)` },
-          { transform: `translate(${xTransform * 0.3}%, ${yTransform * 0.3}%)` },
-        ],
-        {
-          duration: 100,
-          fill: "forwards",
-          delay: 10,
-        }
-      );
+      [gradient1, gradient2, gradient3].forEach((gradient, index) => {
+        if (!gradient.current) return;
+        gradient.current.animate(
+          [
+            {
+              transform: `translate(${xTransform * animateStagger[index]}%, ${
+                yTransform * animateStagger[index]
+              }%)`,
+            },
+            {
+              transform: `translate(${xTransform * animateStagger[index]}%, ${
+                yTransform * animateStagger[index]
+              }%)`,
+            },
+          ],
+          animateParams
+        );
+      });
     }
   }, [mousePosition]);
+
+  function getMouseTransform() {
+    if (!gradContainer.current) return { xTransform: 0, yTransform: 0 };
+    const { x, y } = mousePosition;
+    const { width, height } = gradContainer.current.getBoundingClientRect();
+    const xPercent = x / width;
+    const yPercent = y / height;
+    const xTransform = xPercent * 100;
+    const yTransform = yPercent * 100;
+    return { xTransform, yTransform };
+  }
 
   return (
     <div
