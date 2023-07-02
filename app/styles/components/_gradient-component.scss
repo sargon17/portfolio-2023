@@ -1,0 +1,42 @@
+.gradient {
+  svg {
+    width: 100%;
+    height: 100%;
+    background-blend-mode: screen;
+
+    rect {
+      background-blend-mode: screen;
+    }
+    path {
+      background-blend-mode: screen;
+    }
+  }
+
+  &-bg {
+    fill: $gradient-bg;
+    backdrop-filter: blur(80px);
+  }
+
+  &-1 {
+    fill: $gradient-1;
+  }
+
+  &-2 {
+    fill: $gradient-2;
+  }
+
+  &-3 {
+    fill: $gradient-3;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
