@@ -11,8 +11,13 @@
 }
 
 [data-theme="dark"] {
-  --background: #000;
-  --foreground: #fff;
+  --bottom-background: #1b1b1b;
+  --background: #131313;
+  --text-main: #aeaeae;
+  --text-secondary: #676767;
+  --text-accent: #ffffff;
+
+  --accent: #3d3ddb;
 
   --gradient-bg: #131313d6;
   --gradient-1: #4d4ddbd6;
@@ -21,8 +26,13 @@
 }
 
 [data-theme="light"] {
-  --background: #fff;
-  --foreground: #000;
+  --bottom-background: #1b1b1b;
+  --background: #131313;
+  --text-main: #aeaeae;
+  --text-secondary: #676767;
+  --text-accent: #ffffff;
+
+  --accent: #3d3ddb;
 
   --gradient-bg: #ffffffd6;
   --gradient-1: #fa9348d6;
@@ -31,8 +41,13 @@
 }
 
 [data-theme="pink"] {
-  --background: #ff00ff;
-  --foreground: #000;
+  --bottom-background: #1b1b1b;
+  --background: #131313;
+  --text-main: #aeaeae;
+  --text-secondary: #676767;
+  --text-accent: #ffffff;
+
+  --accent: #3d3ddb;
 
   --gradient-bg: #ff00ffd6;
   --gradient-1: #fff;
@@ -40,8 +55,13 @@
   --gradient-3: #fff;
 }
 
+$bottom-background: var(--bottom-background);
 $background: var(--background);
-$foreground: var(--foreground);
+$text-main: var(--text-main);
+$text-secondary: var(--text-secondary);
+$text-accent: var(--text-accent);
+
+$accent: var(--accent);
 
 $gradient-bg: var(--gradient-bg);
 $gradient-1: var(--gradient-1);
@@ -49,11 +69,8 @@ $gradient-2: var(--gradient-2);
 $gradient-3: var(--gradient-3);
 
 .main {
-}
-
-.background {
-  background-color: $background;
-  color: $foreground;
+  background-color: $bottom-background;
+  color: $text-main;
 }
 
 // temporary gradient
