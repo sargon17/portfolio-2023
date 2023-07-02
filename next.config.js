@@ -1,4 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const path = require("path");
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ["localhost", "cdn.sanity.io"],
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
+};
+
+module.exports = nextConfig;

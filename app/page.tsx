@@ -1,10 +1,50 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from "next/image";
+// import styles from "./page.module.css";
 
-export default function Home() {
+import { createClient } from "next-sanity";
+
+import ThemeSwitcher from "../components/ThemeSwitcher";
+
+type project = {
+  _id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  imgWidth: number;
+  imgHeight: number;
+  tags: string[];
+};
+
+export default async function Home() {
+  const projects: project[] = await getProjects();
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main>
+      <div>
+        <ThemeSwitcher />
+      </div>
+      <div className="background">
+        {projects.map((project: project) => {
+          return (
+            <div
+              key={project._id}
+              id={project._id}
+            >
+              <h1>{project.title}</h1>
+              <p>{project.description}</p>
+              <p>{project.tags.join(", ")}</p>
+              <Image
+                src={project.coverImage}
+                alt={project.title}
+                width={project.imgWidth}
+                height={project.imgHeight}
+                priority
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.tsx</code>
@@ -15,7 +55,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
+            By{" "}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -85,11 +125,22 @@ export default function Home() {
           <h2>
             Deploy <span>-&gt;</span>
           </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
-      </div>
+      </div> */}
     </main>
-  )
+  );
+}
+
+const client = createClient({
+  projectId: "5lwk0a0s",
+  dataset: "production",
+  useCdn: true,
+});
+
+async function getProjects() {
+  const projects = await client.fetch(
+    `*[_type == "project"]{..., "coverImage": coverImage.asset->url, "imgWidth": coverImage.asset->metadata.dimensions.width, "imgHeight": coverImage.asset->metadata.dimensions.height}`
+  );
+  return projects;
 }
