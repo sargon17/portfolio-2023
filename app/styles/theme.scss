@@ -1,6 +1,8 @@
 :root {
   --font-family: "Libre Franklin", sans-serif;
   --font-family-accent: "Trirong", serif;
+
+  --radius: 10px;
 }
 
 [data-theme="dark"] {
@@ -50,6 +52,8 @@
 
 $font-family: var(--font-family);
 $font-family-accent: var(--font-family-accent);
+
+$radius: var(--radius);
 
 $bottom-background: var(--bottom-background);
 $background: var(--background);
