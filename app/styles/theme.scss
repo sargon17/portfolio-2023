@@ -71,6 +71,9 @@ $gradient-3: var(--gradient-3);
 .main {
   background-color: $bottom-background;
   color: $text-main;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
 }
 
 // temporary gradient

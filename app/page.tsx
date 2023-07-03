@@ -4,7 +4,7 @@ import Image from "next/image";
 import { createClient } from "next-sanity";
 import Gradient from "../components/Gradient";
 
-import ThemeSwitcher from "../components/ThemeSwitcher";
+import Sidebar from "@/components/Sidebar";
 
 // type project = {
 //   _id: string;
@@ -20,9 +20,8 @@ export default async function Home() {
   // const projects: project[] = await getProjects();
   return (
     <main className="main">
-      <div>
-        <ThemeSwitcher />
-      </div>
+      <Sidebar />
+      <div className="content"></div>
     </main>
   );
 }
