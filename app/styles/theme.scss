@@ -1,13 +1,6 @@
 :root {
-  --background: #fff;
-  --foreground: #000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000;
-    --foreground: #fff;
-  }
+  --font-family: "Libre Franklin", sans-serif;
+  --font-family-accent: "Trirong", serif;
 }
 
 [data-theme="dark"] {
@@ -55,6 +48,9 @@
   --gradient-3: #fff;
 }
 
+$font-family: var(--font-family);
+$font-family-accent: var(--font-family-accent);
+
 $bottom-background: var(--bottom-background);
 $background: var(--background);
 $text-main: var(--text-main);
@@ -67,6 +63,16 @@ $gradient-bg: var(--gradient-bg);
 $gradient-1: var(--gradient-1);
 $gradient-2: var(--gradient-2);
 $gradient-3: var(--gradient-3);
+
+body {
+  background-color: $bottom-background;
+  color: $text-main;
+  font-family: $font-family;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
 .main {
   background-color: $bottom-background;
