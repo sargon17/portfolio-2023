@@ -3,7 +3,13 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 export default function ThemeSwitcher() {
-  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  let systemTheme = "dark";
+
+  if (typeof window !== "undefined") {
+    systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
 
   const [theme, setTheme] = useState(systemTheme);
 
