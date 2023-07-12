@@ -1,10 +1,12 @@
+"use client";
 import Image from "next/image";
-// import styles from "./page.module.css";
 
 import { createClient } from "next-sanity";
 import Gradient from "../components/Gradient";
 
 import Sidebar from "@/components/Sidebar";
+import Main from "@/components/Main";
+import { ReactLenis } from "@studio-freight/react-lenis";
 
 // type project = {
 //   _id: string;
@@ -20,8 +22,10 @@ export default async function Home() {
   // const projects: project[] = await getProjects();
   return (
     <main className="main">
-      <Sidebar />
-      <div className="content"></div>
+      <ReactLenis root>
+        <Sidebar />
+        <Main />
+      </ReactLenis>
     </main>
   );
 }
