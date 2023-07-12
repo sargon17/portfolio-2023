@@ -71,10 +71,14 @@
 //   --gradient-3: #fff;
 // }
 
+$sidebar-width: 100px;
+$main-content-padding: 2.15rem;
+
 $font-family: var(--font-family);
 $font-family-accent: var(--font-family-accent);
 
 $radius: var(--radius);
+$slide-radius: 1.25rem;
 
 $bottom-background: var(--bottom-background);
 $background: var(--background);
