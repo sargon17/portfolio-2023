@@ -1,0 +1,17 @@
+.main-content-container {
+  width: calc(100vw - $sidebar-width);
+  margin-left: $sidebar-width;
+  padding: $main-content-padding;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: $main-content-padding;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    color: transparent;
+  }
+}

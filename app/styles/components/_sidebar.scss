@@ -6,6 +6,11 @@
   flex-direction: column;
   justify-content: space-between;
 
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+
   &__nav {
     display: flex;
     flex-direction: column;

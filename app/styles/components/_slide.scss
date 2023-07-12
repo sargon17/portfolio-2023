@@ -1,0 +1,7 @@
+.slide {
+  width: 100%;
+  height: calc(100vh - (2 * $main-content-padding));
+  background-color: $background;
+  border-radius: $radius;
+  padding: $slide-radius;
+}
