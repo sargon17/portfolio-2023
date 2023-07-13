@@ -13,7 +13,7 @@ export default function MainContainer() {
     <div className="main-content-container">
       <Slide>
         <h1>Hero</h1>
-        <Button> Button </Button>
+        <Button> supeeeeeer long button </Button>
       </Slide>
       <Slide>
         <h1>Skills</h1>
