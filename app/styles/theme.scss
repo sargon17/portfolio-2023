@@ -39,7 +39,6 @@
   --gradient-bg: rgba(var(--gray-900), 0.8);
   --gradient-1: rgba(var(--purple), 0.8);
   --gradient-2: rgba(var(--green), 0.8);
-  --gradient-3: rgba(var(--purple), 0.8);
 }
 
 [data-theme="dark"] {
@@ -54,23 +53,21 @@
   --gradient-bg: #131313d6;
   --gradient-1: #4d4ddbd6;
   --gradient-2: #a2f6e6d6;
-  --gradient-3: #4d4ddbd6;
 }
 
-// [data-theme="light"] {
-//   --bottom-background: #c9c9c9;
-//   --background: #ececec;
-//   --text-main: #353535;
-//   --text-secondary: #676767;
-//   --text-accent: #1a1a1a;
+[data-theme="light"] {
+  --bottom-background: #c9c9c9;
+  --background: #ececec;
+  --text-main: #353535;
+  --text-secondary: #676767;
+  --text-accent: #1a1a1a;
 
-//   --accent: #fa9348;
+  --accent: #fa9348;
 
-//   --gradient-bg: #ffffffd6;
-//   --gradient-1: #fa9348d6;
-//   --gradient-2: #a2f6e6d6;
-//   --gradient-3: #fa9348d6;
-// }
+  --gradient-bg: #ffffffd6;
+  --gradient-1: #fa9348d6;
+  --gradient-2: #a2f6e6d6;
+}
 
 // [data-theme="pink"] {
 //   --bottom-background: #ff53ee;
@@ -114,7 +111,6 @@ $text-accent: var(--text-accent);
 $gradient-bg: var(--gradient-bg);
 $gradient-1: var(--gradient-1);
 $gradient-2: var(--gradient-2);
-$gradient-3: var(--gradient-3);
 //----------------------------------------
 
 // UTILS
@@ -122,9 +118,10 @@ $gradient-3: var(--gradient-3);
 $accent: var(--accent);
 
 // TRANSITIONS
-$t-fast: 0.5s;
+$t-fast: 0.2s;
 $t-normal: 0.3s;
 $t-slow: 0.4s;
+$t-2slow: 0.5s;
 $t-easing: cubic-bezier(0.25, 1, 0.5, 1);
 
 body {
