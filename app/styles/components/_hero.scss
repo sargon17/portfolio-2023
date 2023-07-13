@@ -1,0 +1,23 @@
+.hero {
+  &__title {
+    &__name {
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: normal;
+    }
+    &__title {
+      font-weight: 100;
+      font-size: 2.625rem;
+      line-height: 2.6875rem;
+      font-style: normal;
+      margin-top: 1rem;
+      span {
+        font-weight: 900;
+        font-size: 1.1em;
+        font-family: $font-accent;
+        font-style: italic;
+      }
+    }
+  }
+}
