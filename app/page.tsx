@@ -22,7 +22,14 @@ export default async function Home() {
   // const projects: project[] = await getProjects();
   return (
     <main className="main">
-      <ReactLenis root>
+      <ReactLenis
+        root
+        options={{
+          smoothWheel: true,
+          duration: 1.4,
+          wheelMultiplier: 1.4,
+        }}
+      >
         <Sidebar />
         <MainContainer />
       </ReactLenis>
