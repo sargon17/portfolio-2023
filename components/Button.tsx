@@ -1,11 +1,11 @@
 import React from "react";
 
 type Props = {
-  text: string;
+  children: React.ReactNode;
   className?: string;
   styles?: React.CSSProperties;
 };
-export default function Button({ text, className, styles }: Props) {
+export default function Button({ children, className, styles }: Props) {
   const baseClass = "button";
   const classNames = [baseClass, className].join(" ");
 
@@ -13,10 +13,7 @@ export default function Button({ text, className, styles }: Props) {
   const mergedStyles = { ...baseStyles, ...styles };
 
   return (
-    <div
-      className={classNames}
-      style={mergedStyles}
-    >
+    <div className={classNames} style={mergedStyles}>
       <div className="background">
         <svg
           width="83"
@@ -26,17 +23,8 @@ export default function Button({ text, className, styles }: Props) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <g clip-path="url(#clip0_102_169)">
-            <rect
-              width="83"
-              height="43"
-              fill="#131313"
-            />
-            <circle
-              cx="63.5"
-              cy="34.2422"
-              r="21.5"
-              fill="#3D3DDB"
-            />
+            <rect width="83" height="43" fill="#131313" />
+            <circle cx="63.5" cy="34.2422" r="21.5" fill="#3D3DDB" />
             <ellipse
               cx="12.6096"
               cy="1.0985"
@@ -70,13 +58,7 @@ export default function Button({ text, className, styles }: Props) {
               transform="rotate(122.3 62.6267 -8.49272)"
               fill="#3D3DDB"
             />
-            <ellipse
-              cx="62.5"
-              cy="37.7422"
-              rx="8.5"
-              ry="18"
-              fill="#458FE0"
-            />
+            <ellipse cx="62.5" cy="37.7422" rx="8.5" ry="18" fill="#458FE0" />
             <ellipse
               opacity="0.5"
               cx="79"
@@ -86,12 +68,7 @@ export default function Button({ text, className, styles }: Props) {
               fill="#AEAEAE"
             />
             <g filter="url(#filter0_b_102_169)">
-              <rect
-                width="82"
-                height="43"
-                fill="#131313"
-                fill-opacity="0.01"
-              />
+              <rect width="82" height="43" fill="#131313" fill-opacity="0.01" />
             </g>
           </g>
           <defs>
@@ -104,14 +81,8 @@ export default function Button({ text, className, styles }: Props) {
               filterUnits="userSpaceOnUse"
               color-interpolation-filters="sRGB"
             >
-              <feFlood
-                flood-opacity="0"
-                result="BackgroundImageFix"
-              />
-              <feGaussianBlur
-                in="BackgroundImageFix"
-                stdDeviation="6"
-              />
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feGaussianBlur in="BackgroundImageFix" stdDeviation="6" />
               <feComposite
                 in2="SourceAlpha"
                 operator="in"
@@ -125,16 +96,12 @@ export default function Button({ text, className, styles }: Props) {
               />
             </filter>
             <clipPath id="clip0_102_169">
-              <rect
-                width="83"
-                height="43"
-                fill="white"
-              />
+              <rect width="83" height="43" fill="white" />
             </clipPath>
           </defs>
         </svg>
       </div>
-      <button>{text}</button>
+      <button>{children}</button>
     </div>
   );
 }
