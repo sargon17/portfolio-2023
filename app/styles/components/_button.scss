@@ -1,8 +1,27 @@
+// VARIABLES
+:root {
+  --btn-border-color: var(--gray-400);
+  --btn-border-color--hover: var(--gray-500);
+  --btn-text-color: var(--text-main);
+}
+[data-theme="light"] {
+  --btn-border-color: var(--gray-200);
+  --btn-border-color--hover: var(--gray-100);
+}
+
+$btn-border-color: var(--btn-border-color);
+$btn-border-color--hover: var(--btn-border-color--hover);
+$btn-text-color: var(--btn-text-color);
+$btn-radius: $radius;
+$btn-t-delay: 100ms;
+
+//----------------------------------------
+
 .button {
+  border: 1px solid $btn-border-color;
+  border-radius: $btn-radius;
+  position: relative;
   background-color: transparent;
-  border: 1px solid $text-secondary;
-  border-radius: $radius;
-  cursor: pointer;
   display: inline-block;
   line-height: normal;
   margin-bottom: 0;
@@ -10,7 +29,10 @@
   vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
-  position: relative;
+  cursor: pointer;
+
+  transition: border $t-fast $t-easing;
+  transition-delay: $btn-t-delay;
 
   .background {
     position: absolute;
@@ -22,11 +44,13 @@
     background-color: rgba(0, 0, 0, 0.1);
     z-index: 0;
     transform: translate(-10%, -10%);
+
     opacity: 0;
+    transition: opacity $t-fast $t-easing;
+    transition-delay: $btn-t-delay;
   }
 
   button {
-    color: $text-main;
     position: relative;
     padding: 0.375rem 0.5rem;
     width: 100%;
@@ -34,17 +58,24 @@
     background: transparent;
     z-index: 1;
     border: none;
+
     font-family: $font-family-accent;
+    color: $btn-text-color;
     font-style: italic;
     font-size: 1.125rem;
     font-weight: 300;
+    text-transform: lowercase;
+
+    cursor: pointer;
   }
 
   &:hover {
+    border-color: $btn-border-color--hover;
+    transition-delay: 0ms;
+
     .background {
       opacity: 1;
+      transition-delay: 0ms;
     }
-
-    border: 1px solid $bottom-background;
   }
 }
