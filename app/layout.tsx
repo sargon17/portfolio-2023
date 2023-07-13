@@ -1,5 +1,21 @@
 import "./styles/global.scss";
 import "./globals.css";
+import clsx from "clsx";
+
+import { Trirong } from "next/font/google";
+import { Libre_Franklin } from "next/font/google";
+
+const accent = Trirong({
+  subsets: ["latin-ext"],
+  variable: "--font-accent",
+  weight: ["500", "600"],
+});
+
+const body = Libre_Franklin({
+  subsets: ["latin-ext"],
+  variable: "--font-body",
+  weight: ["100", "300", "900"],
+});
 
 export const metadata = {
   title: "Mykhaylo Tymofyeyev Portfolio",
@@ -29,10 +45,14 @@ export const metadata = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={clsx(body.className, accent.className)}>{children}</body>
     </html>
   );
 }
