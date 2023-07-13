@@ -5,7 +5,7 @@ import { createClient } from "next-sanity";
 import Gradient from "../components/Gradient";
 
 import Sidebar from "@/components/Sidebar";
-import Main from "@/components/Main";
+import MainContainer from "@/components/MainContainer";
 import { ReactLenis } from "@studio-freight/react-lenis";
 
 // type project = {
@@ -24,7 +24,7 @@ export default async function Home() {
     <main className="main">
       <ReactLenis root>
         <Sidebar />
-        <Main />
+        <MainContainer />
       </ReactLenis>
     </main>
   );

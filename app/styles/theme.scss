@@ -4,57 +4,56 @@
 
   // --------------- BASE THEME ---------------
 
+  // COLORS
+  --white: #fff;
+  --black: #000;
+  --purple: #3d3ddb;
+  --green: #a2f6e6;
+
+  // --gray-100: #f7fafc;
+  --gray-200: #d8d8d8;
+  --gray-300: #8d8d8d;
+  --gray-400: #757575;
+  --gray-500: #242424;
+  // --gray-600: #f7fafc;
+  // --gray-700: #f7fafc;
+  --gray-800: #1b1b1b;
+  --gray-900: #131313;
+
   // BG
-  --bottom-background: #1b1b1b;
-  --background: #131313;
+  --bottom-background: var(--gray-800);
+  --background: var(--gray-900);
 
   // BORDERS
-  --border-color: #676767;
+  --border-color: var(--gray-400);
   --radius: 10px;
 
   // TEXT
-  --text-main: #aeaeae;
-  --text-secondary: #676767;
-  --text-accent: #ffffff;
+  --text-main: var(--gray-200);
+  --text-secondary: var(--gray-400);
+  --text-accent: var(--white);
 
-  --accent: #3d3ddb;
+  --accent: var(--purple);
 
   // GRADIENT
-  --gradient-bg: #131313d6;
-  --gradient-1: #4d4ddbd6;
-  --gradient-2: #a2f6e6d6;
-  --gradient-3: #4d4ddbd6;
+  --gradient-bg: var(--gray-900);
+  --gradient-1: var(--purple);
+  --gradient-2: var(--green);
 }
 
-[data-theme="dark"] {
-  --bottom-background: #1b1b1b;
-  --background: #131313;
-  --text-main: #aeaeae;
+[data-theme="light"] {
+  --bottom-background: #dcdcdc;
+  --background: #ececec;
+  --text-main: #353535;
   --text-secondary: #676767;
-  --text-accent: #ffffff;
+  --text-accent: #1a1a1a;
 
-  --accent: #3d3ddb;
+  --accent: #fa9348;
 
-  --gradient-bg: #131313d6;
-  --gradient-1: #4d4ddbd6;
+  --gradient-bg: #ffffffd6;
+  --gradient-1: #fa9348d6;
   --gradient-2: #a2f6e6d6;
-  --gradient-3: #4d4ddbd6;
 }
-
-// [data-theme="light"] {
-//   --bottom-background: #c9c9c9;
-//   --background: #ececec;
-//   --text-main: #353535;
-//   --text-secondary: #676767;
-//   --text-accent: #1a1a1a;
-
-//   --accent: #fa9348;
-
-//   --gradient-bg: #ffffffd6;
-//   --gradient-1: #fa9348d6;
-//   --gradient-2: #a2f6e6d6;
-//   --gradient-3: #fa9348d6;
-// }
 
 // [data-theme="pink"] {
 //   --bottom-background: #ff53ee;
@@ -71,28 +70,45 @@
 //   --gradient-3: #fff;
 // }
 
-$sidebar-width: 100px;
-$main-content-padding: 2.15rem;
-
-$font-family: var(--font-family);
-$font-family-accent: var(--font-family-accent);
-
-$radius: var(--radius);
-$slide-radius: 1.25rem;
-
+// BG
+// (colors)
 $bottom-background: var(--bottom-background);
 $background: var(--background);
+//----------------------------------------
+
+// BORDERS
+// (colors)
 $border-color: var(--border-color);
+// (radius)
+$radius: var(--radius);
+//----------------------------------------
+
+// TEXT
+// (fonts)
+$font-family: var(--font-family);
+$font-family-accent: var(--font-family-accent);
+// (colors)
 $text-main: var(--text-main);
 $text-secondary: var(--text-secondary);
 $text-accent: var(--text-accent);
+//----------------------------------------
 
-$accent: var(--accent);
-
+// GRADIENT
 $gradient-bg: var(--gradient-bg);
 $gradient-1: var(--gradient-1);
 $gradient-2: var(--gradient-2);
-$gradient-3: var(--gradient-3);
+//----------------------------------------
+
+// UTILS
+// (colors)
+$accent: var(--accent);
+
+// TRANSITIONS
+$t-fast: 0.2s;
+$t-normal: 0.3s;
+$t-slow: 0.4s;
+$t-2slow: 0.6s;
+$t-easing: cubic-bezier(0.25, 1, 0.5, 1);
 
 body {
   background-color: $bottom-background;
@@ -102,6 +118,9 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .main {

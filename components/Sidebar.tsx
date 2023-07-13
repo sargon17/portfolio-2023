@@ -7,11 +7,12 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <nav className="sidebar__nav">
-        <Button text="hero" className="sidebar__nav__button" />
-        <Button text="skills" className="sidebar__nav__button" />
-        <Button text="services" className="sidebar__nav__button" />
-        <Button text="projects" className="sidebar__nav__button" />
-        <Button text="contacts" className="sidebar__nav__button" />
+        <Button className="sidebar__nav__button">hero</Button>
+        <Button className="sidebar__nav__button">skills</Button>
+        <Button className="sidebar__nav__button">services</Button>
+        <Button className="sidebar__nav__button">projects</Button>
+        <Button className="sidebar__nav__button">contacts</Button>
+
         <ThemeSwitcher />
       </nav>
       <div className="sidebar__title">

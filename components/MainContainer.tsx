@@ -1,9 +1,10 @@
 import React from "react";
 
+import Button from "./Button";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import Slide from "./Slide";
-export default function Main() {
+export default function MainContainer() {
   const lenis = useLenis((scroll: Event) => {
     console.log(scroll);
   });
@@ -12,6 +13,7 @@ export default function Main() {
     <div className="main-content-container">
       <Slide>
         <h1>Hero</h1>
+        <Button> supeeeeeer long button </Button>
       </Slide>
       <Slide>
         <h1>Skills</h1>
