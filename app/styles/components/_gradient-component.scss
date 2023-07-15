@@ -1,4 +1,6 @@
 .gradient {
+  overflow: hidden;
+  position: relative;
   svg {
     width: 100%;
     height: 100%;
@@ -13,17 +15,20 @@
   }
 
   &-bg {
-    fill: $gradient-bg;
+    fill: $gradient-1;
     backdrop-filter: blur(80px);
+    opacity: 0.2;
   }
 
   &-1,
   &-3 {
     fill: $gradient-1;
+    opacity: 0.6;
   }
 
   &-2 {
     fill: $gradient-2;
+    opacity: 0.6;
   }
 
   &::before {
