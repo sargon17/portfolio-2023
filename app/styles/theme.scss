@@ -9,7 +9,7 @@
 
   // --gray-100: #f7fafc;
   --gray-200: #d8d8d8;
-  --gray-300: #8d8d8d;
+  --gray-300: #b0b0b0;
   --gray-400: #757575;
   --gray-500: #242424;
   // --gray-600: #f7fafc;
@@ -26,9 +26,9 @@
   --radius: 10px;
 
   // TEXT
-  --text-main: var(--gray-200);
+  --text-main: var(--gray-300);
   --text-secondary: var(--gray-400);
-  --text-accent: var(--white);
+  --text-accent: var(--gray-200);
 
   --accent: var(--purple);
 
@@ -99,6 +99,7 @@ $gradient-2: var(--gradient-2);
 // UTILS
 // (colors)
 $accent: var(--accent);
+$padding: 1rem 2rem;
 
 // TRANSITIONS
 $t-fast: 0.2s;
