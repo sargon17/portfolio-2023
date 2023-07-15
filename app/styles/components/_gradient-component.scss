@@ -16,7 +16,6 @@
 
   &-bg {
     fill: $gradient-1;
-    backdrop-filter: blur(80px);
     opacity: 0.2;
   }
 
@@ -38,7 +37,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.1);
   }
 }
