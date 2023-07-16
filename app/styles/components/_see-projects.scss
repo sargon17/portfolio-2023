@@ -28,7 +28,7 @@
       overflow: hidden;
       border-radius: $slide-radius;
       position: relative;
-      transition: opacity $t-2slow $t-easing, transform $t-2slow $t-easing;
+      transition: opacity $t-2slow $t-easing;
 
       &::after {
         content: "";
@@ -40,7 +40,7 @@
 
         background-color: $overflow-color;
         opacity: 0.7;
-        transition: opacity $t-2slow $bounce 1ms;
+        transition: opacity $t-normal $bounce;
       }
 
       &__image {
@@ -75,27 +75,17 @@
         }
       }
     }
-
-    .slide-1 {
-      transform: translate(-30%, -40%) rotate(-15deg);
-    }
-    .slide-2 {
-      transform: translate(0%, -140%);
-    }
-    .slide-3 {
-      transform: translate(30%, -230%) rotate(15deg);
-    }
   }
 }
 
 .magnet-animation-box {
   //   border: 2px solid red;
   border-radius: 100%;
-  width: 80vw;
+  width: 60vw;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  transform: translateY(-15%);
+  transform: translateY(-20%);
 }
