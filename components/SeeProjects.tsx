@@ -1,4 +1,7 @@
-import React from "react";
+import React, { use } from "react";
+
+// next image
+import Image from "next/image";
 
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 
@@ -6,8 +9,13 @@ export default function SeeProjects() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseOver, setIsMouseOver] = useState(false);
 
+  const [isMouseOverElement, setIsMouseOverElement] = useState(false);
+
   const element = useRef<HTMLDivElement>(null);
   const magnetBox = useRef<HTMLDivElement>(null);
+  const singleProject1 = useRef<HTMLDivElement>(null);
+  const singleProject2 = useRef<HTMLDivElement>(null);
+  const singleProject3 = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (element.current && magnetBox.current) {
@@ -42,6 +50,70 @@ export default function SeeProjects() {
             fill: "forwards",
           }
         );
+
+        if (singleProject1.current && singleProject2.current && singleProject3.current) {
+          const baseSingleTransforms = [
+            {
+              x: -30,
+              y: -40,
+              rotate: -10,
+            },
+            {
+              x: 0,
+              y: -140,
+              rotate: 0,
+            },
+            {
+              x: 30,
+              y: -230,
+              rotate: 10,
+            },
+          ];
+
+          if (isMouseOverElement) {
+            singleProject1.current.animate(
+              [
+                {
+                  transform: `translate(${baseSingleTransforms[0].x + xPercent / 8}%, ${
+                    baseSingleTransforms[0].y
+                  }%) rotate(${baseSingleTransforms[0].rotate}deg)`,
+                },
+              ],
+              {
+                duration: 1000,
+                fill: "forwards",
+              }
+            );
+
+            singleProject2.current.animate(
+              [
+                {
+                  transform: `translate(${baseSingleTransforms[1].x + xPercent / 4}%, ${
+                    baseSingleTransforms[1].y - 10
+                  }%) rotate(${baseSingleTransforms[1].rotate}deg)`,
+                },
+              ],
+              {
+                duration: 1000,
+                fill: "forwards",
+              }
+            );
+
+            singleProject3.current.animate(
+              [
+                {
+                  transform: `translate(${baseSingleTransforms[2].x + xPercent / 2}%, ${
+                    baseSingleTransforms[2].y
+                  }%) rotate(${baseSingleTransforms[2].rotate}deg)`,
+                },
+              ],
+              {
+                duration: 1000,
+                fill: "forwards",
+              }
+            );
+          }
+        }
       } else {
         element.current.animate(
           [
@@ -56,7 +128,49 @@ export default function SeeProjects() {
         );
       }
     }
-  }, [element, mousePosition]);
+  }, [element, mousePosition, isMouseOverElement]);
+
+  useLayoutEffect(() => {
+    if (!isMouseOverElement) {
+      if (singleProject1.current && singleProject2.current && singleProject3.current) {
+        singleProject1.current.animate(
+          [
+            {
+              transform: `translate(0%, 0%)`,
+            },
+          ],
+          {
+            duration: 200,
+            fill: "forwards",
+          }
+        );
+
+        singleProject2.current.animate(
+          [
+            {
+              transform: `translate(0%, -100%)`,
+            },
+          ],
+          {
+            duration: 200,
+            fill: "forwards",
+          }
+        );
+
+        singleProject3.current.animate(
+          [
+            {
+              transform: `translate(0%, -200%)`,
+            },
+          ],
+          {
+            duration: 200,
+            fill: "forwards",
+          }
+        );
+      }
+    }
+  }, [isMouseOverElement]);
 
   useLayoutEffect(() => {
     if (window) {
@@ -67,11 +181,6 @@ export default function SeeProjects() {
     }
   }, []);
 
-  const handleMouseHover = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
-    setIsMouseOver(true);
-  };
-
   return (
     <div
       className="magnet-animation-box"
@@ -81,6 +190,8 @@ export default function SeeProjects() {
     >
       <div
         className="see-projects"
+        onMouseEnter={() => setIsMouseOverElement(true)}
+        onMouseLeave={() => setIsMouseOverElement(false)}
         ref={element}
       >
         <div className="see-projects__cta">
@@ -91,27 +202,42 @@ export default function SeeProjects() {
           </div>
         </div>
         <div className="see-projects__slides">
-          <div className="see-projects__slides__slide slide-1 ">
+          <div
+            className="see-projects__slides__slide slide-1"
+            ref={singleProject1}
+          >
             <div className="see-projects__slides__slide__image">
-              <img
-                src="https://i.pinimg.com/564x/f3/7e/a7/f37ea737cc480d66b5ea13c3266e5491.jpg"
+              <Image
+                src="/edi.deseip.png"
                 alt="slide-1"
+                width={500}
+                height={500}
               />
             </div>
           </div>
-          <div className="see-projects__slides__slide slide-2 ">
+          <div
+            className="see-projects__slides__slide slide-2 "
+            ref={singleProject2}
+          >
             <div className="see-projects__slides__slide__image">
-              <img
-                src="https://i.pinimg.com/564x/40/c6/30/40c6306493718141bb7b64d6f6698399.jpg"
+              <Image
+                src="/edi.deseip-1.png"
                 alt="slide-2"
+                width={500}
+                height={500}
               />
             </div>
           </div>
-          <div className="see-projects__slides__slide slide-3">
+          <div
+            className="see-projects__slides__slide slide-3"
+            ref={singleProject3}
+          >
             <div className="see-projects__slides__slide__image">
-              <img
-                src="https://i.pinimg.com/564x/40/c6/30/40c6306493718141bb7b64d6f6698399.jpg"
+              <Image
+                src="/edi.deseip-2.png"
                 alt="slide-2"
+                width={500}
+                height={500}
               />
             </div>
           </div>
