@@ -54,20 +54,12 @@
         }
       }
     }
-    .slide-1 {
-      //   transition: rotate $t-2slow $t-easing, transform $t-2slow $t-easing,
-      //     opacity $t-normal $t-easing $t-2slow;
-    }
+
     .slide-2 {
-      //   transition: transform $t-2slow $t-easing $t-normal, opacity $t-2slow $t-easing $t-normal;
-      //   opacity: 0;
       transform: translateY(-100%);
     }
     .slide-3 {
-      //   transition: rotate $t-slow $t-easing, transform $t-2slow $t-easing $t-normal,
-      // opacity $t-normal $t-easing $t-2slow;
       transform: translateY(-200%);
-      //   opacity: 0;
     }
   }
 
