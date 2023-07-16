@@ -6,10 +6,6 @@ import { useLenis } from "@studio-freight/react-lenis";
 import Slide from "./Slide";
 import Hero from "./Hero";
 export default function MainContainer() {
-  const lenis = useLenis((scroll: Event) => {
-    console.log(scroll);
-  });
-
   return (
     <div className="main-content-container">
       <Slide>
