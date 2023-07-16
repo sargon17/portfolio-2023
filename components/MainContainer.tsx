@@ -4,22 +4,22 @@ import Button from "./Button";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import Slide from "./Slide";
+import Hero from "./Hero";
 export default function MainContainer() {
-  const lenis = useLenis((scroll: Event) => {
-    console.log(scroll);
-  });
+  //on scroll update mouse position
+
+  // const lenis = useLenis((e: any) => console.log(e));
 
   return (
     <div className="main-content-container">
       <Slide>
-        <h1>Hero</h1>
-        <Button> supeeeeeer long button </Button>
+        <Hero />
       </Slide>
       <Slide>
         <h1>Skills</h1>
       </Slide>
-      <Slide>
-        <h1>Slide 3</h1>
+      <Slide id="_projects">
+        <h1>Projects</h1>
       </Slide>
       <Slide>
         <h1>Slide 4</h1>
