@@ -113,8 +113,14 @@
       right: 10vw;
       width: 16vw;
       pointer-events: none;
-      font-style: italic;
       font-weight: 100;
+      transform: translateY(-50%);
+      p {
+        font-style: italic;
+
+        font-size: 0.875rem;
+        line-height: 1.18;
+      }
 
       &--accent {
         color: $text-accent;
