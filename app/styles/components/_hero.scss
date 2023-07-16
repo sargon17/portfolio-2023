@@ -106,5 +106,20 @@
         object-position: center;
       }
     }
+
+    &__text {
+      position: absolute;
+      top: 0;
+      right: 10vw;
+      width: 16vw;
+      pointer-events: none;
+      font-style: italic;
+      font-weight: 100;
+
+      &--accent {
+        color: $text-accent;
+        font-weight: 500;
+      }
+    }
   }
 }

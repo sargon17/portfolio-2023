@@ -31,6 +31,15 @@ export default function Hero() {
         <div className="hero__gradient">
           <Gradient />
         </div>
+        <div>
+          <div className="hero__content__text">
+            <p>
+              Everyone knew it was impossible, until a{" "}
+              <span className="hero__content__text--accent"> fool </span> who didn&apos;t know came along and
+              did it.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
