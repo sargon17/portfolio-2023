@@ -1,11 +1,41 @@
 import React from "react";
 
+import { useLayoutEffect, useState, useRef } from "react";
+
 import Gradient from "./Gradient";
 import SeeProjects from "./SeeProjects";
 
 export default function Hero() {
+  const hero = useRef<HTMLDivElement>(null);
+
+  let heroWidth = 3258;
+  let gradientHigh = 1000;
+
+  const [gradientDimensions, setGradientDimensions] = useState({
+    width: 3258,
+    height: 1000,
+  });
+
+  useLayoutEffect(() => {
+    if (hero.current) {
+      setGradientDimensions({
+        ...gradientDimensions,
+        width: hero.current.getBoundingClientRect().width,
+      });
+    }
+    if (window) {
+      setGradientDimensions({
+        ...gradientDimensions,
+        height: window.innerHeight * 0.35,
+      });
+    }
+  }, []);
+
   return (
-    <div className="hero">
+    <div
+      className="hero"
+      ref={hero}
+    >
       <div className="hero__heading">
         <div className="hero__title">
           <h2 className="hero__title__title">
@@ -29,16 +59,17 @@ export default function Hero() {
           <SeeProjects />
         </div>
         <div className="hero__gradient">
-          <Gradient />
+          <Gradient
+            width={heroWidth}
+            height={gradientHigh}
+          />
         </div>
-        <div>
-          <div className="hero__content__text">
-            <p>
-              Everyone knew it was impossible, until a{" "}
-              <span className="hero__content__text--accent"> fool </span> who didn&apos;t know came along and
-              did it.
-            </p>
-          </div>
+        <div className="hero__content__text">
+          <p>
+            Everyone knew it was impossible, until a{" "}
+            <span className="hero__content__text--accent"> fool </span> who didn&apos;t know came along and
+            did it.
+          </p>
         </div>
       </div>
     </div>
