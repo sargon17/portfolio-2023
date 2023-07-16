@@ -2,10 +2,14 @@ import React from "react";
 
 import { useLayoutEffect, useState, useRef } from "react";
 
+import { useDispatch } from "react-redux";
+import { setContent } from "@/contexts/features/mouse/mouseContent";
+
 import Gradient from "./Gradient";
 import SeeProjects from "./SeeProjects";
 
 export default function Hero() {
+  const dispatch = useDispatch();
   const hero = useRef<HTMLDivElement>(null);
 
   let heroWidth = 3258;
@@ -46,7 +50,15 @@ export default function Hero() {
             </span>
           </h2>
         </div>
-        <div className="hero__location">
+        <div
+          className="hero__location"
+          onMouseEnter={() => {
+            dispatch(setContent("based in"));
+          }}
+          onMouseLeave={() => {
+            dispatch(setContent(""));
+          }}
+        >
           <p>
             <span className="open">(</span>
             <span className="content">milan, italy</span>

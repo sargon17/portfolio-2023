@@ -3,7 +3,11 @@ import React from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Button from "./Button";
 
+import { useDispatch } from "react-redux";
+import { setContent } from "@/contexts/features/mouse/mouseContent";
+
 export default function Sidebar() {
+  const dispatch = useDispatch();
   return (
     <div className="sidebar">
       <nav className="sidebar__nav">
@@ -16,7 +20,16 @@ export default function Sidebar() {
         <ThemeSwitcher />
       </nav>
       <div className="sidebar__title">
-        <h1>Mykhaylo Tymofyeyev</h1>
+        <h1
+          onMouseEnter={() => {
+            dispatch(setContent("kaylo"));
+          }}
+          onMouseLeave={() => {
+            dispatch(setContent(""));
+          }}
+        >
+          Mykhaylo Tymofyeyev
+        </h1>
       </div>
     </div>
   );
