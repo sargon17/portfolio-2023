@@ -24,6 +24,8 @@ export default function Hero() {
     if (hero.current) {
       setGradientDimensions({
         ...gradientDimensions,
+        //
+        //
         width: hero.current.getBoundingClientRect().width,
       });
     }
