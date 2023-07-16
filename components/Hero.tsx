@@ -1,6 +1,7 @@
 import React from "react";
 
 import Gradient from "./Gradient";
+import SeeProjects from "./SeeProjects";
 
 export default function Hero() {
   return (
@@ -25,10 +26,7 @@ export default function Hero() {
       </div>
       <div className="hero__content">
         <div className="hero__content__image">
-          <img
-            src="https://unsplash.it/1200/800"
-            alt="hero"
-          />
+          <SeeProjects />
         </div>
         <div className="hero__gradient">
           <Gradient />

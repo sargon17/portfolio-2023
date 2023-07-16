@@ -1,0 +1,109 @@
+.see-projects {
+  position: relative;
+  cursor: pointer;
+
+  &__cta {
+    position: absolute;
+    top: 2.5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    transition: opacity $t-normal $t-easing;
+
+    &__text {
+      font-family: $font-accent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-style: italic;
+
+      .accent {
+        color: $text-accent;
+      }
+    }
+  }
+
+  &__slides {
+    &__slide {
+      width: 25vw;
+      overflow: hidden;
+      border-radius: $slide-radius;
+      position: relative;
+      transition: opacity $t-2slow $t-easing, transform $t-2slow $t-easing;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background-color: $overflow-color;
+        opacity: 0.7;
+        transition: opacity $t-2slow $bounce 1ms;
+      }
+
+      &__image {
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    .slide-1 {
+      //   transition: rotate $t-2slow $t-easing, transform $t-2slow $t-easing,
+      //     opacity $t-normal $t-easing $t-2slow;
+    }
+    .slide-2 {
+      //   transition: transform $t-2slow $t-easing $t-normal, opacity $t-2slow $t-easing $t-normal;
+      //   opacity: 0;
+      transform: translateY(-100%);
+    }
+    .slide-3 {
+      //   transition: rotate $t-slow $t-easing, transform $t-2slow $t-easing $t-normal,
+      // opacity $t-normal $t-easing $t-2slow;
+      transform: translateY(-200%);
+      //   opacity: 0;
+    }
+  }
+
+  &:hover {
+    .see-projects__cta {
+      opacity: 0;
+    }
+
+    .see-projects__slides {
+      &__slide {
+        &::after {
+          opacity: 0.2;
+        }
+      }
+    }
+
+    .slide-1 {
+      transform: translate(-30%, -40%) rotate(-15deg);
+    }
+    .slide-2 {
+      transform: translate(0%, -140%);
+    }
+    .slide-3 {
+      transform: translate(30%, -230%) rotate(15deg);
+    }
+  }
+}
+
+.magnet-animation-box {
+  //   border: 2px solid red;
+  border-radius: 100%;
+  width: 80vw;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform: translateY(-15%);
+}

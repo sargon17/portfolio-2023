@@ -81,8 +81,8 @@
   &__content {
     position: relative;
     width: 100%;
-    height: 45vh;
-    overflow: hidden;
+    height: 40vh;
+    // overflow: hidden;
     .hero__gradient {
       position: absolute;
       bottom: 0;
@@ -95,13 +95,9 @@
 
     &__image {
       position: absolute;
-      top: 10%;
+      top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 30rem;
-      height: 15.0625rem;
-      border-radius: $slide-radius;
-      overflow: hidden;
 
       img {
         width: 100%;

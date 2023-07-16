@@ -6,4 +6,5 @@ $slide-radius: 1.25rem;
   height: calc(100vh - (2 * $main-content-padding));
   background-color: $background;
   border-radius: $slide-radius;
+  overflow: hidden;
 }
