@@ -1,12 +1,8 @@
 "use client";
-import Image from "next/image";
+import { Provider } from "react-redux";
+import { mouseStore } from "@/contexts/mouseStore";
 
-import { createClient } from "next-sanity";
-import Gradient from "../components/Gradient";
-
-import Sidebar from "@/components/Sidebar";
-import MainContainer from "@/components/MainContainer";
-import { ReactLenis } from "@studio-freight/react-lenis";
+import App from "./app";
 
 // type project = {
 //   _id: string;
@@ -20,20 +16,11 @@ import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default async function Home() {
   // const projects: project[] = await getProjects();
+
   return (
-    <main className="main">
-      <ReactLenis
-        root
-        options={{
-          smoothWheel: true,
-          duration: 1.4,
-          wheelMultiplier: 1.4,
-        }}
-      >
-        <Sidebar />
-        <MainContainer />
-      </ReactLenis>
-    </main>
+    <Provider store={mouseStore}>
+      <App />
+    </Provider>
   );
 }
 

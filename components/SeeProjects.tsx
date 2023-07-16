@@ -1,11 +1,16 @@
 import React, { use } from "react";
 
+import { useDispatch } from "react-redux";
+import { setContent } from "@/contexts/features/mouse/mouseContent";
+import { useLenis } from "@studio-freight/react-lenis";
+
 // next image
 import Image from "next/image";
 
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 
 export default function SeeProjects() {
+  const dispatch = useDispatch();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseOver, setIsMouseOver] = useState(false);
 
@@ -16,6 +21,8 @@ export default function SeeProjects() {
   const singleProject1 = useRef<HTMLDivElement>(null);
   const singleProject2 = useRef<HTMLDivElement>(null);
   const singleProject3 = useRef<HTMLDivElement>(null);
+
+  const lenis = useLenis((e: any) => console.log(e));
 
   useLayoutEffect(() => {
     if (element.current && magnetBox.current) {
@@ -172,6 +179,14 @@ export default function SeeProjects() {
     }
   }, [isMouseOverElement]);
 
+  function handleScrollToElement(element: string) {
+    const el = document.querySelector(element);
+    console.log(el);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   useLayoutEffect(() => {
     if (window) {
       window.addEventListener("mousemove", (event) => {
@@ -190,8 +205,17 @@ export default function SeeProjects() {
     >
       <div
         className="see-projects"
-        onMouseEnter={() => setIsMouseOverElement(true)}
-        onMouseLeave={() => setIsMouseOverElement(false)}
+        onMouseEnter={() => {
+          setIsMouseOverElement(true);
+          dispatch(setContent("See more"));
+        }}
+        onMouseLeave={() => {
+          setIsMouseOverElement(false);
+          dispatch(setContent(""));
+        }}
+        onClick={() => {
+          handleScrollToElement("#_projects");
+        }}
         ref={element}
       >
         <div className="see-projects__cta">
