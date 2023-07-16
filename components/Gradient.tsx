@@ -9,6 +9,8 @@ type GradientParams = {
   animate?: boolean;
   animateParams?: object;
   animateStagger?: number[];
+  width?: number;
+  height?: number;
 };
 
 export default function Gradient({
@@ -17,6 +19,8 @@ export default function Gradient({
   animate = true,
   animateParams = { duration: 100, fill: "forwards", delay: 10 },
   animateStagger = [0.05, -0.1, 0.05],
+  width = 3258,
+  height = 1000,
 }: GradientParams) {
   const baseClass = "gradient";
   const gradientClass = className ? `${baseClass} ${className}` : baseClass;
@@ -24,45 +28,31 @@ export default function Gradient({
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const [gradientsParams, setGradientsParams] = useState({
-    gradient1: {
-      cy: "0",
-      cx: "0",
-      rx: "0",
-      ry: "0",
+  const [gradientsParams, setGradientsParams] = useState([
+    {
+      cy: rand(0, height).toString(),
+      cx: rand(0, width).toString(),
+      rx: rand(width / 5, width).toString(),
+      ry: rand(height / 5, height).toString(),
     },
-    gradient2: {
-      cy: "0",
-      cx: "0",
-      rx: "0",
-      ry: "0",
+    {
+      cy: rand(0, height).toString(),
+      cx: rand(0, width).toString(),
+      rx: rand(width / 5, width).toString(),
+      ry: rand(height / 5, height).toString(),
     },
-    gradient3: {
-      cy: "0",
-      cx: "0",
-      rx: "0",
-      ry: "0",
+    {
+      cy: rand(0, height).toString(),
+      cx: rand(0, width).toString(),
+      rx: rand(width / 5, width).toString(),
+      ry: rand(height / 5, height).toString(),
     },
-  });
+  ]);
 
   const gradContainer = useRef<HTMLDivElement>(null);
   const gradient1 = useRef<SVGEllipseElement>(null);
   const gradient2 = useRef<SVGEllipseElement>(null);
   const gradient3 = useRef<SVGEllipseElement>(null);
-
-  useLayoutEffect(() => {
-    for (let i = 0; i < 3; i++) {
-      setGradientsParams((prevState) => ({
-        ...prevState,
-        [`gradient${i + 1}`]: {
-          cy: rand(10, 1258).toString(),
-          cx: rand(10, 3258).toString(),
-          rx: rand(1000, 3258 / 2).toString(),
-          ry: rand(1000, 3258 / 2).toString(),
-        },
-      }));
-    }
-  }, []);
 
   useLayoutEffect(() => {
     if (isMouseOver) {
@@ -89,11 +79,6 @@ export default function Gradient({
         if (!gradient.current) return;
         gradient.current.animate(
           [
-            {
-              transform: `translate(${xTransform * animateStagger[index]}%, ${
-                yTransform * animateStagger[index]
-              }%)`,
-            },
             {
               transform: `translate(${xTransform * animateStagger[index]}%, ${
                 yTransform * animateStagger[index]
@@ -130,42 +115,42 @@ export default function Gradient({
       ref={gradContainer}
     >
       <svg
-        width="3259"
-        height="3258"
-        viewBox="0 0 3258 3258"
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         filter="url(#svg)"
         preserveAspectRatio="xMidYMin slice"
       >
-        <g clip-path="url(#clip0_102_321)">
+        <g clipPath="url(#clip0_102_321)">
           <rect
-            width="3258"
-            height="3258"
+            width={width}
+            height={height}
             className="gradient-bg"
           />
           <g filter="url(#filter0_f_102_321)">
             <ellipse
-              cx={gradientsParams.gradient1?.cx}
-              cy={gradientsParams.gradient1?.cy}
-              rx={gradientsParams.gradient1?.rx}
-              ry={gradientsParams.gradient1?.ry}
+              cx={gradientsParams[0]?.cx}
+              cy={gradientsParams[0]?.cy}
+              rx={gradientsParams[0]?.rx}
+              ry={gradientsParams[0]?.ry}
               className="gradient-1"
               ref={gradient1}
             />
             <ellipse
-              cx={gradientsParams.gradient2?.cx}
-              cy={gradientsParams.gradient2?.cy}
-              rx={gradientsParams.gradient2?.rx}
-              ry={gradientsParams.gradient2?.ry}
+              cx={gradientsParams[1]?.cx}
+              cy={gradientsParams[1]?.cy}
+              rx={gradientsParams[1]?.rx}
+              ry={gradientsParams[1]?.ry}
               className="gradient-2"
               ref={gradient2}
             />
             <ellipse
-              cx={gradientsParams.gradient3?.cx}
-              cy={gradientsParams.gradient3?.cy}
-              rx={gradientsParams.gradient3?.rx}
-              ry={gradientsParams.gradient3?.ry}
+              cx={gradientsParams[2]?.cx}
+              cy={gradientsParams[2]?.cy}
+              rx={gradientsParams[2]?.rx}
+              ry={gradientsParams[2]?.ry}
               className="gradient-3"
               ref={gradient3}
             />
@@ -174,15 +159,15 @@ export default function Gradient({
         <defs>
           <filter
             id="filter0_f_102_321"
-            x="-2296.45"
-            y="-1818.44"
-            width="6367.78"
-            height="4854.94"
+            x="0"
+            y="0"
+            width={width}
+            height={height}
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood
-              flood-opacity="0"
+              floodOpacity="0"
               result="BackgroundImageFix"
             />
             <feBlend
@@ -192,21 +177,21 @@ export default function Gradient({
               result="shape"
             />
             <feGaussianBlur
-              stdDeviation="200"
+              stdDeviation="100"
               result="blurred"
             />
           </filter>
           <filter
             id="filter1_f_102_321"
-            x="-1599.71"
-            y="141.679"
-            width="5610.77"
-            height="5272.2"
+            x="0"
+            y="0"
+            width={width}
+            height={height}
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood
-              flood-opacity="0"
+              floodOpacity="0"
               result="BackgroundImageFix"
             />
             <feBlend
@@ -216,21 +201,21 @@ export default function Gradient({
               result="shape"
             />
             <feGaussianBlur
-              stdDeviation="200"
+              stdDeviation="10"
               result="blurred"
             />
           </filter>
           <filter
             id="filter2_f_102_321"
-            x="1203.88"
-            y="-571.959"
-            width="3191.8"
-            height="2552.48"
+            x="0"
+            y="0"
+            width={width}
+            height={height}
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood
-              flood-opacity="0"
+              floodOpacity="0"
               result="BackgroundImageFix"
             />
             <feBlend
@@ -240,15 +225,15 @@ export default function Gradient({
               result="shape"
             />
             <feGaussianBlur
-              stdDeviation="200"
+              stdDeviation="10"
               result="blurred"
             />
           </filter>
 
           <clipPath id="clip0_102_321">
             <rect
-              width="3258"
-              height="3258"
+              width={width}
+              height={height}
               fill="white"
             />
           </clipPath>
