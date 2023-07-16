@@ -7,4 +7,10 @@ $slide-radius: 1.25rem;
   background-color: $background;
   border-radius: $slide-radius;
   overflow: hidden;
+  position: relative;
+
+  .anchor {
+    position: absolute;
+    top: calc(1px - $main-content-padding);
+  }
 }
