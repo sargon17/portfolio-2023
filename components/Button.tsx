@@ -17,7 +17,10 @@ export default function Button({ children, className, styles }: Props) {
   }
 
   return (
-    <div className={classNames} style={mergedStyles}>
+    <div
+      className={classNames}
+      style={mergedStyles}
+    >
       <div className="background">
         <svg
           viewBox="0 0 83 43"
@@ -25,9 +28,19 @@ export default function Button({ children, className, styles }: Props) {
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMin slice"
         >
-          <g clip-path="url(#clip0_102_169)">
-            <rect width="83" height="43" fill="#131313" className="svg-rect" />
-            <circle cx="63.5" cy="34.2422" r="21.5" className="svg-child-1" />
+          <g clipPath="url(#clip0_102_169)">
+            <rect
+              width="83"
+              height="43"
+              fill="#131313"
+              className="svg-rect"
+            />
+            <circle
+              cx="63.5"
+              cy="34.2422"
+              r="21.5"
+              className="svg-child-1"
+            />
             <ellipse
               cx={rand(10, 83).toString()}
               cy={rand(10, 34).toString()}
