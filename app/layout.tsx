@@ -8,7 +8,7 @@ import { Libre_Franklin } from "next/font/google";
 const accent = Trirong({
   subsets: ["latin-ext"],
   variable: "--font-accent",
-  weight: ["500", "600"],
+  weight: ["200", "300", "500", "600"],
 });
 
 const body = Libre_Franklin({
@@ -23,33 +23,9 @@ export const metadata = {
   metadata: {
     viewport: "width=device-width, initial-scale=1",
   },
-  links: [
-    {
-      rel: "preconnect",
-      href: "https://fonts.googleapis.com",
-      crossorigin: true,
-    },
-    {
-      rel: "preconnect",
-      href: "https://fonts.gstatic.com",
-      crossorigin: true,
-    },
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,500;0,600;1,300&display=swap",
-    },
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,900;1,100&display=swap",
-    },
-  ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={clsx(body.className, accent.className)}>{children}</body>
