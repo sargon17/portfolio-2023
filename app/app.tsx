@@ -3,8 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setPosition } from "@/contexts/features/mouse/mousePosition";
 
-import { createClient } from "next-sanity";
-import Gradient from "../components/Gradient";
+// import Gradient from "../components/Gradient";
 
 import Sidebar from "@/components/Sidebar";
 import MainContainer from "@/components/MainContainer";

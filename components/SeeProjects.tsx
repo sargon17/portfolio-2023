@@ -22,8 +22,6 @@ export default function SeeProjects() {
   const singleProject2 = useRef<HTMLDivElement>(null);
   const singleProject3 = useRef<HTMLDivElement>(null);
 
-  const lenis = useLenis((e: any) => console.log(e));
-
   useLayoutEffect(() => {
     if (element.current && magnetBox.current) {
       if (isMouseOver) {
@@ -43,7 +41,6 @@ export default function SeeProjects() {
         //get percentage of mouse position relative to element
         const xPercent = (xPosition / width) * 50;
         const yPercent = (yPosition / height) * 10;
-        // console.log(yPercent);
 
         //animate element position based on mouse position
         element.current.animate(
@@ -181,7 +178,6 @@ export default function SeeProjects() {
 
   function handleScrollToElement(element: string) {
     const el = document.querySelector(element);
-    console.log(el);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }

@@ -14,7 +14,6 @@ export default function MouseHelper() {
   const content = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
 
-  //   console.log(mousePositionState);
   const lenis = useLenis(handleScroll);
 
   const mouse = useRef<HTMLDivElement>(null);
@@ -31,7 +30,6 @@ export default function MouseHelper() {
   }, [mousePositionState]);
 
   useLayoutEffect(() => {
-    // console.log(mousePosition);
     if (mouse.current) {
       mouse.current.animate(
         [

@@ -8,8 +8,6 @@ import Hero from "./Hero";
 export default function MainContainer() {
   //on scroll update mouse position
 
-  // const lenis = useLenis((e: any) => console.log(e));
-
   return (
     <div className="main-content-container">
       <Slide>
