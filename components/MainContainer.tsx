@@ -5,7 +5,7 @@ import { useLenis } from "@studio-freight/react-lenis";
 
 import Slide from "./Slide";
 import Hero from "./_Hero";
-import Projects from "./Projects";
+import Projects from "./_Projects";
 export default function MainContainer() {
   //on scroll update mouse position
 
