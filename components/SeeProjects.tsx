@@ -1,7 +1,6 @@
-import React, { use } from "react";
-
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
+import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { useLenis } from "@studio-freight/react-lenis";
 
 // next image
@@ -203,10 +202,12 @@ export default function SeeProjects() {
         className="see-projects"
         onMouseEnter={() => {
           setIsMouseOverElement(true);
+          dispatch(setDimension({ width: 150, height: 150 }));
           dispatch(setContent("See more"));
         }}
         onMouseLeave={() => {
           setIsMouseOverElement(false);
+          dispatch(setDimension({ width: 10, height: 10 }));
           dispatch(setContent(""));
         }}
         onClick={() => {
