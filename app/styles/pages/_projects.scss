@@ -79,13 +79,19 @@ $title-color: var(--title-color);
       position: relative;
       width: 100%;
       height: 100%;
-      top: -80px;
+      top: -100px;
 
       &__image {
         width: 62%;
-        aspect-ratio: 16/9;
+        aspect-ratio: 16/8;
         z-index: 1;
         overflow: hidden;
+
+        video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
 
         img {
           width: 100%;

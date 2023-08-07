@@ -42,6 +42,8 @@ export default function Projects() {
     }
   }, [mousePositionState]);
 
+  // big title animation
+  // todo - refactor
   useLayoutEffect(() => {
     // get all the title letters
     const title = page.current?.querySelector(".project__main-data__title h2");
@@ -129,6 +131,7 @@ export default function Projects() {
     }
   }, [mousePosition]);
 
+  // todo - refactor & move to utils
   const mixColors = (color1: string, color2: string, weight: number) => {
     // mix the given colors
     const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
@@ -155,12 +158,11 @@ export default function Projects() {
     const projects = await client.fetch(`*[_type == "project"]{
       _id,
       title,
+      date,
       description,
       link,
-
       "image": image.asset->url,
-
-      "secondaryImage": secondaryImage.asset->url,
+      "video": video.asset->url,
       tags,
 
     }`);
@@ -225,7 +227,7 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
           >
-            <p>2023</p>
+            <p>{new Date(activeProject?.date || "").getFullYear()}</p>
           </motion.div>
         </div>
         <div className="project__content">
@@ -235,31 +237,61 @@ export default function Projects() {
             animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
             className="project__content__image"
           >
-            <img
-              src={activeProject?.image}
-              alt=""
-            />
+            {activeProject?.video ? (
+              <video
+                src={activeProject?.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                src={activeProject?.image}
+                alt=""
+              />
+            )}
           </motion.div>
           <div className="project__content__description">
-            <motion.p
-              key={activeProject?._id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.5 } }}
-            >
-              {activeProject?.description}
-            </motion.p>
-            {activeProject?.tags?.map((tag, index) => {
-              return (
-                <motion.p
-                  key={tag}
-                  className="project__content__description__tag"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1, transition: { delay: 0.9 + index * 0.1, duration: 0.5 } }}
+            <div>
+              <motion.p
+                key={activeProject?._id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.5 } }}
+              >
+                {activeProject?.description}
+              </motion.p>
+            </div>
+            <div>
+              {activeProject?.tags?.map((tag, index) => {
+                return (
+                  <motion.p
+                    key={tag}
+                    className="project__content__description__tag"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: 0.9 + index * 0.1, duration: 0.5 } }}
+                  >
+                    {tag}
+                  </motion.p>
+                );
+              })}
+            </div>
+            {activeProject?.link && (
+              <motion.div
+                className="project__content__description__link"
+                key={activeProject?._id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
+              >
+                <a
+                  href={activeProject?.link}
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  {tag}
-                </motion.p>
-              );
-            })}
+                  visit the website
+                </a>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

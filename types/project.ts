@@ -1,10 +1,11 @@
 type projectType = {
   _id: string;
   title: string;
+  date: string;
   description: string;
   link: string;
   image: string;
-  secondaryImage: string;
+  video: string;
   tags: string[];
 };
 
