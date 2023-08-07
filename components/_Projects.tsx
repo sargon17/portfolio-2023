@@ -82,6 +82,7 @@ export default function Projects() {
             letter.animate(
               [
                 {
+                  // color
                   color: mixColors(accentColor, classicColor, 1 - distance / minDistance),
                 },
               ],

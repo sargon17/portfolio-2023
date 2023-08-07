@@ -10,6 +10,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "date",
+      title: "Project Date",
+      type: "date",
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "description",
       title: "Project Description",
       type: "text",
@@ -28,6 +34,11 @@ export default {
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "video",
+      title: "Project Video",
+      type: "file",
     },
     {
       name: "secondaryImage",
