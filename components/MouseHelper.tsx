@@ -12,11 +12,14 @@ export default function MouseHelper() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [mouseDimensions, setMouseDimensions] = useState({ width: 0, height: 0 });
   const [content, setContent] = useState("");
+  const [isPositionFixed, setIsPositionFixed] = useState(false);
 
   const newContent = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
+
+  const fixedPosition = useSelector((state: RootState) => state.fixPosition.fixedPosition);
 
   const lenis = useLenis(handleScroll);
 
@@ -32,6 +35,14 @@ export default function MouseHelper() {
       setMousePosition(mousePositionState);
     }
   }, [mousePositionState]);
+
+  useLayoutEffect(() => {
+    if (fixedPosition.x !== 0 && fixedPosition.y !== 0) {
+      setIsPositionFixed(true);
+    } else {
+      setIsPositionFixed(false);
+    }
+  }, [fixedPosition]);
 
   useLayoutEffect(() => {
     if (newContent !== content) {
@@ -66,20 +77,38 @@ export default function MouseHelper() {
   }, [mouseDimensions]);
 
   useLayoutEffect(() => {
-    if (mouse.current) {
-      mouse.current.animate(
-        [
+    if (!isPositionFixed) {
+      if (mouse.current) {
+        mouse.current.animate(
+          [
+            {
+              transform: `translate(${10 + mousePosition.x}px, ${10 + mousePosition.y + scrollPosition}px)`,
+            },
+          ],
           {
-            transform: `translate(${10 + mousePosition.x}px, ${10 + mousePosition.y + scrollPosition}px)`,
-          },
-        ],
-        {
-          duration: 400,
-          fill: "forwards",
-          delay: 10,
-          easing: "ease-in-out",
-        }
-      );
+            duration: 1200,
+            fill: "forwards",
+            delay: 10,
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
+          }
+        );
+      }
+    } else {
+      if (mouse.current) {
+        mouse.current.animate(
+          [
+            {
+              transform: `translate(${fixedPosition.x}px, ${fixedPosition.y}px)`,
+            },
+          ],
+          {
+            duration: 400,
+            fill: "forwards",
+            delay: 10,
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
+          }
+        );
+      }
     }
   }, [mousePosition, scrollPosition]);
 

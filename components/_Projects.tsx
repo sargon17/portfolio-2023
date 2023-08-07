@@ -16,6 +16,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
+import { setPosition } from "@/contexts/features/mouse/mousePosition";
+import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
 export default function Projects() {
   const getProjects = async () => {
@@ -291,6 +293,18 @@ export default function Projects() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
                 ref={link}
+                onMouseEnter={() => {
+                  dispatch(setDimension({ width: 150, height: 30 }));
+
+                  const itemTop = link.current?.getBoundingClientRect().top;
+                  const itemLeft = link.current?.getBoundingClientRect().left;
+
+                  dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
+                }}
+                onMouseLeave={() => {
+                  dispatch(setDimension({ width: 10, height: 10 }));
+                  dispatch(setFixPosition({ x: 0, y: 0 }));
+                }}
               >
                 <a
                   href={activeProject?.link}

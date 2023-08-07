@@ -1,19 +1,22 @@
 :root {
   --title-color: var(--gray-800);
+  --contest-text-color: var(--gray-200);
 }
 
 [data-theme="light"] {
   --title-color: var(--gray-200);
+  --contest-text-color: var(--gray-800);
 }
 
 $title-color: var(--title-color);
+$contest-text-color: var(--contest-text-color);
 
 .projects-page {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 
   .navigation {
     display: flex;
@@ -66,6 +69,7 @@ $title-color: var(--title-color);
           text-wrap: nowrap;
           overflow: hidden;
           line-height: 1.25;
+          cursor: default;
         }
       }
 
@@ -136,6 +140,28 @@ $title-color: var(--title-color);
             border-radius: 0.5rem;
             margin: 0 !important;
             cursor: default;
+          }
+        }
+
+        &__link {
+          display: inline-block;
+          margin-top: 20px;
+
+          a {
+            margin: 0;
+            padding: 0;
+
+            p {
+              margin: 0;
+              padding: 0;
+              transition: color 0.4s ease-in-out;
+            }
+          }
+
+          &:hover {
+            p {
+              color: $contest-text-color;
+            }
           }
         }
       }
