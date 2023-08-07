@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
-import { setPosition } from "@/contexts/features/mouse/mousePosition";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
 export default function Projects() {
@@ -43,8 +42,6 @@ export default function Projects() {
 
   const page = useRef<HTMLDivElement>(null);
   const link = useRef<HTMLDivElement>(null);
-
-  let linkCenter = { x: 0, y: 0 };
 
   useEffect(() => {
     getProjects();
@@ -148,13 +145,6 @@ export default function Projects() {
       }
     }
   }, [mousePosition]);
-
-  // on mount gets the link center coordinates
-  useLayoutEffect(() => {
-    if (!link.current) return;
-    linkCenter = getItemCenter(link.current);
-    console.log(linkCenter);
-  }, []);
 
   // todo - refactor & move to utils
   const mixColors = (color1: string, color2: string, weight: number) => {
