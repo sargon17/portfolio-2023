@@ -3,9 +3,9 @@ import React, { useLayoutEffect } from "react";
 import { useState, useEffect, useRef } from "react";
 import { client } from "@/sanity/lib/client";
 
-import { textToLetters } from "@/utils/utils";
+import { textToLetters, getItemCenter } from "@/utils/utils";
 
-import { m, mix, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 // types
 import projectType from "@/types/project";
@@ -55,13 +55,8 @@ export default function Projects() {
 
       if (letters) {
         letters.forEach((letter, index) => {
-          const letterTop = letter.getBoundingClientRect().top;
-          const letterBottom = letter.getBoundingClientRect().bottom;
-          const letterLeft = letter.getBoundingClientRect().left;
-          const letterRight = letter.getBoundingClientRect().right;
-
-          const letterCenterX = letterLeft + (letterRight - letterLeft) / 2;
-          const letterCenterY = letterTop + (letterBottom - letterTop) / 2;
+          // get the letters center
+          const { x: letterCenterX, y: letterCenterY } = getItemCenter(letter);
 
           const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
           const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
