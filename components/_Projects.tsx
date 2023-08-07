@@ -72,10 +72,10 @@ export default function Projects() {
           console.log(distance);
 
           if (
-            mousePosition.x > letterLeft - minDistance &&
-            mousePosition.x < letterRight + minDistance &&
-            mousePosition.y > letterTop - minDistance &&
-            mousePosition.y < letterBottom + minDistance
+            mousePosition.x > letterCenterX - minDistance &&
+            mousePosition.x < letterCenterX + minDistance &&
+            mousePosition.y > letterCenterY - minDistance &&
+            mousePosition.y < letterCenterY + minDistance
           ) {
             // get the closest distance from the mouse to the letter
 
