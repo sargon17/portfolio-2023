@@ -9,6 +9,8 @@ import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import Gradient from "./Gradient";
 import SeeProjects from "./SeeProjects";
 
+import { ScopesText } from "@/utils/animations";
+
 export default function Hero() {
   const dispatch = useDispatch();
   const hero = useRef<HTMLDivElement>(null);
@@ -64,11 +66,7 @@ export default function Hero() {
             dispatch(setContent(""));
           }}
         >
-          <p>
-            <span className="open">(</span>
-            <span className="content">milan, italy</span>
-            <span className="close">)</span>
-          </p>
+          <ScopesText>milan, italy</ScopesText>
         </div>
       </div>
       <div className="hero__content">
