@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { client } from "@/sanity/lib/client";
 
 import { textToLetters, getItemCenter } from "@/utils/utils";
+import { ScopesText } from "@/utils/animations";
 
 import { motion } from "framer-motion";
 
@@ -262,12 +263,12 @@ export default function Projects() {
                 {activeProject?.description}
               </motion.p>
             </div>
-            <div>
+            <div className="project__content__description__tags">
               {activeProject?.tags?.map((tag, index) => {
                 return (
                   <motion.p
                     key={tag}
-                    className="project__content__description__tag"
+                    className="project__content__description__tags__item"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1, transition: { delay: 0.9 + index * 0.1, duration: 0.5 } }}
                   >
@@ -288,7 +289,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  visit the website
+                  <ScopesText>see it yourself</ScopesText>
                 </a>
               </motion.div>
             )}
