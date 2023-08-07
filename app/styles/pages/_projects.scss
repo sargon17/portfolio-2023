@@ -9,6 +9,12 @@
 $title-color: var(--title-color);
 
 .projects-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
   .navigation {
     display: flex;
     justify-content: flex-start;
@@ -39,11 +45,11 @@ $title-color: var(--title-color);
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 80%;
 
     &__main-data {
       width: 100%;
       position: relative;
+      margin-bottom: -6.5%;
       &__title {
         font-size: 2rem;
         font-weight: 700;
@@ -69,7 +75,7 @@ $title-color: var(--title-color);
         margin-bottom: 1rem;
         color: $text-secondary;
         position: absolute;
-        top: 10%;
+        top: 15%;
         left: 65%;
         z-index: 2;
       }
@@ -79,7 +85,6 @@ $title-color: var(--title-color);
       position: relative;
       width: 100%;
       height: 100%;
-      top: -100px;
 
       &__image {
         width: 62%;
