@@ -1,0 +1,32 @@
+.scopes-text {
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: normal;
+  color: $text-secondary;
+  transition: color $t-normal $t-easing;
+
+  p {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    .open,
+    .close,
+    .content {
+      transition: transform $t-normal $t-easing;
+      display: inline-block;
+    }
+  }
+
+  &:hover {
+    color: $text-accent;
+
+    p {
+      .open {
+        transform: translateX(-0.5em);
+      }
+      .close {
+        transform: translateX(0.5em);
+      }
+    }
+  }
+}

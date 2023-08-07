@@ -21,7 +21,7 @@ $text-color: var(--text-color);
   left: 0;
   width: $mouse-helper-size;
   aspect-ratio: 1;
-  border-radius: 100%;
+  border-radius: 200px;
   background-color: $mouse-helper-color;
   pointer-events: none;
   mix-blend-mode: $blend-mode;

@@ -4,29 +4,28 @@ import Button from "./Button";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import Slide from "./Slide";
-import Hero from "./Hero";
+import Hero from "./_Hero";
+import Projects from "./_Projects";
 export default function MainContainer() {
   //on scroll update mouse position
 
-  // const lenis = useLenis((e: any) => console.log(e));
-
   return (
     <div className="main-content-container">
-      <Slide>
+      <Slide id="_main">
         <Hero />
       </Slide>
-      <Slide>
+      {/* <Slide>
         <h1>Skills</h1>
-      </Slide>
+      </Slide> */}
       <Slide id="_projects">
-        <h1>Projects</h1>
+        <Projects />
       </Slide>
-      <Slide>
+      {/* <Slide>
         <h1>Slide 4</h1>
-      </Slide>
-      <Slide>
+      </Slide> */}
+      {/* <Slide>
         <h1>Slide 5</h1>
-      </Slide>
+      </Slide> */}
     </div>
   );
 }
