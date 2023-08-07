@@ -52,11 +52,14 @@ $title-color: var(--title-color);
         position: relative;
         z-index: 1;
 
-        svg text {
-          // fit text to container
-          width: 100%;
-          pointer-events: none;
-          fill: $title-color;
+        h2 {
+          font-size: 25vh;
+          font-weight: 700;
+          color: $title-color;
+          white-space: nowrap;
+          text-wrap: nowrap;
+          overflow: hidden;
+          line-height: 1;
         }
       }
 
@@ -76,7 +79,7 @@ $title-color: var(--title-color);
       position: relative;
       width: 100%;
       height: 100%;
-      top: -150px;
+      top: -80px;
 
       &__image {
         width: 62%;

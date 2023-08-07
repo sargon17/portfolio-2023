@@ -1,14 +1,18 @@
 "use client";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useState, useEffect, useRef } from "react";
 import { client } from "@/sanity/lib/client";
 
-import { motion } from "framer-motion";
+import { textToLetters } from "@/utils/utils";
+
+import { m, mix, motion } from "framer-motion";
 
 // types
 import projectType from "@/types/project";
 
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 
@@ -16,6 +20,9 @@ export default function Projects() {
   const [projects, setProjects] = useState<projectType[]>([]);
   const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
   const dispatch = useDispatch();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
 
@@ -28,6 +35,125 @@ export default function Projects() {
       setActiveProject(projects[0]);
     }
   }, [projects]);
+
+  useEffect(() => {
+    if (mousePositionState) {
+      setMousePosition(mousePositionState);
+    }
+  }, [mousePositionState]);
+
+  useLayoutEffect(() => {
+    // get all the title letters
+    const title = page.current?.querySelector(".project__main-data__title h2");
+    if (!title) return;
+
+    const titleTop = title.getBoundingClientRect().top;
+    const titleBottom = title.getBoundingClientRect().bottom;
+
+    if (mousePosition.y > titleTop - 20 && mousePosition.y < titleBottom + 20) {
+      const letters = title.querySelectorAll("span");
+
+      if (letters) {
+        letters.forEach((letter, index) => {
+          const letterTop = letter.getBoundingClientRect().top;
+          const letterBottom = letter.getBoundingClientRect().bottom;
+          const letterLeft = letter.getBoundingClientRect().left;
+          const letterRight = letter.getBoundingClientRect().right;
+
+          const letterCenterX = letterLeft + (letterRight - letterLeft) / 2;
+          const letterCenterY = letterTop + (letterBottom - letterTop) / 2;
+
+          const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
+          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+
+          // if mouse is 20px away from the letter or less
+
+          const minDistance = 200;
+
+          const distance = Math.sqrt(
+            Math.pow(mousePosition.x - letterCenterX, 2) + Math.pow(mousePosition.y - letterCenterY, 2)
+          );
+
+          console.log(distance);
+
+          if (
+            mousePosition.x > letterLeft - minDistance &&
+            mousePosition.x < letterRight + minDistance &&
+            mousePosition.y > letterTop - minDistance &&
+            mousePosition.y < letterBottom + minDistance
+          ) {
+            // get the closest distance from the mouse to the letter
+
+            letter.animate(
+              [
+                {
+                  color: mixColors(accentColor, classicColor, 1 - distance / minDistance),
+                },
+              ],
+              {
+                duration: 1000,
+                fill: "forwards",
+              }
+            );
+          } else {
+            letter.animate(
+              [
+                {
+                  color: classicColor,
+                },
+              ],
+              {
+                duration: 1000,
+                fill: "forwards",
+              }
+            );
+          }
+        });
+      }
+    } else {
+      const letters = title.querySelectorAll("span");
+
+      if (letters) {
+        letters.forEach((letter, index) => {
+          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+
+          letter.animate(
+            [
+              {
+                color: classicColor,
+              },
+            ],
+            {
+              duration: 1000,
+              fill: "forwards",
+            }
+          );
+        });
+      }
+    }
+  }, [mousePosition]);
+
+  const mixColors = (color1: string, color2: string, weight: number) => {
+    // mix the given colors
+    const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
+    const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
+
+    let color = "#";
+
+    for (let i = 1; i <= 6; i += 2) {
+      const v1 = h2d(color1.substr(i, 2));
+      const v2 = h2d(color2.substr(i, 2));
+      let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
+
+      while (val.length < 2) {
+        val = "0" + val;
+      }
+
+      color += val;
+    }
+
+    return color;
+  };
 
   const getProjects = async () => {
     const projects = await client.fetch(`*[_type == "project"]{
@@ -43,6 +169,13 @@ export default function Projects() {
 
     }`);
     setProjects(projects);
+  };
+
+  const printTitle = (title: string) => {
+    const letters = textToLetters(title);
+    return letters.map((letter, index) => {
+      return <span key={index}>{letter}</span>;
+    });
   };
 
   return (
@@ -82,22 +215,13 @@ export default function Projects() {
       <div className="project">
         <div className="project__main-data">
           <div className="project__main-data__title">
-            <motion.svg
-              viewBox="0 0 200 40"
-              preserveAspectRatio="xMidYMin slice"
+            <motion.h2
               key={activeProject?._id}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { duration: 0.5 } }}
+              animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
             >
-              <text
-                x="0%"
-                y="50%"
-                textAnchor="start"
-                dominantBaseline="middle"
-              >
-                {activeProject?.title}
-              </text>
-            </motion.svg>
+              {printTitle(activeProject?.title || "")}
+            </motion.h2>
           </div>
           <motion.div
             className="project__main-data__year"

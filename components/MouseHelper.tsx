@@ -1,5 +1,3 @@
-import React, { use } from "react";
-
 import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
