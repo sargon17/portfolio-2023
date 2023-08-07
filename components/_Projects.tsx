@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect } from "react";
+import React, { use, useLayoutEffect } from "react";
 import { useState, useEffect, useRef } from "react";
 import { client } from "@/sanity/lib/client";
 
@@ -18,14 +18,31 @@ import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 
 export default function Projects() {
+  const getProjects = async () => {
+    const projects = await client.fetch(`*[_type == "project"]{
+      _id,
+      title,
+      date,
+      description,
+      link,
+      "image": image.asset->url,
+      "video": video.asset->url,
+      tags,
+
+    }`);
+    setProjects(projects);
+  };
   const [projects, setProjects] = useState<projectType[]>([]);
   const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
-  const dispatch = useDispatch();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
+  const dispatch = useDispatch();
   const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
+  const link = useRef<HTMLDivElement>(null);
+
+  let linkCenter = { x: 0, y: 0 };
 
   useEffect(() => {
     getProjects();
@@ -71,8 +88,6 @@ export default function Projects() {
           const distance = Math.sqrt(
             Math.pow(mousePosition.x - letterCenterX, 2) + Math.pow(mousePosition.y - letterCenterY, 2)
           );
-
-          console.log(distance);
 
           if (
             mousePosition.x > letterCenterX - minDistance &&
@@ -132,6 +147,13 @@ export default function Projects() {
     }
   }, [mousePosition]);
 
+  // on mount gets the link center coordinates
+  useLayoutEffect(() => {
+    if (!link.current) return;
+    linkCenter = getItemCenter(link.current);
+    console.log(linkCenter);
+  }, []);
+
   // todo - refactor & move to utils
   const mixColors = (color1: string, color2: string, weight: number) => {
     // mix the given colors
@@ -153,21 +175,6 @@ export default function Projects() {
     }
 
     return color;
-  };
-
-  const getProjects = async () => {
-    const projects = await client.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      date,
-      description,
-      link,
-      "image": image.asset->url,
-      "video": video.asset->url,
-      tags,
-
-    }`);
-    setProjects(projects);
   };
 
   const printTitle = (title: string) => {
@@ -283,6 +290,7 @@ export default function Projects() {
                 key={activeProject?._id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
+                ref={link}
               >
                 <a
                   href={activeProject?.link}
