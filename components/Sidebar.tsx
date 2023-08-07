@@ -7,16 +7,32 @@ import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
+import { handleScrollToElement } from "@/utils/utils";
+
 export default function Sidebar() {
   const dispatch = useDispatch();
   return (
     <div className="sidebar">
       <nav className="sidebar__nav">
-        <Button className="sidebar__nav__button">hero</Button>
-        <Button className="sidebar__nav__button">skills</Button>
-        <Button className="sidebar__nav__button">services</Button>
-        <Button className="sidebar__nav__button">projects</Button>
-        <Button className="sidebar__nav__button">contacts</Button>
+        <Button
+          className="sidebar__nav__button"
+          onClick={() => {
+            handleScrollToElement("#_main");
+          }}
+        >
+          main
+        </Button>
+        {/* <Button className="sidebar__nav__button">skills</Button> */}
+        {/* <Button className="sidebar__nav__button">services</Button> */}
+        <Button
+          className="sidebar__nav__button"
+          onClick={() => {
+            handleScrollToElement("#_projects");
+          }}
+        >
+          projects
+        </Button>
+        {/* <Button className="sidebar__nav__button">contacts</Button> */}
 
         <ThemeSwitcher />
       </nav>

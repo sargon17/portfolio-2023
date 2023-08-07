@@ -11,4 +11,11 @@ const getItemCenter = (item: any): object => {
   };
 };
 
-export { textToLetters, getItemCenter };
+const handleScrollToElement = (element: string) => {
+  const el = document.querySelector(element);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+export { textToLetters, getItemCenter, handleScrollToElement };

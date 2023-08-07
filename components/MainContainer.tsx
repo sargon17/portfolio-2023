@@ -11,7 +11,7 @@ export default function MainContainer() {
 
   return (
     <div className="main-content-container">
-      <Slide>
+      <Slide id="_main">
         <Hero />
       </Slide>
       {/* <Slide>
