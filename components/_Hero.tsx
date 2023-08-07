@@ -4,9 +4,12 @@ import { useLayoutEffect, useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
+import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 import Gradient from "./Gradient";
 import SeeProjects from "./SeeProjects";
+
+import { ScopesText } from "@/utils/animations";
 
 export default function Hero() {
   const dispatch = useDispatch();
@@ -55,17 +58,15 @@ export default function Hero() {
         <div
           className="hero__location"
           onMouseEnter={() => {
+            dispatch(setDimension({ width: 100, height: 100 }));
             dispatch(setContent("based in"));
           }}
           onMouseLeave={() => {
+            dispatch(setDimension({ width: 10, height: 10 }));
             dispatch(setContent(""));
           }}
         >
-          <p>
-            <span className="open">(</span>
-            <span className="content">milan, italy</span>
-            <span className="close">)</span>
-          </p>
+          <ScopesText>milan, italy</ScopesText>
         </div>
       </div>
       <div className="hero__content">

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
@@ -7,14 +5,22 @@ import { useLenis } from "@studio-freight/react-lenis";
 import { useLayoutEffect, useState, useRef } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
+import { motion } from "framer-motion";
+
 export default function MouseHelper() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [mouseDimensions, setMouseDimensions] = useState({ width: 0, height: 0 });
+  const [content, setContent] = useState("");
+  const [isPositionFixed, setIsPositionFixed] = useState(false);
 
-  const content = useSelector((state: RootState) => state.content.content);
+  const newContent = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
 
-  //   console.log(mousePositionState);
+  const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
+
+  const fixedPosition = useSelector((state: RootState) => state.fixPosition.fixedPosition);
+
   const lenis = useLenis(handleScroll);
 
   const mouse = useRef<HTMLDivElement>(null);
@@ -31,21 +37,78 @@ export default function MouseHelper() {
   }, [mousePositionState]);
 
   useLayoutEffect(() => {
-    // console.log(mousePosition);
+    if (fixedPosition.x !== 0 && fixedPosition.y !== 0) {
+      setIsPositionFixed(true);
+    } else {
+      setIsPositionFixed(false);
+    }
+  }, [fixedPosition]);
+
+  useLayoutEffect(() => {
+    if (newContent !== content) {
+      setContent(newContent);
+    }
+  }, [newContent]);
+
+  useLayoutEffect(() => {
+    if (mouseDimensionState) {
+      setMouseDimensions(mouseDimensionState);
+    }
+  }, [mouseDimensionState]);
+
+  useLayoutEffect(() => {
     if (mouse.current) {
       mouse.current.animate(
         [
           {
-            transform: `translate(${10 + mousePosition.x}px, ${10 + mousePosition.y + scrollPosition}px)`,
+            width: `${mouseDimensions.width}px`,
+            height: `${mouseDimensions.height}px`,
           },
         ],
         {
-          duration: 400,
+          duration: 300,
           fill: "forwards",
           delay: 10,
-          easing: "ease-in-out",
+          // bouncy easing
+          easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
         }
       );
+    }
+  }, [mouseDimensions]);
+
+  useLayoutEffect(() => {
+    if (!isPositionFixed) {
+      if (mouse.current) {
+        mouse.current.animate(
+          [
+            {
+              transform: `translate(${10 + mousePosition.x}px, ${10 + mousePosition.y + scrollPosition}px)`,
+            },
+          ],
+          {
+            duration: 1200,
+            fill: "forwards",
+            delay: 10,
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
+          }
+        );
+      }
+    } else {
+      if (mouse.current) {
+        mouse.current.animate(
+          [
+            {
+              transform: `translate(${fixedPosition.x}px, ${fixedPosition.y}px)`,
+            },
+          ],
+          {
+            duration: 400,
+            fill: "forwards",
+            delay: 10,
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
+          }
+        );
+      }
     }
   }, [mousePosition, scrollPosition]);
 
@@ -57,7 +120,13 @@ export default function MouseHelper() {
       ref={mouse}
     >
       <div className="mouse-helper__content">
-        <p>{content}</p>
+        <motion.p
+          key={content}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.2 } }}
+        >
+          {content}
+        </motion.p>
       </div>
     </div>
   );

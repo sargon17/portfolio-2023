@@ -1,13 +1,13 @@
-import React, { use } from "react";
-
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
-import { useLenis } from "@studio-freight/react-lenis";
+import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 // next image
 import Image from "next/image";
 
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
+
+import { handleScrollToElement } from "@/utils/utils";
 
 export default function SeeProjects() {
   const dispatch = useDispatch();
@@ -21,8 +21,6 @@ export default function SeeProjects() {
   const singleProject1 = useRef<HTMLDivElement>(null);
   const singleProject2 = useRef<HTMLDivElement>(null);
   const singleProject3 = useRef<HTMLDivElement>(null);
-
-  const lenis = useLenis((e: any) => console.log(e));
 
   useLayoutEffect(() => {
     if (element.current && magnetBox.current) {
@@ -43,7 +41,6 @@ export default function SeeProjects() {
         //get percentage of mouse position relative to element
         const xPercent = (xPosition / width) * 50;
         const yPercent = (yPosition / height) * 10;
-        // console.log(yPercent);
 
         //animate element position based on mouse position
         element.current.animate(
@@ -179,14 +176,6 @@ export default function SeeProjects() {
     }
   }, [isMouseOverElement]);
 
-  function handleScrollToElement(element: string) {
-    const el = document.querySelector(element);
-    console.log(el);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   useLayoutEffect(() => {
     if (window) {
       window.addEventListener("mousemove", (event) => {
@@ -207,10 +196,12 @@ export default function SeeProjects() {
         className="see-projects"
         onMouseEnter={() => {
           setIsMouseOverElement(true);
+          dispatch(setDimension({ width: 150, height: 150 }));
           dispatch(setContent("See more"));
         }}
         onMouseLeave={() => {
           setIsMouseOverElement(false);
+          dispatch(setDimension({ width: 10, height: 10 }));
           dispatch(setContent(""));
         }}
         onClick={() => {
@@ -234,8 +225,8 @@ export default function SeeProjects() {
               <Image
                 src="/edi.deseip.png"
                 alt="slide-1"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
               />
             </div>
           </div>
@@ -247,8 +238,8 @@ export default function SeeProjects() {
               <Image
                 src="/edi.deseip-1.png"
                 alt="slide-2"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
               />
             </div>
           </div>
@@ -260,8 +251,8 @@ export default function SeeProjects() {
               <Image
                 src="/edi.deseip-2.png"
                 alt="slide-2"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
               />
             </div>
           </div>
