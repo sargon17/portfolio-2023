@@ -55,7 +55,7 @@ export default function MouseHelper() {
           },
         ],
         {
-          duration: 400,
+          duration: 300,
           fill: "forwards",
           delay: 10,
           // bouncy easing
