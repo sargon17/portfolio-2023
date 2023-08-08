@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
 
+import { useSelector } from "react-redux";
 import { useLayoutEffect, useState, useRef } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
