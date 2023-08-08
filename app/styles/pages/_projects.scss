@@ -145,7 +145,8 @@ $contest-text-color: var(--contest-text-color);
 
         &__link {
           display: inline-block;
-          margin-top: 20px;
+          margin-top: -60px;
+          margin-left: -20px;
 
           a {
             margin: 0;

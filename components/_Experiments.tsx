@@ -8,7 +8,7 @@ export default function Experiments() {
       <div className="center">
         <Magnet
           returnToOrigin
-          force={{ x: 1, y: 1 }}
+          force={{ x: 2, y: 10 }}
           displayMagnetZone
           magnetZoneDiameter={600}
         >

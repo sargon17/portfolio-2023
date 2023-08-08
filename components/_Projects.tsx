@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 
 import { textToLetters, getItemCenter } from "@/utils/utils";
 import { ScopesText } from "@/utils/animations";
+import Magnet from "@/components/Magnet";
 
 import { motion } from "framer-motion";
 
@@ -277,33 +278,47 @@ export default function Projects() {
               })}
             </div>
             {activeProject?.link && (
-              <motion.div
-                className="project__content__description__link"
-                key={activeProject?._id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
-                ref={link}
-                onMouseEnter={() => {
-                  dispatch(setDimension({ width: 150, height: 30 }));
-
-                  const itemTop = link.current?.getBoundingClientRect().top || 0;
-                  const itemLeft = link.current?.getBoundingClientRect().left || 0;
-
-                  dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
-                }}
-                onMouseLeave={() => {
-                  dispatch(setDimension({ width: 10, height: 10 }));
-                  dispatch(setFixPosition({ x: 0, y: 0 }));
-                }}
-              >
-                <a
-                  href={activeProject?.link}
-                  target="_blank"
-                  rel="noreferrer"
+              <div className="project__content__description__link">
+                <Magnet
+                  force={{ x: 1, y: 5 }}
+                  magnetZoneDiameter={200}
                 >
-                  <ScopesText>see it yourself</ScopesText>
-                </a>
-              </motion.div>
+                  <motion.div
+                    key={activeProject?._id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
+                    ref={link}
+                    onMouseEnter={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
+
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
+
+                      dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
+                    }}
+                    onMouseMove={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
+
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
+
+                      dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
+                    }}
+                    onMouseLeave={() => {
+                      dispatch(setDimension({ width: 10, height: 10 }));
+                      dispatch(setFixPosition({ x: 0, y: 0 }));
+                    }}
+                  >
+                    <a
+                      href={activeProject?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ScopesText>see it yourself</ScopesText>
+                    </a>
+                  </motion.div>
+                </Magnet>
+              </div>
             )}
           </div>
         </div>
