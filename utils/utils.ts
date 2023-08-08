@@ -1,8 +1,15 @@
+import { type } from "os";
+
 const textToLetters = (text: string): string[] => {
   return text.split("");
 };
 
-const getItemCenter = (item: any): object => {
+type getItemCenterReturnType = {
+  x: number;
+  y: number;
+};
+
+const getItemCenter = (item: any): getItemCenterReturnType => {
   const { top: itemTop, left: itemLeft, width: itemWidth, height: itemHeight } = item.getBoundingClientRect();
 
   return {

@@ -286,8 +286,8 @@ export default function Projects() {
                 onMouseEnter={() => {
                   dispatch(setDimension({ width: 150, height: 30 }));
 
-                  const itemTop = link.current?.getBoundingClientRect().top;
-                  const itemLeft = link.current?.getBoundingClientRect().left;
+                  const itemTop = link.current?.getBoundingClientRect().top || 0;
+                  const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
                   dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
                 }}
