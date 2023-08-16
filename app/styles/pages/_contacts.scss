@@ -1,0 +1,145 @@
+:root {
+  --title-color: var(--gray-800);
+  --accent-blob-color: var(--green);
+  --contacts-text-color: #a4c2bc;
+  --contacts-number-color: #364d48;
+  --contact-link-color: #cddfdb;
+}
+
+[data-theme="light"] {
+  --title-color: var(--gray-200);
+  --accent-blob-color: var(--accent);
+}
+
+$title-color: var(--title-color);
+$accent-blob-color: var(--accent-blob-color);
+$contacts-text-color: var(--contacts-text-color);
+$contacts-number-color: var(--contacts-number-color);
+$contact-link-color: var(--contact-link-color);
+
+.contacts {
+  position: relative;
+  .bg__text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    p {
+      text-orientation: mixed;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 16rem;
+      white-space: nowrap;
+      text-wrap: nowrap;
+      height: 90vh;
+      font-weight: 600;
+      color: $title-color;
+      z-index: 0;
+      filter: blur(10px);
+      margin-left: 10%;
+    }
+  }
+
+  .bg__color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      width: 90vw;
+      height: 95vh;
+      filter: blur(150px);
+      g {
+        path {
+          fill: $accent-blob-color;
+        }
+      }
+    }
+  }
+  .bg__noise {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url("/noise.png");
+    background-repeat: repeat;
+    background-size: 100%;
+    z-index: 1;
+    opacity: 0.1;
+    mix-blend-mode: overlay;
+  }
+
+  &__container {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+
+    &__title {
+      grid-column: 5 / 8;
+      grid-row: 3/4;
+
+      font-size: 2rem;
+      font-weight: 100;
+
+      color: $contacts-number-color;
+
+      span {
+        font-weight: 600;
+        font-family: $font-accent;
+        font-style: italic;
+        font-size: 1.5em;
+        color: $contacts-text-color;
+      }
+    }
+
+    &__main {
+      grid-column: 8 / 11;
+      grid-row: 4/9;
+
+      p {
+        font-size: 0.9rem;
+        line-height: 1;
+        color: $contacts-text-color;
+        text-align: justify;
+      }
+
+      &__links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 2rem;
+        gap: 2rem;
+        a {
+          margin-bottom: 1rem;
+          font-size: 1.2rem;
+          color: $contacts-text-color;
+          text-decoration: none;
+          transition: color 0.2s ease-in-out;
+
+          .number {
+            color: $contacts-number-color;
+            font-weight: 600;
+            font-size: 2rem;
+          }
+
+          .title {
+            display: inline-block;
+            transform: translateY(100%);
+            color: $contact-link-color;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}
