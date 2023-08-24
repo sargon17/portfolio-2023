@@ -1,19 +1,25 @@
 :root {
   --title-color: var(--gray-800);
-  --accent-blob-color: var(--green);
-  --contacts-text-color: #a4c2bc;
-  --contacts-number-color: #364d48;
-  --contact-link-color: #cddfdb;
+  --accent-blob-color: var(--purple-600);
+  --contacts-text-color: var(--gray-700);
+  --contacts-title-color: var(--gray-300);
+  --contacts-number-color: var(--gray-800);
+  --contact-link-color: var(--gray-300);
 }
 
 [data-theme="light"] {
   --title-color: var(--gray-200);
-  --accent-blob-color: var(--accent);
+  --accent-blob-color: var(--green-200);
+  --contacts-text-color: var(--green-600);
+  --contacts-title-color: var(--green-800);
+  --contacts-number-color: var(--green-400);
+  --contact-link-color: var(--green-700);
 }
 
 $title-color: var(--title-color);
 $accent-blob-color: var(--accent-blob-color);
 $contacts-text-color: var(--contacts-text-color);
+$contacts-title-color: var(--contacts-title-color);
 $contacts-number-color: var(--contacts-number-color);
 $contact-link-color: var(--contact-link-color);
 
@@ -48,29 +54,45 @@ $contact-link-color: var(--contact-link-color);
     width: 100%;
     height: 100%;
 
+    .noise {
+      background: url("https://grainy-gradients.vercel.app/noise.svg");
+      width: 100vw;
+      height: 100vh;
+      mix-blend-mode: $noise-blend-mode;
+    }
+
     svg {
-      width: 90vw;
-      height: 95vh;
-      filter: blur(150px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      // filter: blur(150px);
       g {
         path {
           fill: $accent-blob-color;
         }
       }
+
+      rect {
+        // mix-blend-mode: screen;
+        // filter: contrast(170%) brightness(1000%);
+      }
     }
   }
   .bg__noise {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-image: url("/noise.png");
-    background-repeat: repeat;
-    background-size: 100%;
-    z-index: 1;
-    opacity: 0.1;
-    mix-blend-mode: overlay;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // width: 100%;
+    // height: 100vh;
+    // background-image: url("/noise.png");
+    // background-repeat: repeat;
+    // background-size: 100%;
+    // z-index: 1;
+    // opacity: 0.1;
+    // mix-blend-mode: overlay;
+    transform: translateX(-10000%);
   }
 
   &__container {
@@ -98,7 +120,7 @@ $contact-link-color: var(--contact-link-color);
         font-family: $font-accent;
         font-style: italic;
         font-size: 1.5em;
-        color: $contacts-text-color;
+        color: $contacts-title-color;
       }
     }
 
@@ -108,7 +130,7 @@ $contact-link-color: var(--contact-link-color);
 
       p {
         font-size: 0.9rem;
-        line-height: 1;
+        line-height: 1.2;
         color: $contacts-text-color;
         text-align: justify;
       }
@@ -130,6 +152,8 @@ $contact-link-color: var(--contact-link-color);
             color: $contacts-number-color;
             font-weight: 600;
             font-size: 2rem;
+            filter: blur(4px);
+            transition: filter 0.2s ease-in-out;
           }
 
           .title {
@@ -140,6 +164,12 @@ $contact-link-color: var(--contact-link-color);
 
             .letter {
               display: inline-block;
+            }
+          }
+
+          &:hover {
+            .number {
+              filter: blur(0px);
             }
           }
         }
