@@ -59,6 +59,7 @@ export default function Gradient({
           </g>
         </g>
       </svg>
+      <div className="noise"></div>
     </div>
   );
 }
