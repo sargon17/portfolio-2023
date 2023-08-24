@@ -16,18 +16,26 @@
 
   &-bg {
     fill: $gradient-1;
-    opacity: 0.2;
+  }
+
+  &-bg,
+  &-1,
+  &-2,
+  &-3 {
+    mix-blend-mode: screen;
   }
 
   &-1,
   &-3 {
-    fill: $gradient-1;
-    opacity: 0.6;
+    fill: $gradient-2;
+    filter: blur(150px);
+    animation: gradient1 8s ease-in-out infinite;
   }
 
   &-2 {
-    fill: $gradient-2;
-    opacity: 0.6;
+    fill: $gradient-1;
+    filter: blur(100px);
+    animation: gradient2 12s ease-in-out infinite;
   }
 
   &::before {
@@ -39,5 +47,41 @@
     height: 100%;
     backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes gradient1 {
+  0% {
+    transform: translateX(0%) translateY(0%);
+  }
+  25% {
+    transform: translateX(10%) translateY(-20%);
+  }
+  50% {
+    transform: translateX(10%) translateY(0%);
+  }
+  75% {
+    transform: translateX(5%) translateY(-5%);
+  }
+  100% {
+    transform: translateX(0%) translateY(0%);
+  }
+}
+
+@keyframes gradient2 {
+  0% {
+    transform: translateX(0%) translateY(0%) scale(1);
+  }
+  25% {
+    transform: translateX(-15%) translateY(10%) scale(1.1);
+  }
+  50% {
+    transform: translateX(-10%) translateY(20%) scale(1.2);
+  }
+  75% {
+    transform: translateX(10%) translateY(5%) scale(1.1);
+  }
+  100% {
+    transform: translateX(0%) translateY(0%) scale(1);
   }
 }
