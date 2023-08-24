@@ -13,14 +13,8 @@ import { ReactLenis } from "@studio-freight/react-lenis";
 export default function App() {
   const dispatch = useDispatch();
 
-  function handleMouseMove(e: any): any {
-    const { clientX, clientY } = e;
-    dispatch(setPosition({ x: clientX, y: clientY }));
-  }
-
   return (
     <div>
-      {" "}
       <main
         className="main"
         onMouseMove={(e) => {
