@@ -1,6 +1,55 @@
+"use client";
 import React from "react";
 
+import { useState } from "react";
+
+import { motion } from "framer-motion";
+
+import { textToLetters } from "@/utils/utils";
+
 export default function Contacts() {
+  const [currentHover, setCurrentHover] = useState<string>("");
+
+  type printLink = {
+    text: string;
+    link?: string;
+    number?: string;
+  };
+  const printLink = ({ text, link, number }: printLink): React.ReactElement => {
+    const letters = textToLetters(text);
+
+    console.log(currentHover);
+    return (
+      <a
+        href={link}
+        onMouseEnter={() => setCurrentHover(text)}
+        onMouseLeave={() => setCurrentHover("")}
+      >
+        <span className="number">{number}</span>
+        <span className="title">
+          {letters.map((letter, index) => {
+            return (
+              <motion.span
+                key={index}
+                className="letter"
+                initial={{ y: 15 }}
+                animate={{ y: currentHover === text ? 0 : 15 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  delay: index * 0.01,
+                }}
+              >
+                {letter}
+              </motion.span>
+            );
+          })}
+        </span>
+      </a>
+    );
+  };
+
   return (
     <div className="contacts">
       <div className="bg__text">
@@ -34,21 +83,9 @@ export default function Contacts() {
               spells come to life!
             </p>
             <div className="contacts__container__main__links">
-              {/* Telegram */}
-              <a href="">
-                <span className="number">001</span>
-                <span className="title">Telegram</span>
-              </a>
-              {/* Email */}
-              <a href="">
-                <span className="number">002</span>
-                <span className="title">Email</span>
-              </a>
-              {/* LinkedIn */}
-              <a href="">
-                <span className="number">003</span>
-                <span className="title">LinkedIn</span>
-              </a>
+              {printLink({ text: "Telegram", number: "001" })}
+              {printLink({ text: "Email", number: "002" })}
+              {printLink({ text: "Linkedin", number: "003" })}
             </div>
           </div>
         </div>

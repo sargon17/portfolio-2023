@@ -133,10 +133,14 @@ $contact-link-color: var(--contact-link-color);
           }
 
           .title {
-            display: inline-block;
-            transform: translateY(100%);
+            // display: inline-block;
+            // transform: translateY(100%);
             color: $contact-link-color;
             font-style: italic;
+
+            .letter {
+              display: inline-block;
+            }
           }
         }
       }
