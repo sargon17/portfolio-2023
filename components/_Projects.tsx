@@ -18,6 +18,8 @@ import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
+import Button from "./Button";
+
 export default function Projects() {
   const getProjects = async () => {
     const projects = await client.fetch(`*[_type == "project"]{
@@ -280,55 +282,62 @@ export default function Projects() {
               })}
             </div>
             {activeProject?.link && (
-              <div className="project__content__description__link">
-                <motion.div
-                  key={activeProject?._id}
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    transition: { delay: 1.2, duration: 0.5 },
-                  }}
-                  ref={link}
-                  onMouseEnter={() => {
-                    dispatch(setDimension({ width: 150, height: 30 }));
+              <>
+                <div className="project__content__description__link">
+                  <motion.div
+                    key={activeProject?._id}
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 1.2, duration: 0.5 },
+                    }}
+                    ref={link}
+                    onMouseEnter={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
 
-                    const itemTop = link.current?.getBoundingClientRect().top || 0;
-                    const itemLeft = link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
-                    dispatch(
-                      setFixPosition({
-                        x: itemLeft - 20,
-                        y: itemTop + window.scrollY - 5,
-                      })
-                    );
-                  }}
-                  onMouseMove={() => {
-                    dispatch(setDimension({ width: 150, height: 30 }));
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseMove={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
 
-                    const itemTop = link.current?.getBoundingClientRect().top || 0;
-                    const itemLeft = link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
-                    dispatch(
-                      setFixPosition({
-                        x: itemLeft - 20,
-                        y: itemTop + window.scrollY - 5,
-                      })
-                    );
-                  }}
-                  onMouseLeave={() => {
-                    dispatch(setDimension({ width: 10, height: 10 }));
-                    dispatch(setFixPosition({ x: 0, y: 0 }));
-                  }}
-                >
-                  <a
-                    href={activeProject?.link}
-                    target="_blank"
-                    rel="noreferrer"
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseLeave={() => {
+                      dispatch(setDimension({ width: 10, height: 10 }));
+                      dispatch(setFixPosition({ x: 0, y: 0 }));
+                    }}
                   >
-                    <ScopesText>see it yourself</ScopesText>
+                    <a
+                      href={activeProject?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ScopesText>see it yourself</ScopesText>
+                    </a>
+                  </motion.div>
+                </div>
+                <div className="project__content__description__link--mobile">
+                  <a href={activeProject?.link}>
+                    <Button>see it yourself</Button>
                   </a>
-                </motion.div>
-              </div>
+                </div>
+              </>
             )}
           </div>
         </div>

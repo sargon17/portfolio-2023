@@ -8,6 +8,11 @@
   align-items: center;
   gap: $main-content-padding;
 
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - $mobile-sidebar-width);
+    margin-left: $mobile-sidebar-width;
+  }
+
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
