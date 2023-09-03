@@ -15,31 +15,6 @@ export default function Hero() {
   const dispatch = useDispatch();
   const hero = useRef<HTMLDivElement>(null);
 
-  let heroWidth = 3258;
-  let gradientHigh = 1000;
-
-  const [gradientDimensions, setGradientDimensions] = useState({
-    width: 3258,
-    height: 1000,
-  });
-
-  useLayoutEffect(() => {
-    if (hero.current) {
-      setGradientDimensions({
-        ...gradientDimensions,
-        //
-        //
-        width: hero.current.getBoundingClientRect().width,
-      });
-    }
-    if (window) {
-      setGradientDimensions({
-        ...gradientDimensions,
-        height: window.innerHeight * 0.35,
-      });
-    }
-  }, []);
-
   return (
     <div
       className="hero"
@@ -74,10 +49,7 @@ export default function Hero() {
           <SeeProjects />
         </div>
         <div className="hero__gradient">
-          <Gradient
-            width={heroWidth}
-            height={gradientHigh}
-          />
+          <Gradient />
         </div>
         <div className="hero__content__text">
           <p>

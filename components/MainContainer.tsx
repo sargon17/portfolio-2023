@@ -25,9 +25,9 @@ export default function MainContainer() {
       <Slide id="_contacts">
         <Contacts />
       </Slide>
-      <Slide>
+      {/* <Slide>
         <Experiments />
-      </Slide>
+      </Slide> */}
     </div>
   );
 }

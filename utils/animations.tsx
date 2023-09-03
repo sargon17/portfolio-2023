@@ -1,5 +1,5 @@
 type scopeTextProps = {
-  children?: React.ReactNode;
+  children?: React.ReactNode | string | number | null;
   className?: string;
 };
 function ScopesText({ children, className }: scopeTextProps): JSX.Element {
