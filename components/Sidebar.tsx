@@ -32,6 +32,14 @@ export default function Sidebar() {
         >
           projects
         </Button>
+        <Button
+          className="sidebar__nav__button"
+          onClick={() => {
+            handleScrollToElement("#_contacts");
+          }}
+        >
+          contacts
+        </Button>
         {/* <Button className="sidebar__nav__button">contacts</Button> */}
 
         <ThemeSwitcher />
