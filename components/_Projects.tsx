@@ -17,24 +17,24 @@ import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
+import Button from "./Button";
+
 export default function Projects() {
   const getProjects = async () => {
     const projects: any = [];
     setProjects(projects);
 
-    if (projects[0]) {
-      setActiveProject(projects[0]);
+    if (projects && projects.length > 0) {
+      if (projects[0]) {
+        setActiveProject(projects[0]);
+      }
     }
   };
   const [projects, setProjects] = useState<projectType[]>([]);
-  const [activeProject, setActiveProject] = useState<projectType | null>(
-    projects[0] || null
-  );
+  const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
 
   const dispatch = useDispatch();
-  const mousePositionState = useSelector(
-    (state: RootState) => state.position.position
-  );
+  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
   const link = useRef<HTMLDivElement>(null);
@@ -53,10 +53,7 @@ export default function Projects() {
     const titleTop = title.getBoundingClientRect().top;
     const titleBottom = title.getBoundingClientRect().bottom;
 
-    if (
-      mousePositionState.y > titleTop - 20 &&
-      mousePositionState.y < titleBottom + 20
-    ) {
+    if (mousePositionState.y > titleTop - 20 && mousePositionState.y < titleBottom + 20) {
       const letters = title.querySelectorAll("span");
 
       if (letters) {
@@ -64,12 +61,8 @@ export default function Projects() {
           // get the letters center
           const { x: letterCenterX, y: letterCenterY } = getItemCenter(letter);
 
-          const accentColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--accent");
-          const classicColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--title-color");
+          const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
+          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
 
           // if mouse is 20px away from the letter or less
 
@@ -92,11 +85,7 @@ export default function Projects() {
               [
                 {
                   // color
-                  color: mixColors(
-                    accentColor,
-                    classicColor,
-                    1 - distance / minDistance
-                  ),
+                  color: mixColors(accentColor, classicColor, 1 - distance / minDistance),
                 },
               ],
               {
@@ -124,9 +113,7 @@ export default function Projects() {
 
       if (letters) {
         letters.forEach((letter, index) => {
-          const classicColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--title-color");
+          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
 
           letter.animate(
             [
@@ -175,7 +162,10 @@ export default function Projects() {
   };
 
   return (
-    <div className="projects-page" ref={page}>
+    <div
+      className="projects-page"
+      ref={page}
+    >
       <div className="navigation">
         {projects.map((project) => {
           return (
@@ -244,7 +234,10 @@ export default function Projects() {
                 playsInline
               />
             ) : (
-              <img src={activeProject?.image} alt="" />
+              <img
+                src={activeProject?.image}
+                alt=""
+              />
             )}
           </motion.div>
           <div className="project__content__description">
@@ -278,59 +271,62 @@ export default function Projects() {
               })}
             </div>
             {activeProject?.link && (
-              <div className="project__content__description__link">
-                <motion.div
-                  key={activeProject?._id}
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    transition: { delay: 1.2, duration: 0.5 },
-                  }}
-                  ref={link}
-                  onMouseEnter={() => {
-                    dispatch(setDimension({ width: 150, height: 30 }));
+              <>
+                <div className="project__content__description__link">
+                  <motion.div
+                    key={activeProject?._id}
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 1.2, duration: 0.5 },
+                    }}
+                    ref={link}
+                    onMouseEnter={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
 
-                    const itemTop =
-                      link.current?.getBoundingClientRect().top || 0;
-                    const itemLeft =
-                      link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
-                    dispatch(
-                      setFixPosition({
-                        x: itemLeft - 20,
-                        y: itemTop + window.scrollY - 5,
-                      })
-                    );
-                  }}
-                  onMouseMove={() => {
-                    dispatch(setDimension({ width: 150, height: 30 }));
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseMove={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
 
-                    const itemTop =
-                      link.current?.getBoundingClientRect().top || 0;
-                    const itemLeft =
-                      link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
-                    dispatch(
-                      setFixPosition({
-                        x: itemLeft - 20,
-                        y: itemTop + window.scrollY - 5,
-                      })
-                    );
-                  }}
-                  onMouseLeave={() => {
-                    dispatch(setDimension({ width: 10, height: 10 }));
-                    dispatch(setFixPosition({ x: 0, y: 0 }));
-                  }}
-                >
-                  <a
-                    href={activeProject?.link}
-                    target="_blank"
-                    rel="noreferrer"
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseLeave={() => {
+                      dispatch(setDimension({ width: 10, height: 10 }));
+                      dispatch(setFixPosition({ x: 0, y: 0 }));
+                    }}
                   >
-                    <ScopesText>see it yourself</ScopesText>
+                    <a
+                      href={activeProject?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ScopesText>see it yourself</ScopesText>
+                    </a>
+                  </motion.div>
+                </div>
+                <div className="project__content__description__link--mobile">
+                  <a href={activeProject?.link}>
+                    <Button>see it yourself</Button>
                   </a>
-                </motion.div>
-              </div>
+                </div>
+              </>
             )}
           </div>
         </div>

@@ -22,12 +22,12 @@ export default function MainContainer() {
       <Slide id="_projects">
         <Projects />
       </Slide>
-      <Slide>
+      <Slide id="_contacts">
         <Contacts />
       </Slide>
-      <Slide>
+      {/* <Slide>
         <Experiments />
-      </Slide>
+      </Slide> */}
     </div>
   );
 }

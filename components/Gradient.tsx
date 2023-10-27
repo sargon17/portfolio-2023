@@ -1,7 +1,5 @@
 "use client";
-import { type } from "os";
 import React from "react";
-import { useLayoutEffect, useState, useRef } from "react";
 
 type GradientParams = {
   className?: string;
@@ -10,51 +8,52 @@ type GradientParams = {
   height?: number;
 };
 
-export default function Gradient({
-  className,
-  styles,
-
-  width = 3258,
-  height = 1000,
-}: GradientParams) {
+export default function Gradient({ className, styles }: GradientParams) {
   const baseClass = "gradient";
   const gradientClass = className ? `${baseClass} ${className}` : baseClass;
   const gradientStyles = styles ? styles : {};
 
   return (
-    <div className={gradientClass} style={gradientStyles}>
+    <div
+      className={gradientClass}
+      style={gradientStyles}
+    >
       <svg
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
+        width="2000"
+        height="2000"
+        viewBox={`0 0 2000 2000`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         filter="url(#svg)"
         preserveAspectRatio="xMidYMin slice"
       >
         <g clipPath="url(#clip0_102_321)">
-          <rect width={width} height={height} className="gradient-bg" />
+          <rect
+            width="2000"
+            height="2000"
+            className="gradient-bg"
+          />
           <g filter="url(#filter0_f_102_321)">
             <ellipse
               className="gradient-1"
               cx="829"
-              cy="500"
+              cy="1000"
               rx="1629"
-              ry="300"
+              ry="600"
             />
             <ellipse
               className="gradient-2"
-              cx="1645"
-              cy="503"
+              cx="145"
+              cy="10"
               rx="845"
-              ry="500"
+              ry="1000"
             />
             <ellipse
               className="gradient-3"
-              cx="2645"
-              cy="03"
+              cx="645"
+              cy="0"
               rx="645"
-              ry="350"
+              ry="700"
             />
           </g>
         </g>
