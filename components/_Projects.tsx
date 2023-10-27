@@ -1,7 +1,6 @@
 "use client";
 import React, { use, useLayoutEffect } from "react";
 import { useState, useEffect, useRef } from "react";
-import { client } from "@/sanity/lib/client";
 
 import { textToLetters, getItemCenter } from "@/utils/utils";
 import { ScopesText } from "@/utils/animations";
@@ -20,17 +19,7 @@ import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
 export default function Projects() {
   const getProjects = async () => {
-    const projects = await client.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      date,
-      description,
-      link,
-      "image": image.asset->url,
-      "video": video.asset->url,
-      tags,
-
-    }`);
+    const projects: any = [];
     setProjects(projects);
 
     if (projects[0]) {
