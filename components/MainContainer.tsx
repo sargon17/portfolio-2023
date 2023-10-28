@@ -13,18 +13,18 @@ export default function MainContainer() {
 
   return (
     <div className="main-content-container">
-      <Slide id="_main">
+      {/* <Slide id="_main">
         <Hero />
-      </Slide>
+      </Slide> */}
       {/* <Slide>
         <h1>Skills</h1>
       </Slide> */}
       <Slide id="_projects">
         <Projects />
       </Slide>
-      <Slide id="_contacts">
+      {/* <Slide id="_contacts">
         <Contacts />
-      </Slide>
+      </Slide> */}
       {/* <Slide>
         <Experiments />
       </Slide> */}
