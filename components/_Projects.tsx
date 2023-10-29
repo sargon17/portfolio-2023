@@ -1,8 +1,8 @@
 "use client";
-import React, { use, useLayoutEffect } from "react";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 
-import { textToLetters, getItemCenter } from "@/utils/utils";
+import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 import { ScopesText } from "@/utils/animations";
 
 import { motion } from "framer-motion";
@@ -11,8 +11,6 @@ import { motion } from "framer-motion";
 import projectType from "@/types/project";
 
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
@@ -35,7 +33,6 @@ export default function Projects() {
   const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
 
   const dispatch = useDispatch();
-  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
   const link = useRef<HTMLDivElement>(null);
@@ -43,8 +40,6 @@ export default function Projects() {
   useEffect(() => {
     getProjects();
   }, []);
-
-  // todo - refactor & move to utils
 
   return (
     <div
@@ -268,37 +263,24 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   useEffect(() => {
     if (!letterRef.current) return;
     const letterColorAnimation = (e: MouseEvent) => {
+      if (!letterRef.current) return;
       // getting the colors from the css variables in the root
       const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
       const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
 
       // set the distance from the center of the letter to the mouse position to run the animation
-      const dist = 400;
+      const dist = window.innerWidth / 2;
 
-      // get the letter position and size
-      const { top, left, width, height } = letterRef.current?.getBoundingClientRect() || {
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
-      };
-
-      // get the letter center
-      const centerX = left + width / 2;
-      const centerY = top + height / 2;
+      // get the center of the letter
+      const { x: centerX, y: centerY } = getItemCenter(letterRef.current);
 
       // get the distance from the mouse to the letter center (pythagoras)
-      const distanceY = Math.abs(e.clientY - centerY);
-      const distanceX = Math.abs(e.clientX - centerX);
-      let distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
-
-      if (!letterRef.current) return;
+      const distance = getDistance(centerX, centerY, e.clientX, e.clientY);
 
       if (distance < dist) {
         // if the distance is less than the max distance, animate the letter color based on the distance
-        const delta = distance / dist;
-
-        letterRef.current.style.color = mixColors(accentColor, classicColor, 1 - delta);
+        const factor = distance / dist;
+        letterRef.current.style.color = mixColors(accentColor, classicColor, 1 - factor);
       } else {
         letterRef.current.style.color = classicColor;
       }
