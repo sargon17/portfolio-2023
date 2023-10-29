@@ -22,9 +22,7 @@ import Button from "./Button";
 export default function Projects() {
   const getProjects = async () => {
     // get project data from a json file in the public folder
-    const projects: any = await fetch("/projects.json").then((res) =>
-      res.json()
-    );
+    const projects: any = await fetch("/projects.json").then((res) => res.json());
     setProjects(projects);
 
     if (projects && projects.length > 0) {
@@ -34,14 +32,10 @@ export default function Projects() {
     }
   };
   const [projects, setProjects] = useState<projectType[]>([]);
-  const [activeProject, setActiveProject] = useState<projectType | null>(
-    projects[0] || null
-  );
+  const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
 
   const dispatch = useDispatch();
-  const mousePositionState = useSelector(
-    (state: RootState) => state.position.position
-  );
+  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
   const link = useRef<HTMLDivElement>(null);
@@ -50,139 +44,13 @@ export default function Projects() {
     getProjects();
   }, []);
 
-  // big title animation
-  // todo - refactor
-  useLayoutEffect(() => {
-    // get all the title letters
-    const title = page.current?.querySelector(".project__main-data__title h2");
-    if (!title) return;
-
-    const titleTop = title.getBoundingClientRect().top;
-    const titleBottom = title.getBoundingClientRect().bottom;
-
-    if (
-      mousePositionState.y > titleTop - 20 &&
-      mousePositionState.y < titleBottom + 20
-    ) {
-      const letters = title.querySelectorAll("span");
-
-      if (letters) {
-        letters.forEach((letter, index) => {
-          // get the letters center
-          const { x: letterCenterX, y: letterCenterY } = getItemCenter(letter);
-
-          const accentColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--accent");
-          const classicColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--title-color");
-
-          // if mouse is 20px away from the letter or less
-
-          const minDistance = 200;
-
-          const distance = Math.sqrt(
-            Math.pow(mousePositionState.x - letterCenterX, 2) +
-              Math.pow(mousePositionState.y - letterCenterY, 2)
-          );
-
-          if (
-            mousePositionState.x > letterCenterX - minDistance &&
-            mousePositionState.x < letterCenterX + minDistance &&
-            mousePositionState.y > letterCenterY - minDistance &&
-            mousePositionState.y < letterCenterY + minDistance
-          ) {
-            // get the closest distance from the mouse to the letter
-
-            letter.animate(
-              [
-                {
-                  // color
-                  color: mixColors(
-                    accentColor,
-                    classicColor,
-                    1 - distance / minDistance
-                  ),
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          } else {
-            letter.animate(
-              [
-                {
-                  color: classicColor,
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          }
-        });
-      }
-    } else {
-      const letters = title.querySelectorAll("span");
-
-      if (letters) {
-        letters.forEach((letter, index) => {
-          const classicColor = getComputedStyle(
-            document.documentElement
-          ).getPropertyValue("--title-color");
-
-          letter.animate(
-            [
-              {
-                color: classicColor,
-              },
-            ],
-            {
-              duration: 1000,
-              fill: "forwards",
-            }
-          );
-        });
-      }
-    }
-  }, [mousePositionState]);
-
   // todo - refactor & move to utils
-  const mixColors = (color1: string, color2: string, weight: number) => {
-    // mix the given colors
-    const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
-    const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
-
-    let color = "#";
-
-    for (let i = 1; i <= 6; i += 2) {
-      const v1 = h2d(color1.substr(i, 2));
-      const v2 = h2d(color2.substr(i, 2));
-      let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
-
-      while (val.length < 2) {
-        val = "0" + val;
-      }
-
-      color += val;
-    }
-
-    return color;
-  };
-
-  const printTitle = (title: string) => {
-    const letters = textToLetters(title);
-    return letters.map((letter, index) => {
-      return <span key={index}>{letter}</span>;
-    });
-  };
 
   return (
-    <div className="projects-page" ref={page}>
+    <div
+      className="projects-page"
+      ref={page}
+    >
       <div className="navigation">
         {projects.map((project) => {
           return (
@@ -214,18 +82,7 @@ export default function Projects() {
       </div>
       <div className="project">
         <div className="project__main-data">
-          <div className="project__main-data__title">
-            <motion.h2
-              key={activeProject?._id}
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: { delay: 0.1, duration: 0.5 },
-              }}
-            >
-              {printTitle(activeProject?.title || "")}
-            </motion.h2>
-          </div>
+          <MulticolorTitle title={activeProject?.title || ""} />
           <motion.div
             className="project__main-data__year"
             key={activeProject?._id}
@@ -251,7 +108,10 @@ export default function Projects() {
                 playsInline
               />
             ) : (
-              <img src={activeProject?.image} alt="" />
+              <img
+                src={activeProject?.image}
+                alt=""
+              />
             )}
           </motion.div>
           <div className="project__content__description">
@@ -298,10 +158,8 @@ export default function Projects() {
                     onMouseEnter={() => {
                       dispatch(setDimension({ width: 150, height: 30 }));
 
-                      const itemTop =
-                        link.current?.getBoundingClientRect().top || 0;
-                      const itemLeft =
-                        link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
                       dispatch(
                         setFixPosition({
@@ -313,10 +171,8 @@ export default function Projects() {
                     onMouseMove={() => {
                       dispatch(setDimension({ width: 150, height: 30 }));
 
-                      const itemTop =
-                        link.current?.getBoundingClientRect().top || 0;
-                      const itemLeft =
-                        link.current?.getBoundingClientRect().left || 0;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
                       dispatch(
                         setFixPosition({
@@ -352,3 +208,140 @@ export default function Projects() {
     </div>
   );
 }
+
+const MulticolorTitle = ({ title }: { title: string }) => {
+  const printTitle = (title: string) => {
+    const letters = textToLetters(title);
+    return letters.map((letter, index) => {
+      return (
+        <Letter
+          key={index}
+          letter={letter}
+          index={index}
+        />
+      );
+    });
+  };
+
+  return (
+    <div className="project__main-data__title">
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.1, duration: 0.5 },
+        }}
+      >
+        {printTitle(title || "")}
+      </motion.h2>
+    </div>
+  );
+};
+
+const Letter = ({ letter, index }: { letter: string; index: number }) => {
+  const areaRef = useRef<HTMLSpanElement>(null);
+  const letterRef = useRef<HTMLSpanElement>(null);
+
+  const mixColors = (color1: string, color2: string, weight: number) => {
+    // mix two colors together with a weight from 0 to 1 (0 = color1, 1 = color2)
+
+    const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
+    const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
+
+    let color = "#";
+
+    for (let i = 1; i <= 6; i += 2) {
+      const v1 = h2d(color1.substring(i, i + 2));
+      const v2 = h2d(color2.substring(i, i + 2));
+      let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
+
+      while (val.length < 2) {
+        val = "0" + val;
+      }
+
+      color += val;
+    }
+
+    return color;
+  };
+
+  useEffect(() => {
+    if (!letterRef.current) return;
+    const letterColorAnimation = (e: MouseEvent) => {
+      // getting the colors from the css variables in the root
+      const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
+      const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+
+      // set the distance from the center of the letter to the mouse position to run the animation
+      const dist = 400;
+
+      // get the letter position and size
+      const { top, left, width, height } = letterRef.current?.getBoundingClientRect() || {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+      };
+
+      // get the letter center
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
+
+      // get the distance from the mouse to the letter center (pythagoras)
+      const distanceY = Math.abs(e.clientY - centerY);
+      const distanceX = Math.abs(e.clientX - centerX);
+      let distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+
+      if (!letterRef.current) return;
+
+      if (distance < dist) {
+        // if the distance is less than the max distance, animate the letter color based on the distance
+        const delta = distance / dist;
+
+        letterRef.current.style.color = mixColors(accentColor, classicColor, 1 - delta);
+      } else {
+        letterRef.current.style.color = classicColor;
+      }
+    };
+
+    window.addEventListener("mousemove", (e) => letterColorAnimation(e));
+
+    return () => {
+      window.removeEventListener("mousemove", (e) => letterColorAnimation(e));
+    };
+  }, []);
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.05,
+          duration: 0.5,
+        },
+      };
+    },
+  };
+
+  return (
+    <>
+      <motion.span
+        className="letter"
+        ref={letterRef}
+        custom={index}
+        variants={lettersVariants}
+        initial="initial"
+        animate="animate"
+        key={index}
+      >
+        {letter}
+      </motion.span>
+    </>
+  );
+};
