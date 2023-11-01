@@ -25,7 +25,6 @@
   &-1,
   &-2,
   &-3 {
-    will-change: transform, filter, opacity, mix-blend-mode;
     mix-blend-mode: screen;
     transform: translateZ(0);
   }
@@ -33,13 +32,13 @@
   &-1,
   &-3 {
     fill: $gradient-2;
-    width: 40vw;
-    height: 50dvh;
+    filter: blur(150px);
     animation: gradient1 8s ease-in-out infinite;
   }
 
   &-2 {
     fill: $gradient-1;
+    filter: blur(100px);
     animation: gradient2 12s ease-in-out infinite;
   }
 
@@ -54,15 +53,6 @@
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    backdrop-filter: blur(100px);
-  }
   .noise {
     background: url("https://grainy-gradients.vercel.app/noise.svg");
     width: 100vw;

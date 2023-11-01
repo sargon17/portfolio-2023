@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useLayoutEffect, useState, useRef } from "react";
+
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
@@ -11,9 +13,13 @@ import { ScopesText } from "@/utils/animations";
 
 export default function Hero() {
   const dispatch = useDispatch();
+  const hero = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="hero">
+    <div
+      className="hero"
+      ref={hero}
+    >
       <div className="hero__heading">
         <div className="hero__title">
           <h2 className="hero__title__title">
