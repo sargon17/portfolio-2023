@@ -35,26 +35,10 @@ $contest-text-color: var(--contest-text-color);
 
       &[data-active="true"] {
         color: $text-accent;
-        .index {
-          color: $accent;
-        }
       }
 
       &:hover {
         color: $text-accent;
-      }
-
-      .index {
-        transition: color 0.2s ease-in-out;
-        font-size: 0.8rem;
-        font-weight: 200;
-        margin-right: 0.2rem;
-        color: $text-secondary;
-      }
-
-      .title {
-        font-size: 1.5rem;
-        font-weight: 400;
       }
     }
   }

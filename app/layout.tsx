@@ -8,13 +8,13 @@ import { Libre_Franklin } from "next/font/google";
 const accent = Trirong({
   subsets: ["latin-ext"],
   variable: "--font-accent",
-  weight: ["200", "300", "400", "500", "600"],
+  weight: ["200", "300", "500", "600"],
 });
 
 const body = Libre_Franklin({
   subsets: ["latin-ext"],
   variable: "--font-body",
-  weight: ["100", "200", "300", "400", "900"],
+  weight: ["100", "300", "900"],
 });
 
 export const metadata = {

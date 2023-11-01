@@ -46,12 +46,34 @@ export default function Projects() {
       className="projects-page"
       ref={page}
     >
-      <div className="projects-page__navigation">
-        <Navigation
-          projects={projects}
-          activeProject={activeProject}
-          setActiveProject={setActiveProject}
-        />
+      <div className="navigation">
+        {projects.map((project) => {
+          return (
+            <div
+              key={"nav" + project._id}
+              className="navigation__item"
+              data-active={activeProject?._id === project._id}
+              onClick={() => {
+                setActiveProject(project);
+                dispatch(setDimension({ width: 10, height: 10 }));
+                dispatch(setContent(""));
+              }}
+              onMouseEnter={() => {
+                const isActive = activeProject?._id === project._id;
+                if (!isActive) {
+                  dispatch(setDimension({ width: 100, height: 100 }));
+                  dispatch(setContent("see the project"));
+                }
+              }}
+              onMouseLeave={() => {
+                dispatch(setDimension({ width: 10, height: 10 }));
+                dispatch(setContent(""));
+              }}
+            >
+              {project.title}
+            </div>
+          );
+        })}
       </div>
       <div className="project">
         <div className="project__main-data">
@@ -212,6 +234,7 @@ const MulticolorTitle = ({ title }: { title: string }) => {
 };
 
 const Letter = ({ letter, index }: { letter: string; index: number }) => {
+  const areaRef = useRef<HTMLSpanElement>(null);
   const letterRef = useRef<HTMLSpanElement>(null);
 
   const mixColors = (color1: string, color2: string, weight: number) => {
@@ -302,50 +325,5 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         {letter}
       </motion.span>
     </>
-  );
-};
-
-const Navigation = ({
-  projects,
-  activeProject,
-  setActiveProject,
-}: {
-  projects: projectType[];
-  activeProject: projectType | null;
-  setActiveProject: (project: projectType) => void;
-}) => {
-  const dispatch = useDispatch();
-
-  return (
-    <div className="navigation">
-      {projects.map((project, index) => {
-        return (
-          <div
-            key={"nav" + project._id}
-            className="navigation__item"
-            data-active={activeProject?._id === project._id}
-            onClick={() => {
-              setActiveProject(project);
-              dispatch(setDimension({ width: 10, height: 10 }));
-              dispatch(setContent(""));
-            }}
-            onMouseEnter={() => {
-              const isActive = activeProject?._id === project._id;
-              if (!isActive) {
-                dispatch(setDimension({ width: 100, height: 100 }));
-                dispatch(setContent("see the project"));
-              }
-            }}
-            onMouseLeave={() => {
-              dispatch(setDimension({ width: 10, height: 10 }));
-              dispatch(setContent(""));
-            }}
-          >
-            <span className="index">00{index + 1}/</span>
-            <span className="title">{project.title}</span>
-          </div>
-        );
-      })}
-    </div>
   );
 };
