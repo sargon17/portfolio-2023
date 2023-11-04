@@ -13,9 +13,9 @@ export default function MainContainer() {
 
   return (
     <div className="main-content-container">
-      {/* <Slide id="_main">
+      <Slide id="_main">
         <Hero />
-      </Slide> */}
+      </Slide>
       {/* <Slide>
         <h1>Skills</h1>
       </Slide> */}

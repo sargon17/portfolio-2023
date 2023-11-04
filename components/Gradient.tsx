@@ -18,7 +18,7 @@ export default function Gradient({ className, styles }: GradientParams) {
       className={gradientClass}
       style={gradientStyles}
     >
-      <svg
+      {/* <svg
         width="2000"
         height="2000"
         viewBox={`0 0 2000 2000`}
@@ -57,7 +57,12 @@ export default function Gradient({ className, styles }: GradientParams) {
             />
           </g>
         </g>
-      </svg>
+      </svg> */}
+
+      <div className="gradient-1"></div>
+      <div className="gradient-2"></div>
+      <div className="gradient-3"></div>
+
       <div className="noise"></div>
     </div>
   );
