@@ -144,6 +144,11 @@ $contest-text-color: var(--contest-text-color);
         overflow: hidden;
         border-radius: 1rem;
 
+        @media screen and (max-width: 1200px) {
+          width: 50%;
+          aspect-ratio: 16/9;
+        }
+
         @media screen and (max-width: 768px) {
           width: 100%;
           aspect-ratio: 16/9;
@@ -169,6 +174,12 @@ $contest-text-color: var(--contest-text-color);
         width: 30%;
         z-index: 2;
         height: 100%;
+        min-width: 400px;
+
+        @media screen and (max-width: 1200px) {
+          left: 52%;
+          width: 40%;
+        }
 
         @media screen and (max-width: 768px) {
           position: relative;

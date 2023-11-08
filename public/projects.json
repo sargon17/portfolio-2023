@@ -8,35 +8,5 @@
     "description": "'EDI VFX: Where Imagination Comes to Life' – A cutting-edge project for the renowned Italian VFX company, Effetti digitali italiani (EDI). I spearheaded the development of their dynamic website, blending advanced animations and a modern aesthetic to captivate audiences. Leveraging WordPress, I crafted custom plugins to effortlessly extract frames from videos, seamlessly transforming them into stunning project cover images. The result? An immersive experience on the uninterrupted search page and a state-of-the-art video player that elevates the user's journey.",
     "tags": ["WordPress", "Animations", "Custom Uninterrupted Search", "Custom WP Plugins", "Video Player"],
     "link": "http://effettidigitali.it/"
-  },
-  {
-    "_id": "prj02",
-    "title": "Romeo e Giulietta",
-    "date": "2023-04-08",
-    "image": "",
-    "video": "https://kaylo.it//files/portfolio/video/edi/presentazione_EDI.mp4",
-    "description": "'EDI VFX: Where Imagination Comes to Life' – A cutting-edge project for the renowned Italian VFX company, Effetti digitali italiani (EDI). I spearheaded the development of their dynamic website, blending advanced animations and a modern aesthetic to captivate audiences. Leveraging WordPress, I crafted custom plugins to effortlessly extract frames from videos, seamlessly transforming them into stunning project cover images. The result? An immersive experience on the uninterrupted search page and a state-of-the-art video player that elevates the user's journey.",
-    "tags": ["WordPress", "Animations", "Custom Uninterrupted Search", "Custom WP Plugins", "Video Player"],
-    "link": "http://effettidigitali.it/"
-  },
-  {
-    "_id": "prj03",
-    "title": "Clessidra & Sentiero",
-    "date": "2023-01-20",
-    "image": "",
-    "video": "https://kaylo.it//files/portfolio/video/edi/presentazione_EDI.mp4",
-    "description": "'EDI VFX: Where Imagination Comes to Life' – A cutting-edge project for the renowned Italian VFX company, Effetti digitali italiani (EDI). I spearheaded the development of their dynamic website, blending advanced animations and a modern aesthetic to captivate audiences. Leveraging WordPress, I crafted custom plugins to effortlessly extract frames from videos, seamlessly transforming them into stunning project cover images. The result? An immersive experience on the uninterrupted search page and a state-of-the-art video player that elevates the user's journey.",
-    "tags": ["WordPress", "Animations", "Custom Uninterrupted Search", "Custom WP Plugins", "Video Player"],
-    "link": "http://effettidigitali.it/"
-  },
-  {
-    "_id": "prj04",
-    "title": "A",
-    "date": "2023-01-20",
-    "image": "",
-    "video": "https://kaylo.it//files/portfolio/video/edi/presentazione_EDI.mp4",
-    "description": "'EDI VFX: Where Imagination Comes to Life' – A cutting-edge project for the renowned Italian VFX company, Effetti digitali italiani (EDI). I spearheaded the development of their dynamic website, blending advanced animations and a modern aesthetic to captivate audiences. Leveraging WordPress, I crafted custom plugins to effortlessly extract frames from videos, seamlessly transforming them into stunning project cover images. The result? An immersive experience on the uninterrupted search page and a state-of-the-art video player that elevates the user's journey.",
-    "tags": ["WordPress", "Animations", "Custom Uninterrupted Search", "Custom WP Plugins", "Video Player"],
-    "link": "http://effettidigitali.it/"
   }
 ]
