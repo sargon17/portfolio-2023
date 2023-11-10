@@ -13,4 +13,12 @@ $slide-radius: 2.25rem;
     position: absolute;
     top: calc(1px - $main-content-padding);
   }
+
+  .content {
+    height: 100%;
+  }
+
+  &:not(:first-child) {
+    margin-top: -4rem;
+  }
 }

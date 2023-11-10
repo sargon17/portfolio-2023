@@ -6,7 +6,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: $main-content-padding;
 
   @media screen and (max-width: 768px) {
     width: calc(100vw - $mobile-sidebar-width);
