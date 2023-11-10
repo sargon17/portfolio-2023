@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useRef } from "react";
+import { useRef, useEffect, use } from "react";
 
 import { motion, useScroll, useMotionValueEvent, motionValue, useTransform } from "framer-motion";
 
@@ -12,8 +12,8 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
     offset: ["start end", "end start"],
   });
 
-  const enteringScale = useTransform(scrollYProgress, [0, 0.45], [0.8, 1]);
-  const exitingScale = useTransform(scrollYProgress, [0.55, 1], [1, 0.8]);
+  const enteringScale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
+  const exitingScale = useTransform(scrollYProgress, [0.5, 1], [1, 0.8]);
   const scale = motionValue(1);
 
   const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
@@ -21,16 +21,11 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
 
   const opacity = motionValue(1);
 
-  useMotionValueEvent(scrollYProgress, "renderRequest", () => {
-    scale.set(scrollYProgress.get() > 0.5 ? exitingScale.get() : enteringScale.get());
-    opacity.set(scrollYProgress.get() > 0.5 ? exitingOpacity.get() : enteringOpacity.get());
-  });
-
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log(latest);
-    scale.set(latest > 0.5 ? exitingScale.get() : enteringScale.get());
+    scale.set(latest > 0.49 ? exitingScale.get() : enteringScale.get());
 
-    opacity.set(latest > 0.5 ? exitingOpacity.get() : enteringOpacity.get());
+    opacity.set(latest > 0.49 ? exitingOpacity.get() : enteringOpacity.get());
   });
 
   const slideVariants = {
@@ -44,7 +39,7 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
       ref={slideRef}
       variants={slideVariants}
       style={{
-        scale: scale,
+        scale: scale || 1,
       }}
       initial="initial"
       animate="animate"
@@ -56,7 +51,7 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
       <motion.div
         className="content"
         style={{
-          opacity: opacity,
+          opacity: opacity || 1,
         }}
       >
         {children}
