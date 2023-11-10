@@ -1,3 +1,7 @@
+
+$hero__gradient-margin: 1rem;
+
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -79,13 +83,14 @@
     }
 
     .hero__gradient {
+
       position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 35vh;
-      width: 100%;
+      bottom: $hero__gradient-margin;
+      left: $hero__gradient-margin;
+      height: calc(35vh - $hero__gradient-margin *2);
+      width: calc(100% - $hero__gradient-margin *2);
       overflow: hidden;
-      border-radius: $slide-radius;
+      border-radius: calc($slide-radius - $hero__gradient-margin);
 
       @media screen and (max-width: 768px) {
         height: 40vh;
