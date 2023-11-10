@@ -17,8 +17,4 @@ $slide-radius: 2.25rem;
   .content {
     height: 100%;
   }
-
-  &:not(:first-child) {
-    margin-top: -4rem;
-  }
 }

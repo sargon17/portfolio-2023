@@ -1,6 +1,4 @@
-
 $hero__gradient-margin: 1rem;
-
 
 .hero {
   display: flex;
@@ -60,6 +58,8 @@ $hero__gradient-margin: 1rem;
           font-family: $font-accent;
           font-style: italic;
           color: $text-accent;
+
+          text-shadow: 0px 0px 9px rgba(255, 255, 255, 0.57);
         }
         .description {
           max-width: 13.375rem;
@@ -83,12 +83,11 @@ $hero__gradient-margin: 1rem;
     }
 
     .hero__gradient {
-
       position: absolute;
       bottom: $hero__gradient-margin;
       left: $hero__gradient-margin;
-      height: calc(35vh - $hero__gradient-margin *2);
-      width: calc(100% - $hero__gradient-margin *2);
+      height: calc(35vh - $hero__gradient-margin * 2);
+      width: calc(100% - $hero__gradient-margin * 2);
       overflow: hidden;
       border-radius: calc($slide-radius - $hero__gradient-margin);
 

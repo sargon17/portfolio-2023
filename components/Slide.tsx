@@ -22,7 +22,6 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
   const opacity = motionValue(1);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log(latest);
     scale.set(latest > 0.49 ? exitingScale.get() : enteringScale.get());
 
     opacity.set(latest > 0.49 ? exitingOpacity.get() : enteringOpacity.get());
