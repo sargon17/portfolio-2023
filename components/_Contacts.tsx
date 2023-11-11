@@ -149,18 +149,18 @@ const ArrowSvg = () => {
       <path
         d="M7.19824 5.47461L11.4904 5.47461L11.4904 9.76675"
         stroke="black"
-        stroke-width="0.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M5.47998 11.4941L11.4303 5.54384"
         stroke="black"
-        stroke-width="0.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

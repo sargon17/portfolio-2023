@@ -61,6 +61,10 @@
           svg {
             width: 24px;
             height: 24px;
+
+            path {
+              stroke: $text-accent;
+            }
           }
         }
       }
