@@ -13,6 +13,7 @@ export default function ThemeSwitcher() {
   }
 
   const [theme, setTheme] = useState(systemTheme);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   //check the local storage for the theme
   useEffect(() => {
@@ -36,23 +37,28 @@ export default function ThemeSwitcher() {
     document.documentElement.setAttribute("data-theme", mode);
   };
 
-  return (
-    <div>
-      <ThemeButton />
-      <ThemeDropdown />
+  const handleButtonClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-      {/* <select
-        name="theme"
-        id="theme"
-        onChange={(e) => {
-          setTheme(e.target.value);
+  const handleThemeChange = (value: string) => {
+    setTheme(value);
+    setIsDropdownOpen(false);
+  };
+
+  return (
+    <div className="theme-switcher">
+      <ThemeButton
+        onClick={() => {
+          handleButtonClick();
         }}
-        value={theme}
-      >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="pink">Pink</option>
-      </select> */}
+      />
+      <ThemeDropdown
+        onChange={(value) => {
+          handleThemeChange(value);
+        }}
+        isOpen={isDropdownOpen}
+      />
     </div>
   );
 }

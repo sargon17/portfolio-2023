@@ -32,6 +32,8 @@ $btn-radius: $radius;
   text-transform: lowercase;
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
+  cursor: pointer;
+
   &:hover {
     background: $btn-background--hover;
     transform: scale(0.985);
