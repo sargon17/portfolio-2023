@@ -74,6 +74,7 @@ export default function ThemeDropdown({ onChange, isOpen }: ThemeDropdownProps) 
       style={{
         pointerEvents: isOpen ? "all" : "none",
       }}
+      //
     >
       {themes.map((theme) => {
         return (

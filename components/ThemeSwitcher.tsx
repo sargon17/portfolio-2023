@@ -2,8 +2,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-import ThemeButton from "./_ThemeButton";
-import ThemeDropdown from "./_ThemeDropdown";
+import ThemeButton from "./ThemeButton";
+import ThemeDropdown from "./ThemeDropdown";
 
 export default function ThemeSwitcher() {
   let systemTheme = "dark";
@@ -43,15 +43,20 @@ export default function ThemeSwitcher() {
 
   const handleThemeChange = (value: string) => {
     setTheme(value);
-    setIsDropdownOpen(false);
   };
 
   return (
-    <div className="theme-switcher">
+    <div
+      className="theme-switcher"
+      onMouseLeave={() => {
+        setIsDropdownOpen(false);
+      }}
+    >
       <ThemeButton
         onClick={() => {
           handleButtonClick();
         }}
+        isOpen={isDropdownOpen}
       />
       <ThemeDropdown
         onChange={(value) => {
