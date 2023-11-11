@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, use } from "react";
+import { useRef } from "react";
 
 import { motion, useScroll, useMotionValueEvent, motionValue, useTransform } from "framer-motion";
 
@@ -12,11 +12,11 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
     offset: ["start end", "end start"],
   });
 
-  const enteringScale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
-  const exitingScale = useTransform(scrollYProgress, [0.5, 1], [1, 0.8]);
+  const enteringScale = useTransform(scrollYProgress, [0, 0.49], [0.8, 1]);
+  const exitingScale = useTransform(scrollYProgress, [0.49, 1], [1, 0.8]);
   const scale = motionValue(1);
 
-  const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
+  const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.49], [0, 1]);
   const exitingOpacity = useTransform(scrollYProgress, [0.6, 0.9], [1, 0]);
 
   const opacity = motionValue(1);
