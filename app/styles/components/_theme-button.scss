@@ -1,0 +1,28 @@
+.theme-button {
+  border: none;
+  border-radius: $btn-radius;
+  background: $background;
+  padding: 0.5rem 0.5rem;
+  border-top: 1px solid $btn-border-color;
+  border-bottom: 1px solid $btn-border-color;
+  box-shadow: $button-box-shadow;
+
+  z-index: 1;
+
+  font-family: $font-accent;
+  color: $text-main;
+  font-style: italic;
+  font-size: 1.125rem;
+  font-weight: 300;
+  text-transform: lowercase;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    background: $btn-background--hover;
+    transform: scale(0.985);
+    box-shadow: $button-box-shadow--hover;
+  }
+
+  &:active {
+  }
+}

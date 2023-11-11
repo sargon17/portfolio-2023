@@ -2,13 +2,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
+import ThemeButton from "./_ThemeButton";
+import ThemeDropdown from "./_ThemeDropdown";
+
 export default function ThemeSwitcher() {
   let systemTheme = "dark";
 
   if (typeof window !== "undefined") {
-    systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
   const [theme, setTheme] = useState(systemTheme);
@@ -37,7 +38,10 @@ export default function ThemeSwitcher() {
 
   return (
     <div>
-      <select
+      <ThemeButton />
+      <ThemeDropdown />
+
+      {/* <select
         name="theme"
         id="theme"
         onChange={(e) => {
@@ -48,7 +52,7 @@ export default function ThemeSwitcher() {
         <option value="light">Light</option>
         <option value="dark">Dark</option>
         <option value="pink">Pink</option>
-      </select>
+      </select> */}
     </div>
   );
 }
