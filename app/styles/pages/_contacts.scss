@@ -1,177 +1,66 @@
 :root {
-  --title-color: var(--gray-800);
-  --accent-blob-color: var(--purple-600);
-  --contacts-text-color: var(--gray-700);
-  --contacts-title-color: var(--gray-300);
-  --contacts-number-color: var(--gray-800);
-  --contact-link-color: var(--gray-300);
 }
 
 [data-theme="light"] {
-  --title-color: var(--gray-200);
-  --accent-blob-color: var(--green-200);
-  --contacts-text-color: var(--green-600);
-  --contacts-title-color: var(--green-800);
-  --contacts-number-color: var(--green-400);
-  --contact-link-color: var(--green-700);
 }
-
-$title-color: var(--title-color);
-$accent-blob-color: var(--accent-blob-color);
-$contacts-text-color: var(--contacts-text-color);
-$contacts-title-color: var(--contacts-title-color);
-$contacts-number-color: var(--contacts-number-color);
-$contact-link-color: var(--contact-link-color);
 
 .contacts {
   position: relative;
-  .bg__text {
+  width: 100%;
+  height: 100%;
+
+  .huge-text {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    p {
-      text-orientation: mixed;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: 16rem;
-      white-space: nowrap;
-      text-wrap: nowrap;
-      height: 90vh;
-      font-weight: 600;
-      color: $title-color;
-      z-index: 0;
-      filter: blur(10px);
-      margin-left: 10%;
-    }
+
+    font-size: 20rem;
+    font-weight: 300;
+    color: $text-accent;
+    margin: 0;
   }
 
-  .bg__color {
+  .contacts_info {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 45%;
+    left: 60%;
+
     width: 100%;
     height: 100%;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
 
-    .noise {
-      background: url("https://grainy-gradients.vercel.app/noise.svg");
-      width: 100vw;
-      height: 100vh;
-      mix-blend-mode: $noise-blend-mode;
+    h2 {
+      font-size: 3rem;
+      font-weight: 300;
+      color: $text-accent;
+      margin: 0;
     }
 
-    svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      // filter: blur(150px);
-      g {
-        path {
-          fill: $accent-blob-color;
+    .links {
+      a {
+        margin-top: 1rem;
+        font-size: 1.25rem;
+
+        display: block;
+        position: relative;
+        &:nth-last-child(2) {
+          margin-top: 3rem;
         }
-      }
 
-      rect {
-        // mix-blend-mode: screen;
-        // filter: contrast(170%) brightness(1000%);
-      }
-    }
-  }
-  .bg__noise {
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // width: 100%;
-    // height: 100vh;
-    // background-image: url("/noise.png");
-    // background-repeat: repeat;
-    // background-size: 100%;
-    // z-index: 1;
-    // opacity: 0.1;
-    // mix-blend-mode: overlay;
-    transform: translateX(-10000%);
-  }
+        .arrow {
+          position: absolute;
+          bottom: -4px;
+          left: -2rem;
+          fill: $text-accent;
+          transition: all $t-normal $t-easing;
 
-  &__container {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(9, 1fr);
-
-    &__title {
-      grid-column: 5 / 8;
-      grid-row: 3/4;
-
-      font-size: 2rem;
-      font-weight: 100;
-
-      color: $contacts-number-color;
-
-      span {
-        font-weight: 600;
-        font-family: $font-accent;
-        font-style: italic;
-        font-size: 1.5em;
-        color: $contacts-title-color;
-        display: inline-block;
-      }
-    }
-
-    &__main {
-      grid-column: 8 / 11;
-      grid-row: 4/9;
-
-      p {
-        font-size: 0.9rem;
-        line-height: 1.2;
-        color: $contacts-text-color;
-        text-align: justify;
-      }
-
-      &__links {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: 2rem;
-        gap: 2rem;
-        a {
-          margin-bottom: 1rem;
-          font-size: 1.2rem;
-          color: $contacts-text-color;
-          text-decoration: none;
-          transition: color 0.2s ease-in-out;
-
-          .number {
-            color: $contacts-number-color;
-            font-weight: 600;
-            font-size: 2rem;
-            filter: blur(4px);
-            transition: filter 0.2s ease-in-out;
-          }
-
-          .title {
-            // display: inline-block;
-            // transform: translateY(100%);
-            color: $contact-link-color;
-            font-style: italic;
-
-            .letter {
-              display: inline-block;
-            }
-          }
-
-          &:hover {
-            .number {
-              filter: blur(0px);
-            }
+          svg {
+            width: 24px;
+            height: 24px;
           }
         }
       }

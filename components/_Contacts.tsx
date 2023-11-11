@@ -1,124 +1,190 @@
 "use client";
 import React from "react";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { motion } from "framer-motion";
-
-import { textToLetters } from "@/utils/utils";
+import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
+import { type } from "os";
 
 export default function Contacts() {
-  const [currentHover, setCurrentHover] = useState<string>("");
-
-  type printLink = {
-    text: string;
-    link?: string;
-    number?: string;
-  };
-  const printLink = ({ text, link, number }: printLink): React.ReactElement => {
-    const letters = textToLetters(text);
-
-    console.log(currentHover);
-    return (
-      <a
-        href={link}
-        onMouseEnter={() => setCurrentHover(text)}
-        onMouseLeave={() => setCurrentHover("")}
-      >
-        <span className="number">{number}</span>
-        <span className="title">
-          {letters.map((letter, index) => {
-            return (
-              <motion.span
-                key={index}
-                className="letter"
-                initial={{ y: 15 }}
-                animate={{ y: currentHover === text ? 0 : 15 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  delay: index * 0.01,
-                }}
-              >
-                {letter}
-              </motion.span>
-            );
-          })}
-        </span>
-      </a>
-    );
-  };
-
   return (
     <div className="contacts">
-      <div className="bg__text">
-        <p>Say Hi</p>
-      </div>
-      <div className="bg__color">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1550 1055"
-          fill="none"
-          preserveAspectRatio="xMidYMin slice"
-        >
-          <g filter="url(#blurFilter)" className="bg__color__figure">
-            <path d="M906.722 1235.55C724.535 805.75 224.648 335.01 208.292 1010.41C552.814 818.157 567.589 203.495 1023.88 605.865C1031.42 418.316 888.853 230.626 2377.49 159.256C1936.24 420.688 2053.51 2019.51 2085.87 2301.01C1951.86 1446.12 1698.38 2259.82 1409.33 1069.24C1344.95 1071.34 1252.14 1276.64 1104.68 1356.67C1033.36 1395.38 1008.24 1452.16 906.722 1435.55Z" />
-          </g>
-          <defs>
-            {/* blur filter */}
-            <filter id="blurFilter">
-              <feGaussianBlur stdDeviation="80" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="noise"></div>
-      </div>
-      <div className="bg__noise">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1550 1055"
-          id="bg__noise__svg"
-        >
-          <rect
-            width="1550"
-            height="1055"
-            fill="url(#paint0_linear)"
-            filter="url(#noiseFilter)"
-            className="bg__noise__rect"
-          />
-          <filter id="noiseFilter">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.65"
-              numOctaves="10"
-              stitchTiles="stitch"
-            />
-          </filter>
-        </svg>
-      </div>
-      <main>
-        <div className="contacts__container">
-          <h3 className="contacts__container__title">
-            Ping me for a digital <span>tête-à-tête</span>
-          </h3>
+      <HugeText text="Let's talk" />
 
-          <div className="contacts__container__main">
-            <p>
-              In the realm of coding chaos, HTML wizards and CSS sorcerers brew
-              a potion of responsive enchantment. JavaScript jesters dance atop
-              browser tabs, and animated GIFs share pixelated tales. Welcome to
-              the whimsical web wonderland, where creativity clicks and code
-              spells come to life!
-            </p>
-            <div className="contacts__container__main__links">
-              {printLink({ text: "Telegram", number: "001" })}
-              {printLink({ text: "Email", number: "002" })}
-              {printLink({ text: "Linkedin", number: "003" })}
-            </div>
-          </div>
+      <div className="contacts_info">
+        <h2>Contacts</h2>
+        <div className="links">
+          {contactData.map((contact, index) => (
+            <ContactLink
+              link={contact.link}
+              key={index + contact.name}
+            >
+              {contact.name}
+            </ContactLink>
+          ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
+
+type HugeTextProps = {
+  text: string;
+};
+const HugeText = ({ text }: HugeTextProps) => {
+  const [letters, setLetters] = useState(textToLetters(text));
+
+  return (
+    <div className="huge-text">
+      {letters.map((letter, index) => (
+        <Letter
+          letter={letter}
+          index={index}
+          key={index}
+        />
+      ))}
+    </div>
+  );
+};
+
+const Letter = ({ letter, index }: { letter: string; index: number }) => {
+  const letterRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!letterRef.current) return;
+    const letterColorAnimation = (e: MouseEvent) => {
+      if (!letterRef.current) return;
+
+      // set the distance from the center of the letter to the mouse position to run the animation
+      const dist = window.innerWidth / 2;
+
+      // get the center of the letter
+      const { x: centerX, y: centerY } = getItemCenter(letterRef.current);
+
+      // get the distance from the mouse to the letter center (pythagoras)
+      const distance = getDistance(centerX, centerY, e.clientX, e.clientY);
+
+      if (distance < dist) {
+        // if the distance is less than the max distance, animate the letter color based on the distance
+        const factor = distance / dist;
+
+        console.log(factor);
+
+        letterRef.current.style.filter = `blur(${factor * 10}px)`;
+      } else {
+        // letterRef.current.style.color = classicColor;
+      }
+    };
+
+    window.addEventListener("mousemove", (e) => letterColorAnimation(e));
+
+    return () => {
+      window.removeEventListener("mousemove", (e) => letterColorAnimation(e));
+    };
+  }, []);
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.05,
+          duration: 0.5,
+        },
+      };
+    },
+  };
+
+  return (
+    <>
+      <motion.span
+        className="letter"
+        ref={letterRef}
+        custom={index}
+        variants={lettersVariants}
+        initial="initial"
+        animate="animate"
+        key={index}
+      >
+        {letter}
+      </motion.span>
+    </>
+  );
+};
+
+type ContactLinkProps = {
+  children: React.ReactNode;
+  link: string;
+};
+const ContactLink = ({ children, link }: ContactLinkProps) => {
+  return (
+    <a
+      href={link}
+      target="_blank"
+    >
+      <span className="arrow">
+        <ArrowSvg />
+      </span>
+      <span className="text">{children}</span>
+    </a>
+  );
+};
+
+const ArrowSvg = () => {
+  return (
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.19824 5.47461L11.4904 5.47461L11.4904 9.76675"
+        stroke="black"
+        stroke-width="0.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M5.47998 11.4941L11.4303 5.54384"
+        stroke="black"
+        stroke-width="0.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+const contactData = [
+  {
+    name: "email",
+    link: "mailto:mykhaylo.tymofyeyev@gmail.com",
+  },
+  {
+    name: "instagram",
+    link: "https://www.instagram.com",
+  },
+  {
+    name: "linkedin",
+    link: "https://www.linkedin.com",
+  },
+  {
+    name: "github",
+    link: "https://github.com",
+  },
+  {
+    name: "telegram",
+    link: "https://telegram.org",
+  },
+];

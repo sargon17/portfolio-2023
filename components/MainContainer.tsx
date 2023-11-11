@@ -22,9 +22,9 @@ export default function MainContainer() {
       <Slide id="_projects">
         <Projects />
       </Slide>
-      {/* <Slide id="_contacts">
+      <Slide id="_contacts">
         <Contacts />
-      </Slide> */}
+      </Slide>
       {/* <Slide>
         <Experiments />
       </Slide> */}
