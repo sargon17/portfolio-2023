@@ -5,6 +5,9 @@
 [data-theme="light"] {
   --accent-text-shadow: 0px 0px 5px rgba(67, 66, 66, 0.574);
 }
+[data-theme="pink"] {
+  --accent-text-shadow: 0px 0px 5px rgba(67, 66, 66, 0.574);
+}
 
 $accent-text-shadow: var(--accent-text-shadow);
 

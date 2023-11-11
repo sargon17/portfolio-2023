@@ -243,7 +243,9 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
       if (!letterRef.current) return;
       // getting the colors from the css variables in the root
       const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
-      const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+      const classicColor = getComputedStyle(document.documentElement).getPropertyValue(
+        "--multicolor-title-color"
+      );
 
       // set the distance from the center of the letter to the mouse position to run the animation
       const dist = window.innerWidth / 2;

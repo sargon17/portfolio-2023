@@ -117,6 +117,46 @@
     0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
 }
 
+[data-theme="pink"] {
+  --bottom-background: #dcdcdc;
+  --background: #ececec;
+
+  --background--70: rgba(237, 237, 237, 0.7);
+
+  --text-main: #353535;
+  --text-secondary: #676767;
+  --text-accent: #1a1a1a;
+
+  --pink-100: #ffeafa;
+  --pink-200: #ffc1f1;
+  --pink-300: #ff97e8;
+  --pink-400: #ff6edf;
+  --pink-500: #ff44d6;
+  --pink-600: #ff20ce;
+  --pink-700: #d700a8;
+  --pink-800: #900070;
+  --pink-900: #480038;
+
+  --accent: var(--pink-500);
+
+  --gradient-bg: #ffffffd6;
+  --gradient-1: #ff44d6d6;
+  --gradient-2: #ff335ad6;
+
+  --overflow-color: var(--background);
+
+  --noise-blend-mode: hard-light;
+
+  // shadows
+  --button-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
+  --button-box-shadow--hover: 0px 2px 10px -2px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+
+  --dropdown-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
+}
+
 // [data-theme="pink"] {
 //   --bottom-background: #ff53ee;
 //   --background: #c901b5;

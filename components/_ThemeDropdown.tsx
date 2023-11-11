@@ -32,7 +32,7 @@ export default function ThemeDropdown({ onChange, isOpen }: ThemeDropdownProps) 
     open: {
       opacity: 1,
       y: 0,
-      maxHeight: "auto",
+      maxHeight: 200,
 
       transition: {
         staggerChildren: 0.05,
@@ -115,7 +115,7 @@ const themes = [
   {
     label: "pink",
     value: "pink",
-    color1: "#ffffff",
-    color2: "#000000",
+    color1: "#f7fafc",
+    color2: "#ff44d6",
   },
 ];

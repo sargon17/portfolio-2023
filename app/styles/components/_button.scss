@@ -6,6 +6,10 @@
   --btn-background--hover: var(--gray-150);
 }
 
+[data-theme="pink"] {
+  --btn-background--hover: var(--gray-150);
+}
+
 $btn-border-color: var(--background--70);
 $btn-background--hover: var(--btn-background--hover);
 

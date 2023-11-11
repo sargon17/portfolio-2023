@@ -12,6 +12,11 @@ $mouse-helper-color: $accent;
   --text-color: var(--gray-900);
 }
 
+[data-theme="pink"] {
+  --blend-mode: darken;
+  --text-color: var(--gray-900);
+}
+
 $blend-mode: var(--blend-mode);
 $text-color: var(--text-color);
 
@@ -27,10 +32,10 @@ $text-color: var(--text-color);
   mix-blend-mode: $blend-mode;
   will-change: transform, width, height, opacity, mix-blend-mode;
   transform: translateZ(0);
+  z-index: 10000;
 
-  transition: width $t-normal $t-easing, height $t-normal $t-easing,
-    opacity $t-normal $t-easing, transform $t-normal $t-easing,
-    mix-blend-mode $t-normal $t-easing;
+  transition: width $t-normal $t-easing, height $t-normal $t-easing, opacity $t-normal $t-easing,
+    transform $t-normal $t-easing, mix-blend-mode $t-normal $t-easing;
 
   &--active {
     width: $mouse-helper-size--active;
