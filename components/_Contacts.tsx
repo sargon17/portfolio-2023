@@ -5,7 +5,11 @@ import { useState, useRef, useEffect } from "react";
 
 import { motion } from "framer-motion";
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
-import { type } from "os";
+
+import { useDispatch } from "react-redux";
+
+import { setContent } from "@/contexts/features/mouse/mouseContent";
+import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 export default function Contacts() {
   return (
@@ -124,10 +128,20 @@ type ContactLinkProps = {
   link: string;
 };
 const ContactLink = ({ children, link }: ContactLinkProps) => {
+  const dispatch = useDispatch();
+
   return (
     <a
       href={link}
       target="_blank"
+      onMouseEnter={() => {
+        dispatch(setDimension({ width: 120, height: 120 }));
+        dispatch(setContent("don't be shy"));
+      }}
+      onMouseLeave={() => {
+        dispatch(setDimension({ width: 10, height: 10 }));
+        dispatch(setContent(""));
+      }}
     >
       <span className="arrow">
         <ArrowSvg />
