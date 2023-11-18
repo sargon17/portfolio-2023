@@ -14,10 +14,14 @@
     bottom: 0;
     left: 0;
 
-    font-size: 20rem;
+    font-size: calc(1rem + 18vw);
     font-weight: 300;
     color: $text-accent;
     margin: 0;
+
+    @media (max-width: 600px) {
+      font-size: calc(1rem + 12vw);
+    }
   }
 
   .contacts_info {

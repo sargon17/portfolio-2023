@@ -51,13 +51,14 @@ $text-color: var(--text-color);
     left: 0%;
     transform: translate(0%, -50%);
     font-family: $font-accent;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     font-style: italic;
     color: $text-color;
     text-transform: lowercase;
     text-align: center;
     pointer-events: none;
+    background-blend-mode: difference;
   }
 }
 
