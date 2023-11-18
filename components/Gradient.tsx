@@ -13,17 +13,31 @@ type GradientParams = {
 };
 
 export default function Gradient({ className, styles }: GradientParams) {
+  const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const canvas = useRef<any>(null!);
   const baseClass = "gradient";
   const gradientClass = className ? `${baseClass} ${className}` : baseClass;
   const gradientStyles = styles ? styles : {};
+
+  useEffect(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
 
   return (
     <div
       className={gradientClass}
       style={gradientStyles}
+      ref={canvas}
     >
       <Canvas>
-        <GradientCanvas />
+        <GradientCanvas dimensions={dimensions} />
       </Canvas>
     </div>
   );
@@ -50,7 +64,6 @@ const fragmentShader = /* glsl */ `
     	precision highp float;
 uniform float u_time;
 uniform vec2 resolution;
-uniform vec2 u_mouse;
 
 uniform vec3 u_colorbg;
 uniform vec3 u_color1;
@@ -101,38 +114,27 @@ vec3 color3 = vec3(u_color3.rgb);
 
 
   vec2 st = gl_FragCoord.xy/resolution.xy;
-  vec2 mouse = u_mouse.xy/resolution.xy;
-  float mouseX = mouse.x * 0.1;
-  float mouseY = mouse.y * 0.1;
 
-  vec2 pos = vec2(st.x * 2.8 * (0.2 - mouse.y * 0.02), st.y * 3.4 * (0.2 + mouse.y * 0.01));
+
+  vec2 pos = vec2(st.x * 2.8 , st.y * 3.4);
 
   float tSin = abs(sin(u_time * 0.1)) * 0.3 - 0.2;
 
-  float n = noise(pos * 4.5 + tSin * 1.2);
-
-
+  float n = noise(pos + tSin * 1.2);
 
   n = n + tSin;
 
-
-
-
-
   // mix all the 3 colors
-  vec3 colorStep1 = mix(colorbg, color1, smoothstep(0.15 + mouseX, 0.60 + mouseX, n ));
-  vec3 colorStep2 = mix(colorStep1, color2, smoothstep(0.40 + mouseX, 0.90, n ));
-
-
- 
-  vec3 color = mix(colorStep2, color3, smoothstep(0.8 + mouseX, 1.0, n ));
+  vec3 colorStep1 = mix(colorbg, color1, smoothstep(0.15, 0.60, n ));
+  vec3 colorStep2 = mix(colorStep1, color2, smoothstep(0.40, 0.90, n ));
+  vec3 color = mix(colorStep2, color3, smoothstep(0.8, 1.0, n ));
 
 
   gl_FragColor = vec4(color, 0.8);
 }
 `;
 
-function GradientCanvas() {
+function GradientCanvas({ dimensions }: { dimensions: any }) {
   const mesh = React.useRef<any>(null!);
 
   const time = useRef(0);
@@ -147,19 +149,20 @@ function GradientCanvas() {
 
   useEffect(() => {
     setResolution();
-    document.addEventListener("mousemove", setMouse);
+    // document.addEventListener("mousemove", setMouse);
     // document.addEventListener("resize", setResolution);
 
     return () => {
-      document.removeEventListener("mousemove", setMouse);
+      // document.removeEventListener("mousemove", setMouse);
       // document.removeEventListener("resize", setResolution);
     };
   }, []);
 
   const setResolution = () => {
+    console.log(dimensions);
     mesh.current.material.uniforms.resolution.value = {
-      x: window.innerWidth,
-      y: window.innerHeight,
+      x: dimensions.width,
+      y: dimensions.height,
     };
   };
 
@@ -228,7 +231,6 @@ function GradientCanvas() {
 
   let uniforms = {
     u_time: { value: 0 },
-    u_mouse: { value: { x: 0, y: 0 } },
     resolution: { value: { x: 0, y: 0 } },
     u_colorbg: { value: { r: 0, g: 0, b: 0 } },
     u_color1: { value: { r: 0, g: 0, b: 0 } },
@@ -240,7 +242,7 @@ function GradientCanvas() {
     <mesh ref={mesh}>
       <planeGeometry
         attach="geometry"
-        args={[2, 2, 1]}
+        args={[35, 20, 1]}
       />
       <shaderMaterial
         fragmentShader={fragmentShader}

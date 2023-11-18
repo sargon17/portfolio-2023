@@ -12,8 +12,9 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
     offset: ["start end", "end start"],
   });
 
-  const enteringScale = useTransform(scrollYProgress, [0, 0.49], [0.8, 1]);
-  const exitingScale = useTransform(scrollYProgress, [0.49, 1], [1, 0.8]);
+  const enteringScale = useTransform(scrollYProgress, [0, 0.49], [0.75, 1]);
+  // const exitingScale = useTransform(scrollYProgress, [0.49, 1], [1, 0.85]);
+  const exitingScale = motionValue(1);
   const scale = motionValue(1);
 
   const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.49], [0, 1]);

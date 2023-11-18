@@ -25,6 +25,7 @@ $slide--box-shadow: var(--slide-box-shadow);
   border-radius: $slide-radius;
   overflow: hidden;
   position: relative;
+  // margin: $main-content-padding auto;
 
   border-top: 2px solid $slide-border-color;
 
