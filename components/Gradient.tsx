@@ -116,11 +116,11 @@ vec3 color3 = vec3(u_color3.rgb);
   vec2 st = gl_FragCoord.xy/resolution.xy;
 
 
-  vec2 pos = vec2(st.x * 2.8 , st.y * 3.4);
+  vec2 pos = vec2(st.x * 0.8 + 0.5 , st.y * 1.8);
 
   float tSin = abs(sin(u_time * 0.1)) * 0.3 - 0.2;
 
-  float n = noise(pos + tSin * 1.2);
+  float n = noise(pos * 2.0 + tSin * 1.2);
 
   n = n + tSin;
 
