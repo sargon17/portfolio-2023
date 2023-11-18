@@ -33,6 +33,7 @@ $text-color: var(--text-color);
   will-change: transform, width, height, opacity, mix-blend-mode;
   transform: translateZ(0);
   z-index: 10000;
+  overflow: hidden;
 
   transition: width $t-normal $t-easing, height $t-normal $t-easing, opacity $t-normal $t-easing,
     transform $t-normal $t-easing, mix-blend-mode $t-normal $t-easing;
@@ -47,15 +48,32 @@ $text-color: var(--text-color);
   &__content {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0%;
+    transform: translate(0%, -50%);
     font-family: $font-accent;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 600;
     font-style: italic;
     color: $text-color;
     text-transform: lowercase;
     text-align: center;
     pointer-events: none;
+  }
+}
+
+.running-string {
+  animation: running-string 20s linear infinite;
+  &__content {
+    text-wrap: none;
+    white-space: nowrap;
+  }
+}
+
+@keyframes running-string {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }

@@ -12,17 +12,11 @@ export default function MouseHelper() {
   const [isPositionFixed, setIsPositionFixed] = useState(false);
 
   const contentState = useSelector((state: RootState) => state.content.content);
-  const mousePositionState = useSelector(
-    (state: RootState) => state.position.position
-  );
+  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
-  const mouseDimensionState = useSelector(
-    (state: RootState) => state.dimension.dimension
-  );
+  const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
 
-  const fixedPosition = useSelector(
-    (state: RootState) => state.fixPosition.fixedPosition
-  );
+  const fixedPosition = useSelector((state: RootState) => state.fixPosition.fixedPosition);
 
   const lenis = useLenis(handleScroll);
 
@@ -104,15 +98,35 @@ export default function MouseHelper() {
       })}
       ref={mouse}
     >
-      <div className="mouse-helper__content">
-        <motion.p
-          key={contentState}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.2 } }}
-        >
-          {contentState}
-        </motion.p>
-      </div>
+      {contentState !== "" && (
+        <div className="mouse-helper__content">
+          <motion.p
+            key={contentState}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.2 } }}
+          >
+            <RunningString>{contentState}</RunningString>
+          </motion.p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RunningString({ children }: { children: React.ReactNode }) {
+  const printString = (string: string) => {
+    let fullString = "";
+
+    for (let i = 0; i < 20; i++) {
+      fullString += `  •  ${string}`;
+    }
+
+    return fullString;
+  };
+
+  return (
+    <div className="running-string">
+      <div className="running-string__content">{printString(children as string)}</div>
     </div>
   );
 }
