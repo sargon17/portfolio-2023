@@ -1,7 +1,3 @@
-// VARIABLES
-$main-content-padding: 2.15rem;
-// ----------------------------------------
-
 .main-content-container {
   width: calc(100vw - $sidebar-width);
   margin-left: $sidebar-width;
@@ -10,7 +6,14 @@ $main-content-padding: 2.15rem;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: $main-content-padding;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  gap: 2rem;
+
+  @media screen and (max-width: 768px) {
+    width: calc(100vw - $mobile-sidebar-width);
+    margin-left: $mobile-sidebar-width;
+  }
 
   &::-webkit-scrollbar {
     width: 0;

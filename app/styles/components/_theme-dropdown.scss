@@ -1,0 +1,43 @@
+$dropdown-padding: 4px;
+
+.theme-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 150px;
+  background: var(--background);
+  border-radius: $radius;
+  padding: $dropdown-padding;
+  z-index: 1000;
+
+  box-shadow: $dropdown-box-shadow;
+
+  .option {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    border-radius: calc($radius - $dropdown-padding);
+
+    transition: background-color $t-fast ease-in-out;
+
+    font-family: $font-accent;
+    font-weight: 300;
+    text-transform: lowercase;
+    font-style: italic;
+
+    cursor: pointer;
+
+    &-example {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    &:hover {
+      background: $btn-background--hover;
+    }
+  }
+}

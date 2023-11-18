@@ -1,9 +1,8 @@
 "use client";
-import React, { use, useLayoutEffect } from "react";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { client } from "@/sanity/lib/client";
 
-import { textToLetters, getItemCenter } from "@/utils/utils";
+import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 import { ScopesText } from "@/utils/animations";
 
 import { motion } from "framer-motion";
@@ -12,33 +11,28 @@ import { motion } from "framer-motion";
 import projectType from "@/types/project";
 
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
+import Button from "./Button";
+
 export default function Projects() {
   const getProjects = async () => {
-    const projects = await client.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      date,
-      description,
-      link,
-      "image": image.asset->url,
-      "video": video.asset->url,
-      tags,
-
-    }`);
+    // get project data from a json file in the public folder
+    const projects: any = await fetch("/projects.json").then((res) => res.json());
     setProjects(projects);
+
+    if (projects && projects.length > 0) {
+      if (projects[0]) {
+        setActiveProject(projects[0]);
+      }
+    }
   };
   const [projects, setProjects] = useState<projectType[]>([]);
   const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const dispatch = useDispatch();
-  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
   const link = useRef<HTMLDivElement>(null);
@@ -47,180 +41,21 @@ export default function Projects() {
     getProjects();
   }, []);
 
-  useEffect(() => {
-    if (projects.length > 0) {
-      setActiveProject(projects[0]);
-    }
-  }, [projects]);
-
-  useEffect(() => {
-    if (mousePositionState) {
-      setMousePosition(mousePositionState);
-    }
-  }, [mousePositionState]);
-
-  // big title animation
-  // todo - refactor
-  useLayoutEffect(() => {
-    // get all the title letters
-    const title = page.current?.querySelector(".project__main-data__title h2");
-    if (!title) return;
-
-    const titleTop = title.getBoundingClientRect().top;
-    const titleBottom = title.getBoundingClientRect().bottom;
-
-    if (mousePosition.y > titleTop - 20 && mousePosition.y < titleBottom + 20) {
-      const letters = title.querySelectorAll("span");
-
-      if (letters) {
-        letters.forEach((letter, index) => {
-          // get the letters center
-          const { x: letterCenterX, y: letterCenterY } = getItemCenter(letter);
-
-          const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
-          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
-
-          // if mouse is 20px away from the letter or less
-
-          const minDistance = 200;
-
-          const distance = Math.sqrt(
-            Math.pow(mousePosition.x - letterCenterX, 2) + Math.pow(mousePosition.y - letterCenterY, 2)
-          );
-
-          if (
-            mousePosition.x > letterCenterX - minDistance &&
-            mousePosition.x < letterCenterX + minDistance &&
-            mousePosition.y > letterCenterY - minDistance &&
-            mousePosition.y < letterCenterY + minDistance
-          ) {
-            // get the closest distance from the mouse to the letter
-
-            letter.animate(
-              [
-                {
-                  // color
-                  color: mixColors(accentColor, classicColor, 1 - distance / minDistance),
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          } else {
-            letter.animate(
-              [
-                {
-                  color: classicColor,
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          }
-        });
-      }
-    } else {
-      const letters = title.querySelectorAll("span");
-
-      if (letters) {
-        letters.forEach((letter, index) => {
-          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
-
-          letter.animate(
-            [
-              {
-                color: classicColor,
-              },
-            ],
-            {
-              duration: 1000,
-              fill: "forwards",
-            }
-          );
-        });
-      }
-    }
-  }, [mousePosition]);
-
-  // todo - refactor & move to utils
-  const mixColors = (color1: string, color2: string, weight: number) => {
-    // mix the given colors
-    const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
-    const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
-
-    let color = "#";
-
-    for (let i = 1; i <= 6; i += 2) {
-      const v1 = h2d(color1.substr(i, 2));
-      const v2 = h2d(color2.substr(i, 2));
-      let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
-
-      while (val.length < 2) {
-        val = "0" + val;
-      }
-
-      color += val;
-    }
-
-    return color;
-  };
-
-  const printTitle = (title: string) => {
-    const letters = textToLetters(title);
-    return letters.map((letter, index) => {
-      return <span key={index}>{letter}</span>;
-    });
-  };
-
   return (
     <div
       className="projects-page"
       ref={page}
     >
-      <div className="navigation">
-        {projects.map((project) => {
-          return (
-            <div
-              key={"nav" + project._id}
-              className="navigation__item"
-              data-active={activeProject?._id === project._id}
-              onClick={() => {
-                setActiveProject(project);
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
-              }}
-              onMouseEnter={() => {
-                const isActive = activeProject?._id === project._id;
-                if (!isActive) {
-                  dispatch(setDimension({ width: 100, height: 100 }));
-                  dispatch(setContent("see the project"));
-                }
-              }}
-              onMouseLeave={() => {
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
-              }}
-            >
-              {project.title}
-            </div>
-          );
-        })}
+      <div className="projects-page__navigation">
+        <Navigation
+          projects={projects}
+          activeProject={activeProject}
+          setActiveProject={setActiveProject}
+        />
       </div>
       <div className="project">
         <div className="project__main-data">
-          <div className="project__main-data__title">
-            <motion.h2
-              key={activeProject?._id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
-            >
-              {printTitle(activeProject?.title || "")}
-            </motion.h2>
-          </div>
+          <MulticolorTitle title={activeProject?.title || ""} />
           <motion.div
             className="project__main-data__year"
             key={activeProject?._id}
@@ -257,7 +92,10 @@ export default function Projects() {
               <motion.p
                 key={activeProject?._id}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.5 } }}
+                animate={{
+                  opacity: 1,
+                  transition: { delay: 0.6, duration: 0.5 },
+                }}
               >
                 {activeProject?.description}
               </motion.p>
@@ -269,7 +107,10 @@ export default function Projects() {
                     key={tag}
                     className="project__content__description__tags__item"
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { delay: 0.9 + index * 0.1, duration: 0.5 } }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 0.9 + index * 0.1, duration: 0.5 },
+                    }}
                   >
                     {tag}
                   </motion.p>
@@ -277,33 +118,62 @@ export default function Projects() {
               })}
             </div>
             {activeProject?.link && (
-              <motion.div
-                className="project__content__description__link"
-                key={activeProject?._id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
-                ref={link}
-                onMouseEnter={() => {
-                  dispatch(setDimension({ width: 150, height: 30 }));
+              <>
+                <div className="project__content__description__link">
+                  <motion.div
+                    key={activeProject?._id}
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 1.2, duration: 0.5 },
+                    }}
+                    ref={link}
+                    onMouseEnter={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
 
-                  const itemTop = link.current?.getBoundingClientRect().top;
-                  const itemLeft = link.current?.getBoundingClientRect().left;
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
 
-                  dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
-                }}
-                onMouseLeave={() => {
-                  dispatch(setDimension({ width: 10, height: 10 }));
-                  dispatch(setFixPosition({ x: 0, y: 0 }));
-                }}
-              >
-                <a
-                  href={activeProject?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <ScopesText>see it yourself</ScopesText>
-                </a>
-              </motion.div>
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseMove={() => {
+                      dispatch(setDimension({ width: 150, height: 30 }));
+
+                      const itemTop = link.current?.getBoundingClientRect().top || 0;
+                      const itemLeft = link.current?.getBoundingClientRect().left || 0;
+
+                      dispatch(
+                        setFixPosition({
+                          x: itemLeft - 20,
+                          y: itemTop + window.scrollY - 5,
+                        })
+                      );
+                    }}
+                    onMouseLeave={() => {
+                      dispatch(setDimension({ width: 10, height: 10 }));
+                      dispatch(setFixPosition({ x: 0, y: 0 }));
+                    }}
+                  >
+                    <a
+                      href={activeProject?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ScopesText>see it yourself</ScopesText>
+                    </a>
+                  </motion.div>
+                </div>
+                <div className="project__content__description__link--mobile">
+                  <a href={activeProject?.link}>
+                    <Button>see it yourself</Button>
+                  </a>
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -311,3 +181,173 @@ export default function Projects() {
     </div>
   );
 }
+
+const MulticolorTitle = ({ title }: { title: string }) => {
+  const printTitle = (title: string) => {
+    const letters = textToLetters(title);
+    return letters.map((letter, index) => {
+      return (
+        <Letter
+          key={index}
+          letter={letter}
+          index={index}
+        />
+      );
+    });
+  };
+
+  return (
+    <div className="project__main-data__title">
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.1, duration: 0.5 },
+        }}
+      >
+        {printTitle(title || "")}
+      </motion.h2>
+    </div>
+  );
+};
+
+const Letter = ({ letter, index }: { letter: string; index: number }) => {
+  const letterRef = useRef<HTMLSpanElement>(null);
+
+  const mixColors = (color1: string, color2: string, weight: number) => {
+    // mix two colors together with a weight from 0 to 1 (0 = color1, 1 = color2)
+
+    const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
+    const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
+
+    let color = "#";
+
+    for (let i = 1; i <= 6; i += 2) {
+      const v1 = h2d(color1.substring(i, i + 2));
+      const v2 = h2d(color2.substring(i, i + 2));
+      let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
+
+      while (val.length < 2) {
+        val = "0" + val;
+      }
+
+      color += val;
+    }
+
+    return color;
+  };
+
+  useEffect(() => {
+    if (!letterRef.current) return;
+    const letterColorAnimation = (e: MouseEvent) => {
+      if (!letterRef.current) return;
+      // getting the colors from the css variables in the root
+      const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
+      const classicColor = getComputedStyle(document.documentElement).getPropertyValue(
+        "--multicolor-title-color"
+      );
+
+      // set the distance from the center of the letter to the mouse position to run the animation
+      const dist = window.innerWidth / 2;
+
+      // get the center of the letter
+      const { x: centerX, y: centerY } = getItemCenter(letterRef.current);
+
+      // get the distance from the mouse to the letter center (pythagoras)
+      const distance = getDistance(centerX, centerY, e.clientX, e.clientY);
+
+      if (distance < dist) {
+        // if the distance is less than the max distance, animate the letter color based on the distance
+        const factor = distance / dist;
+        letterRef.current.style.color = mixColors(accentColor, classicColor, 1 - factor);
+      } else {
+        letterRef.current.style.color = classicColor;
+      }
+    };
+
+    window.addEventListener("mousemove", (e) => letterColorAnimation(e));
+
+    return () => {
+      window.removeEventListener("mousemove", (e) => letterColorAnimation(e));
+    };
+  }, []);
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.05,
+          duration: 0.5,
+        },
+      };
+    },
+  };
+
+  return (
+    <>
+      <motion.span
+        className="letter"
+        ref={letterRef}
+        custom={index}
+        variants={lettersVariants}
+        initial="initial"
+        animate="animate"
+        key={index}
+      >
+        {letter}
+      </motion.span>
+    </>
+  );
+};
+
+const Navigation = ({
+  projects,
+  activeProject,
+  setActiveProject,
+}: {
+  projects: projectType[];
+  activeProject: projectType | null;
+  setActiveProject: (project: projectType) => void;
+}) => {
+  const dispatch = useDispatch();
+
+  return (
+    <div className="navigation">
+      {projects.map((project, index) => {
+        return (
+          <div
+            key={"nav" + project._id}
+            className="navigation__item"
+            data-active={activeProject?._id === project._id}
+            onClick={() => {
+              setActiveProject(project);
+              dispatch(setDimension({ width: 10, height: 10 }));
+              dispatch(setContent(""));
+            }}
+            onMouseEnter={() => {
+              const isActive = activeProject?._id === project._id;
+              if (!isActive) {
+                dispatch(setDimension({ width: 100, height: 100 }));
+                dispatch(setContent("see the project"));
+              }
+            }}
+            onMouseLeave={() => {
+              dispatch(setDimension({ width: 10, height: 10 }));
+              dispatch(setContent(""));
+            }}
+          >
+            <span className="index">00{index + 1}/</span>
+            <span className="title">{project.title}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

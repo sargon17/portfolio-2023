@@ -6,6 +6,8 @@ import { useLenis } from "@studio-freight/react-lenis";
 import Slide from "./Slide";
 import Hero from "./_Hero";
 import Projects from "./_Projects";
+import Contacts from "./_Contacts";
+import Experiments from "./_Experiments";
 export default function MainContainer() {
   //on scroll update mouse position
 
@@ -20,11 +22,11 @@ export default function MainContainer() {
       <Slide id="_projects">
         <Projects />
       </Slide>
+      <Slide id="_contacts">
+        <Contacts />
+      </Slide>
       {/* <Slide>
-        <h1>Slide 4</h1>
-      </Slide> */}
-      {/* <Slide>
-        <h1>Slide 5</h1>
+        <Experiments />
       </Slide> */}
     </div>
   );

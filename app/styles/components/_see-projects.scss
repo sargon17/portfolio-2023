@@ -1,6 +1,7 @@
 .see-projects {
   position: relative;
   cursor: pointer;
+  will-change: transform, opacity;
 
   &__cta {
     position: absolute;
@@ -29,6 +30,11 @@
       border-radius: $slide-radius;
       position: relative;
       transition: opacity $t-2slow $t-easing;
+      will-change: transform, opacity;
+
+      @media screen and (max-width: 768px) {
+        width: 60vw;
+      }
 
       &::after {
         content: "";

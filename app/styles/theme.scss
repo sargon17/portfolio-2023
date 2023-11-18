@@ -4,22 +4,49 @@
   // COLORS
   --white: #fff;
   --black: #000;
-  --purple: #3d3ddb;
-  --green: #a2f6e6;
 
-  // --gray-100: #f7fafc;
+  --purple-100: #c7c7ff;
+  --purple-200: #a1a1ff;
+  --purple-300: #8383cc;
+  --purple-400: #5959e2;
+  --purple-500: #3d3ddb;
+  --purple-600: #3131ae;
+  --purple-700: #212175;
+  --purple-800: #0e0e75;
+  --purple-900: #060653;
+
+  --green-100: #cefef5;
+  --green-200: #a2f6e6;
+  --green-300: #8ddccd;
+  --green-400: #79c3b5;
+  --green-500: #79c3b5;
+  --green-600: #539084;
+  --green-700: #42776d;
+  --green-800: #325d55;
+  --green-900: #23443d;
+
+  --purple: var(--purple-500);
+  --green: var(--green-500);
+
+  --gray-100: #f7fafc;
+  --gray-150: #e1e1e1;
   --gray-200: #d8d8d8;
+  --gray-250: #c4c4c4;
   --gray-300: #b0b0b0;
   --gray-400: #757575;
   --gray-500: #242424;
   // --gray-600: #f7fafc;
-  // --gray-700: #f7fafc;
-  --gray-800: #1b1b1b;
+  --gray-700: #4b4b4b;
+  --gray-800: #303030;
+  --gray-850: #1f1f1f;
   --gray-900: #131313;
 
   // BG
   --bottom-background: var(--gray-800);
+  --bottom-background--01: rgba(19, 19, 19, 0.01);
   --background: var(--gray-900);
+
+  --background--70: rgba(31, 31, 31, 0.7);
 
   // BORDERS
   --border-color: var(--gray-400);
@@ -34,18 +61,44 @@
 
   // GRADIENT
   --gradient-bg: var(--gray-900);
-  --gradient-1: var(--purple);
-  --gradient-2: var(--green);
+  --gradient-1: var(--purple-700);
+  --gradient-2: var(--green-500);
+  --gradient-3: var(--gray-100);
 
   --overflow-color: var(--background);
+
+  --noise-blend-mode: color-burn;
+
+  // shadows
+  --button-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.25), 0px 2px 2px -1px rgba(0, 0, 0, 0.3),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  --button-box-shadow--hover: 0px 2px 10px -2px rgba(0, 0, 0, 0.25), 0px 1px 2px -1px rgba(0, 0, 0, 0.3),
+    0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+
+  --dropdown-box-shadow: 0px 8px 10px -2px rgba(0, 0, 0, 0.05), 0px 4px 4px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
 }
 
 [data-theme="light"] {
   --bottom-background: #dcdcdc;
+  --bottom-background--01: rgba(220, 220, 220, 0.01);
   --background: #ececec;
+
+  --background--70: rgba(237, 237, 237, 0.7);
+
   --text-main: #353535;
   --text-secondary: #676767;
   --text-accent: #1a1a1a;
+
+  --orange-100: #fff7e6;
+  --orange-200: #ffe8bf;
+  --orange-300: #ffd699;
+  --orange-400: #ffc97d;
+  --orange-500: #fa9348;
+  --orange-600: #e67a2a;
+  --orange-700: #cc6600;
+  --orange-800: #a64d00;
+  --orange-900: #803900;
 
   --accent: #fa9348;
 
@@ -54,6 +107,58 @@
   --gradient-2: #a2f6e6d6;
 
   --overflow-color: var(--background);
+
+  --noise-blend-mode: hard-light;
+
+  // shadows
+  --button-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
+  --button-box-shadow--hover: 0px 2px 10px -2px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+
+  --dropdown-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
+}
+
+[data-theme="pink"] {
+  --bottom-background: #dcdcdc;
+  --bottom-background--01: rgba(220, 220, 220, 0.01);
+  --background: #ececec;
+
+  --background--70: rgba(237, 237, 237, 0.7);
+
+  --text-main: #353535;
+  --text-secondary: #676767;
+  --text-accent: #1a1a1a;
+
+  --pink-100: #ffeafa;
+  --pink-200: #ffc1f1;
+  --pink-300: #ff97e8;
+  --pink-400: #ff6edf;
+  --pink-500: #ff44d6;
+  --pink-600: #ff20ce;
+  --pink-700: #d700a8;
+  --pink-800: #900070;
+  --pink-900: #480038;
+
+  --accent: var(--pink-500);
+
+  --gradient-bg: #ffffffd6;
+  --gradient-1: #ff44d6d6;
+  --gradient-2: #ff335ad6;
+
+  --overflow-color: var(--background);
+
+  --noise-blend-mode: hard-light;
+
+  // shadows
+  --button-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
+  --button-box-shadow--hover: 0px 2px 10px -2px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset;
+
+  --dropdown-box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 0.05), 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+    0px -1px 4px 0px rgba(0, 0, 0, 0.05) inset;
 }
 
 // [data-theme="pink"] {
@@ -84,6 +189,7 @@ $gray-900: var(--gray-900);
 // BG
 // (colors)
 $bottom-background: var(--bottom-background);
+$bottom-background--01: var(--bottom-background--01);
 $background: var(--background);
 //----------------------------------------
 
@@ -114,6 +220,9 @@ $gradient-2: var(--gradient-2);
 // (colors)
 $accent: var(--accent);
 $padding: 1rem 2rem;
+$padding-small: 0.5rem 1rem;
+
+$main-content-padding: 0.75rem;
 
 // TRANSITIONS
 $t-fast: 0.2s;
@@ -125,6 +234,13 @@ $bounce: cubic-bezier(0.45, 0, 0.55, 1);
 
 // OVERFLOWS
 $overflow-color: var(--overflow-color);
+
+$noise-blend-mode: var(--noise-blend-mode);
+
+// shadows
+$button-box-shadow: var(--box-shadow);
+$button-box-shadow--hover: var(--box-shadow--hover);
+$dropdown-box-shadow: var(--dropdown-box-shadow);
 
 body {
   background-color: $bottom-background;

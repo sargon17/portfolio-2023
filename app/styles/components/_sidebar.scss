@@ -1,5 +1,6 @@
 // VARIABLES
 $sidebar-width: 100px;
+$mobile-sidebar-width: 45px;
 // ----------------------------------------
 
 .sidebar {
@@ -9,11 +10,17 @@ $sidebar-width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 1000;
 
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
+
+  @media screen and (max-width: 768px) {
+    width: $mobile-sidebar-width;
+    padding: 0.5rem 0.25rem;
+  }
 
   &__nav {
     display: flex;
@@ -22,8 +29,21 @@ $sidebar-width: 100px;
     align-items: center;
     gap: 0.3rem;
 
+    @media screen and (max-width: 768px) {
+      // width: 100vh;
+      gap: 3.5rem;
+      margin-top: 2rem;
+    }
+
     &__button {
       width: 100%;
+
+      @media screen and (max-width: 768px) {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(270deg);
+        min-width: 80px;
+      }
     }
   }
 
