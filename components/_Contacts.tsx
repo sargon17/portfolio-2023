@@ -148,17 +148,17 @@ type ContactLinkProps = {
 const ContactLink = ({ children, link, onHover, onUnhover, isHovered }: ContactLinkProps) => {
   const dispatch = useDispatch();
 
-  let opacity = 1;
+  let blur = 0;
 
   if (isHovered === false) {
-    opacity = 0.3;
+    blur = 2;
   }
 
   const linkVariants = {
     initial: {},
     hover: {},
     unhover: {
-      opacity: opacity,
+      filter: `blur(${blur}px)`,
       transition: {
         duration: 0.25,
       },
