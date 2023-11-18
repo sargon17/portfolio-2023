@@ -148,8 +148,6 @@ type ContactLinkProps = {
 const ContactLink = ({ children, link, onHover, onUnhover, isHovered }: ContactLinkProps) => {
   const dispatch = useDispatch();
 
-  console.log(isHovered);
-
   let opacity = 1;
 
   if (isHovered === false) {

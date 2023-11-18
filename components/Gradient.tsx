@@ -159,7 +159,6 @@ function GradientCanvas({ dimensions }: { dimensions: any }) {
   }, []);
 
   const setResolution = () => {
-    console.log(dimensions);
     mesh.current.material.uniforms.resolution.value = {
       x: dimensions.width,
       y: dimensions.height,
