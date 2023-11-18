@@ -18,16 +18,7 @@ export default function Contacts() {
 
       <div className="contacts_info">
         <h2>Contacts</h2>
-        <div className="links">
-          {contactData.map((contact, index) => (
-            <ContactLink
-              link={contact.link}
-              key={index + contact.name}
-            >
-              {contact.name}
-            </ContactLink>
-          ))}
-        </div>
+        <ContactLinks links={contactData} />
       </div>
     </div>
   );
@@ -72,8 +63,6 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
       if (distance < dist) {
         // if the distance is less than the max distance, animate the letter color based on the distance
         const factor = distance / dist;
-
-        console.log(factor);
 
         letterRef.current.style.filter = `blur(${factor * 10}px)`;
       } else {
@@ -123,31 +112,115 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   );
 };
 
+const ContactLinks = ({ links }: { links: { name: string; link: string }[] }) => {
+  const [hoveredLink, setHoveredLink] = useState("");
+  return (
+    <div className="links">
+      {contactData.map((contact, index) => {
+        let hovered: null | boolean = null;
+        if (hoveredLink !== "") {
+          hovered = hoveredLink === contact.name;
+        }
+
+        return (
+          <ContactLink
+            link={contact.link}
+            key={index + contact.name}
+            onHover={() => setHoveredLink(contact.name)}
+            onUnhover={() => setHoveredLink("")}
+            isHovered={hovered}
+          >
+            {contact.name}
+          </ContactLink>
+        );
+      })}
+    </div>
+  );
+};
+
 type ContactLinkProps = {
   children: React.ReactNode;
   link: string;
+  onHover?: () => void;
+  onUnhover?: () => void;
+  isHovered?: boolean | null;
 };
-const ContactLink = ({ children, link }: ContactLinkProps) => {
+const ContactLink = ({ children, link, onHover, onUnhover, isHovered }: ContactLinkProps) => {
   const dispatch = useDispatch();
 
+  console.log(isHovered);
+
+  let opacity = 1;
+
+  if (isHovered === false) {
+    opacity = 0.3;
+  }
+
+  const linkVariants = {
+    initial: {},
+    hover: {},
+    unhover: {
+      opacity: opacity,
+      transition: {
+        duration: 0.25,
+      },
+    },
+  };
+
+  const arrowVariants = {
+    initial: {},
+    hover: {
+      x: 20,
+      y: -20,
+      opacity: 0,
+      transition: {
+        duration: 0.15,
+      },
+    },
+  };
+
+  const textVariants = {
+    initial: {},
+    hover: {
+      x: -5,
+      transition: {
+        duration: 0.25,
+      },
+    },
+    unhover: {},
+  };
+
   return (
-    <a
+    <motion.a
       href={link}
       target="_blank"
       onMouseEnter={() => {
         dispatch(setDimension({ width: 120, height: 120 }));
         dispatch(setContent("don't be shy"));
+        onHover && onHover();
       }}
       onMouseLeave={() => {
         dispatch(setDimension({ width: 10, height: 10 }));
         dispatch(setContent(""));
+        onUnhover && onUnhover();
       }}
+      variants={linkVariants}
+      initial="initial"
+      animate={isHovered ? "hover" : "unhover"}
     >
-      <span className="arrow">
+      <motion.span
+        className="arrow"
+        variants={arrowVariants}
+      >
         <ArrowSvg />
-      </span>
-      <span className="text">{children}</span>
-    </a>
+      </motion.span>
+      <motion.span
+        className="text"
+        variants={textVariants}
+      >
+        {children}
+      </motion.span>
+    </motion.a>
   );
 };
 
@@ -187,18 +260,18 @@ const contactData = [
   },
   {
     name: "instagram",
-    link: "https://www.instagram.com",
+    link: "https://instagram.com/tymofyeyev",
   },
   {
     name: "linkedin",
-    link: "https://www.linkedin.com",
+    link: "https://www.linkedin.com/in/tymofyeyev/",
   },
   {
     name: "github",
-    link: "https://github.com",
+    link: "https://github.com/sargon17",
   },
   {
     name: "telegram",
-    link: "https://telegram.org",
+    link: "https://t.me/Mykhaylo17",
   },
 ];

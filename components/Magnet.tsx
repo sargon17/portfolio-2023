@@ -50,8 +50,6 @@ export default function Magnet({
         const { width, height } = magnetZone.current.getBoundingClientRect();
         const { left: magnetX, top: magnetY } = magnetZone.current.getBoundingClientRect();
 
-        console.log(magnetX, magnetY);
-
         const { x: magnetXCenter, y: magnetYCenter } = getItemCenter(magnetZone.current);
 
         // get mouse position relative to element
