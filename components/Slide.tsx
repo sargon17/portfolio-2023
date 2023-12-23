@@ -17,8 +17,8 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
   const exitingScale = motionValue(1);
   const scale = motionValue(1);
 
-  const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.49], [0, 1]);
-  const exitingOpacity = useTransform(scrollYProgress, [0.6, 0.9], [1, 0]);
+  const enteringOpacity = useTransform(scrollYProgress, [0.2, 0.49], [1, 0]);
+  const exitingOpacity = useTransform(scrollYProgress, [0.6, 0.9], [0, 1]);
 
   const opacity = motionValue(1);
 
@@ -48,14 +48,13 @@ export default function Slide({ children, id }: { children: React.ReactNode; id?
         className="anchor"
         id={id}
       ></div>
+      <motion.div className="content">{children}</motion.div>
       <motion.div
-        className="content"
+        className="overlay"
         style={{
-          opacity: opacity || 1,
+          opacity: opacity || 0,
         }}
-      >
-        {children}
-      </motion.div>
+      ></motion.div>
     </motion.div>
   );
 }
