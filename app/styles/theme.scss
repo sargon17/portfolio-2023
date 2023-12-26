@@ -47,6 +47,8 @@
   --background: var(--gray-900);
 
   --background--70: rgba(31, 31, 31, 0.7);
+  --background--50: rgba(31, 31, 31, 0.5);
+  --background--10: rgba(31, 31, 31, 0.1);
 
   // BORDERS
   --border-color: var(--gray-400);
@@ -85,6 +87,8 @@
   --background: #ececec;
 
   --background--70: rgba(237, 237, 237, 0.7);
+  --background--50: rgba(237, 237, 237, 0.5);
+  --background--10: rgba(237, 237, 237, 0.1);
 
   --text-main: #353535;
   --text-secondary: #676767;
@@ -126,6 +130,8 @@
   --background: #ececec;
 
   --background--70: rgba(237, 237, 237, 0.7);
+  --background--50: rgba(237, 237, 237, 0.5);
+  --background--10: rgba(237, 237, 237, 0.1);
 
   --text-main: #353535;
   --text-secondary: #676767;
@@ -191,6 +197,10 @@ $gray-900: var(--gray-900);
 $bottom-background: var(--bottom-background);
 $bottom-background--01: var(--bottom-background--01);
 $background: var(--background);
+
+$background--50: var(--background--50);
+$background--10: var(--background--10);
+
 //----------------------------------------
 
 // BORDERS
