@@ -15,10 +15,39 @@ $mobile-sidebar-width: 45px;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100lvh;
 
   @media screen and (max-width: 768px) {
+    background-color: $background--20;
+    backdrop-filter: blur(40px);
+  }
+
+  &__status {
     display: none;
+    position: absolute;
+    top: 50%;
+    right: -40px;
+
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+      display: flex;
+    }
+
+    svg {
+      path {
+        // inverted color of the background
+        stroke: $text-main;
+      }
+    }
   }
 
   &__nav {
@@ -30,13 +59,6 @@ $mobile-sidebar-width: 45px;
 
     &__button {
       width: 100%;
-
-      @media screen and (max-width: 768px) {
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        transform: rotate(270deg);
-        min-width: 80px;
-      }
     }
   }
 

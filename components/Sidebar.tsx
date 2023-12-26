@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+import { useState } from "react";
 
 import ThemeSwitcher from "./ThemeSwitcher";
 import Button from "./Button";
+
+import { motion } from "framer-motion";
 
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
@@ -11,8 +14,68 @@ import { handleScrollToElement } from "@/utils/utils";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
+
+  const [isOpened, setIsOpened] = useState(false);
+
+  const sidebarVariants = {
+    initial: {
+      x: -100,
+    },
+
+    opened: {
+      x: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
+
+    closed: {
+      x: -100,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
-    <div className="sidebar">
+    <motion.div
+      className="sidebar"
+      variants={sidebarVariants}
+      initial="initial"
+      animate={isOpened ? "opened" : "closed"}
+    >
+      <div
+        className="sidebar__status"
+        onClick={() => {
+          setIsOpened(!isOpened);
+        }}
+      >
+        <motion.svg
+          width="8"
+          height="14"
+          viewBox="0 0 8 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          initial={{
+            rotate: 0,
+          }}
+          animate={{
+            rotate: isOpened ? 180 : 0,
+          }}
+        >
+          <path
+            d="M1 12.84L5.87354 7.96646C6.44909 7.39091 6.44909 6.44909 5.87354 5.87354L1 1"
+            stroke="#AEAEAE"
+            strokeWidth="1.5"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </motion.svg>
+      </div>
+
       <nav className="sidebar__nav">
         <Button
           className="sidebar__nav__button"
@@ -58,6 +121,27 @@ export default function Sidebar() {
           Mykhaylo Tymofyeyev
         </h1>
       </div>
-    </div>
+    </motion.div>
   );
 }
+
+const Chevron = () => {
+  return (
+    <svg
+      width="8"
+      height="14"
+      viewBox="0 0 8 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 12.84L5.87354 7.96646C6.44909 7.39091 6.44909 6.44909 5.87354 5.87354L1 1"
+        stroke="#AEAEAE"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
