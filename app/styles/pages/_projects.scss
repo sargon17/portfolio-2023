@@ -32,7 +32,7 @@ $border-color: var(--border-color);
   flex-direction: column;
   justify-content: flex-start;
 
-  .navigation {
+  .navigation--desktop {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -40,6 +40,10 @@ $border-color: var(--border-color);
     gap: 2rem;
     padding: 0 2rem;
     color: $text-secondary;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
 
     &__item {
       font-size: 1rem;
@@ -73,6 +77,53 @@ $border-color: var(--border-color);
       .title {
         font-size: 1.5rem;
         font-weight: 400;
+      }
+    }
+  }
+  .navigation--mobile {
+    display: none;
+    padding: $content-margin;
+    position: relative;
+
+    @media screen and (max-width: 768px) {
+      display: block;
+    }
+
+    .navigation__button {
+      .button {
+        border-top-left-radius: calc($slide-radius - $content-margin);
+        text-transform: capitalize;
+        font-size: 1.2rem;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+
+        svg {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+
+    .navigation__dropdown {
+      margin-left: $content-margin;
+
+      .option {
+        .index {
+          font-size: 1rem;
+          font-weight: 200;
+          margin-right: 0.2rem;
+          color: $accent;
+          font-family: $font-body;
+        }
+
+        .title {
+          font-size: 1.5rem;
+          font-weight: 400;
+          text-transform: capitalize;
+        }
       }
     }
   }

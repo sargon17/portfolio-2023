@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
-import { ScopesText } from "@/utils/animations";
 
 import { motion } from "framer-motion";
 
@@ -16,6 +15,8 @@ import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
 import Button from "./Button";
+
+import Chevron from "../public/chevron.svg";
 
 export default function Projects() {
   const card = useRef<HTMLDivElement>(null);
@@ -396,36 +397,159 @@ const Navigation = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: -20,
+      maxHeight: 0,
+    },
+
+    closed: {
+      opacity: 0,
+      y: -20,
+      maxHeight: 0,
+
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+        delayChildren: 0,
+        delay: 0.3,
+      },
+
+      when: "afterChildren",
+    },
+
+    open: {
+      opacity: 1,
+      y: 0,
+      maxHeight: 200,
+
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+
+      when: "beforeChildren",
+    },
+  };
+
+  const childrenVariants = {
+    initial: {
+      opacity: 0,
+      y: -10,
+    },
+
+    closed: {
+      opacity: 0,
+      y: -10,
+    },
+
+    open: {
+      opacity: 1,
+      y: 0,
+
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
   return (
-    <div className="navigation">
-      {projects.map((project, index) => {
-        return (
-          <div
-            key={"nav" + project._id}
-            className="navigation__item"
-            data-active={activeProject?._id === project._id}
+    <>
+      <div className="navigation navigation--desktop">
+        {projects.map((project, index) => {
+          return (
+            <div
+              key={"nav" + project._id}
+              className="navigation__item"
+              data-active={activeProject?._id === project._id}
+              onClick={() => {
+                setActiveProject(project);
+                dispatch(setDimension({ width: 10, height: 10 }));
+                dispatch(setContent(""));
+              }}
+              onMouseEnter={() => {
+                const isActive = activeProject?._id === project._id;
+                if (!isActive) {
+                  dispatch(setDimension({ width: 100, height: 100 }));
+                  dispatch(setContent("see the project"));
+                }
+              }}
+              onMouseLeave={() => {
+                dispatch(setDimension({ width: 10, height: 10 }));
+                dispatch(setContent(""));
+              }}
+            >
+              <span className="index">00{index + 1}/</span>
+              <span className="title">{project.title}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="navigation navigation--mobile">
+        <div className="navigation__button">
+          <Button
             onClick={() => {
-              setActiveProject(project);
-              dispatch(setDimension({ width: 10, height: 10 }));
-              dispatch(setContent(""));
-            }}
-            onMouseEnter={() => {
-              const isActive = activeProject?._id === project._id;
-              if (!isActive) {
-                dispatch(setDimension({ width: 100, height: 100 }));
-                dispatch(setContent("see the project"));
-              }
-            }}
-            onMouseLeave={() => {
-              dispatch(setDimension({ width: 10, height: 10 }));
-              dispatch(setContent(""));
+              setIsDropdownOpen(!isDropdownOpen);
             }}
           >
-            <span className="index">00{index + 1}/</span>
-            <span className="title">{project.title}</span>
-          </div>
-        );
-      })}
-    </div>
+            {activeProject?.title}
+            <ChevronSVG isOpen={isDropdownOpen} />
+          </Button>
+        </div>
+        <motion.div
+          className="navigation__dropdown dropdown"
+          variants={variants}
+          initial="initial"
+          animate={isDropdownOpen ? "open" : "closed"}
+          exit="closed"
+        >
+          {projects.map((project, index) => {
+            return (
+              <motion.div
+                key={"nav" + project._id}
+                className="option"
+                data-active={activeProject?._id === project._id}
+                variants={childrenVariants}
+                onClick={() => {
+                  setActiveProject(project);
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <span className="index">00{index + 1}/</span>
+                <span className="title">{project.title}</span>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </>
+  );
+};
+
+type ChevronSVGProps = {
+  isOpen: boolean;
+};
+const ChevronSVG = ({ isOpen }: ChevronSVGProps) => {
+  return (
+    <motion.div
+      initial={{ rotate: 0 }}
+      animate={{ rotate: isOpen ? 180 : 0 }}
+    >
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 11 11"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.96876 3.9082H5.37293H3.03543C2.63543 3.9082 2.43543 4.39154 2.71876 4.67487L4.87709 6.8332C5.22293 7.17904 5.78543 7.17904 6.13126 6.8332L6.95209 6.01237L8.28959 4.67487C8.56876 4.39154 8.36876 3.9082 7.96876 3.9082Z"
+          fill="#9A9A9A"
+        />
+      </svg>
+    </motion.div>
   );
 };
