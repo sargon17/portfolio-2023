@@ -66,7 +66,7 @@ export default function ThemeDropdown({ onChange, isOpen }: ThemeDropdownProps) 
 
   return (
     <motion.div
-      className="theme-dropdown"
+      className="dropdown"
       variants={variants}
       initial="initial"
       animate={isOpen ? "open" : "closed"}
