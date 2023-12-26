@@ -185,9 +185,9 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
   }
 
   return (
+    // <div className="card-wrapper">
     <motion.div
       className={clss}
-      layoutId={activeProject?._id + "_card"}
       key={activeProject?._id}
       initial={{ opacity: 0 }}
       animate={{
@@ -256,6 +256,7 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
         </motion.div>
       </div>
     </motion.div>
+    // </div>
   );
 };
 

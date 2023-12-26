@@ -20,7 +20,7 @@ $slide--box-shadow: var(--slide-box-shadow);
 // ----------------------------------------
 .slide {
   width: 100%;
-  height: calc(100vh - (2 * $main-content-padding));
+  height: calc(100lvh - (2 * $main-content-padding));
   background-color: $background;
   border-radius: $slide-radius;
   overflow: hidden;
