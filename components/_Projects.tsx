@@ -18,6 +18,7 @@ import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 import Button from "./Button";
 
 export default function Projects() {
+  const card = useRef<HTMLDivElement>(null);
   const getProjects = async () => {
     // get project data from a json file in the public folder
     const projects: any = await fetch("/projects.json").then((res) => res.json());
@@ -39,6 +40,23 @@ export default function Projects() {
 
   useEffect(() => {
     getProjects();
+  }, []);
+
+  useEffect(() => {
+    const cardMousePosition = (e: MouseEvent) => {
+      if (!card.current) return;
+      const itemTop = card.current?.getBoundingClientRect().top || 0;
+      const itemLeft = card.current?.getBoundingClientRect().left || 0;
+
+      card.current.style.setProperty("--x-pos", `${e.clientX - itemLeft}`);
+      card.current.style.setProperty("--y-pos", `${e.clientY - itemTop}`);
+    };
+
+    window.addEventListener("mousemove", (e) => cardMousePosition(e));
+
+    return () => {
+      window.removeEventListener("mousemove", (e) => cardMousePosition(e));
+    };
   }, []);
 
   return (
@@ -87,24 +105,16 @@ export default function Projects() {
               />
             )}
           </motion.div>
-          <div className="project__content__description">
-            <div>
-              <motion.p
-                key={activeProject?._id}
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { delay: 0.6, duration: 0.5 },
-                }}
-              >
-                {activeProject?.description}
-              </motion.p>
-            </div>
+          <div
+            className="project__content__description"
+            ref={card}
+          >
+            <DescriptionCard activeProject={activeProject} />
             <div className="project__content__description__tags">
               {activeProject?.tags?.map((tag, index) => {
                 return (
                   <motion.p
-                    key={tag}
+                    key={tag + index + activeProject?._id}
                     className="project__content__description__tags__item"
                     initial={{ opacity: 0 }}
                     animate={{
@@ -181,6 +191,95 @@ export default function Projects() {
     </div>
   );
 }
+
+const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  if (!activeProject) return null;
+
+  let clss = "project__content__description__card";
+
+  if (isExpanded) {
+    clss += " expanded";
+  }
+
+  // check if the description is too long to show the read more button
+  if (activeProject?.description?.length > 500) {
+    clss += " read-more";
+  }
+
+  return (
+    <motion.div
+      className={clss}
+      layoutId={activeProject?._id + "_card"}
+      key={activeProject?._id}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 0.4, duration: 0.5 },
+      }}
+      exit={{
+        opacity: 0,
+        transition: { duration: 0.5 },
+      }}
+    >
+      <motion.div
+        key={activeProject?._id}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.6, duration: 0.5 },
+        }}
+        dangerouslySetInnerHTML={{ __html: activeProject?.description || "" }}
+      ></motion.div>
+      <div className="read-more__wrapper">
+        <motion.div
+          key={activeProject?._id}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: { delay: 0.7, duration: 0.5 },
+          }}
+          className="read-more__text"
+        >
+          {isExpanded ? (
+            <motion.p
+              onClick={() => setIsExpanded(!isExpanded)}
+              layoutId="card-read-more"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { delay: 0.7, duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.5 },
+              }}
+            >
+              close
+            </motion.p>
+          ) : (
+            <motion.p
+              onClick={() => setIsExpanded(!isExpanded)}
+              layoutId="card-read-more"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { delay: 0.7, duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.5 },
+              }}
+            >
+              read more
+            </motion.p>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
 
 const MulticolorTitle = ({ title }: { title: string }) => {
   const printTitle = (title: string) => {
