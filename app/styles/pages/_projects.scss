@@ -19,6 +19,10 @@ $title-color: var(--multicolor-title-color);
 $contest-text-color: var(--contest-text-color);
 $content-margin: 1rem;
 
+@media screen and (max-width: 768px) {
+  $content-margin: 0.4rem;
+}
+
 $border-color: var(--border-color);
 
 .projects-page {
@@ -113,6 +117,7 @@ $border-color: var(--border-color);
             display: inline-block;
             min-width: 0.15em;
             // transition: color 0.4s ease-in-out;
+            color: $accent;
           }
         }
       }
@@ -132,13 +137,12 @@ $border-color: var(--border-color);
 
         @media screen and (max-width: 768px) {
           font-size: 1.5rem;
-          top: 10%;
-          color: $gradient-2;
+          top: 0%;
+          left: $content-margin;
         }
 
         @media screen and (max-width: 480px) {
           font-size: 1rem;
-          top: 5%;
         }
       }
     }
@@ -160,17 +164,26 @@ $border-color: var(--border-color);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        margin-top: -14%;
-        z-index: 1;
+        gap: min(20lvh, 220px);
+
+        max-height: 85lvh;
       }
 
       &__image {
         width: 100%;
         height: calc(60lvh - $content-margin);
+        min-height: 20lvh;
         aspect-ratio: 16/8;
         z-index: 0;
         overflow: hidden;
         border-radius: calc($slide-radius - $content-margin);
+
+        @media screen and (max-width: 768px) {
+          height: 100%;
+          min-height: 0;
+          aspect-ratio: 16/9;
+          border-radius: calc($slide-radius - $content-margin);
+        }
 
         video {
           width: 100%;
@@ -186,9 +199,9 @@ $border-color: var(--border-color);
       }
 
       &__description {
-        z-index: 2;
+        z-index: 5;
         height: 100%;
-        min-width: 400px;
+        // min-width: 400px;
 
         display: flex;
         flex-direction: column;
@@ -197,6 +210,15 @@ $border-color: var(--border-color);
         gap: 20px;
 
         max-height: calc(60lvh - $content-margin);
+
+        @media screen and (max-width: 768px) {
+          gap: 10px;
+        }
+
+        // .card-wrapper {
+        //   position: relative;
+        //   flex-shrink: 1;
+        // }
 
         &__card {
           position: relative;
@@ -209,9 +231,17 @@ $border-color: var(--border-color);
 
           border: 1px solid $border-color;
 
-          max-height: 250px;
+          // max-height: 250px;
 
           transition: max-height 0.2s ease-in-out;
+
+          @media (max-width: 768px) {
+            // max-height: 150px;
+            position: absolute;
+            bottom: 105%;
+            left: 0;
+            width: 100%;
+          }
 
           p {
             font-size: 1.2rem;
@@ -241,19 +271,28 @@ $border-color: var(--border-color);
               font-size: 1rem;
               font-weight: 200;
               display: none;
+              margin: 0;
 
               cursor: pointer;
+
+              & > p {
+                margin: 0;
+              }
+            }
+
+            @media screen and (max-width: 768px) {
+              height: 50px;
             }
           }
 
           .card-content {
-            max-height: 100%;
-            padding: 1rem 1.5rem 4rem 1.5rem;
+            height: 600px;
+            max-height: 150px;
+            padding: 1rem 1.5rem 1rem 1.5rem;
+            transition: max-height 0.6s ease-in-out;
           }
-          &.read-more {
-            // padding: 1rem 1.5rem 2rem 1.5rem;
-            max-height: 250px;
 
+          &.read-more {
             .read-more__wrapper {
               opacity: 1;
 
@@ -263,11 +302,11 @@ $border-color: var(--border-color);
             }
           }
 
+          // when expanded
           &.expanded {
-            max-height: 100%;
-
             .card-content {
               overflow-y: scroll;
+              max-height: 600px;
             }
 
             .read-more__wrapper {
@@ -280,15 +319,9 @@ $border-color: var(--border-color);
           }
         }
 
-        @media screen and (max-width: 1200px) {
-          left: 52%;
-          width: 40%;
-        }
-
         @media screen and (max-width: 768px) {
           position: relative;
           width: 100%;
-          padding: 1rem;
           left: 0%;
         }
 
@@ -301,7 +334,6 @@ $border-color: var(--border-color);
           @media screen and (max-width: 768px) {
             font-size: 0.8rem;
             max-height: 180px;
-            overflow-y: scroll;
           }
         }
 
@@ -313,7 +345,7 @@ $border-color: var(--border-color);
           // margin-bottom: 0.2rem;
 
           &__item {
-            font-size: 1rem !important;
+            font-size: 1rem;
             font-weight: 100;
             color: $text-secondary;
             padding: 0.5rem 1rem;
@@ -323,6 +355,14 @@ $border-color: var(--border-color);
             cursor: default;
 
             font-size: 1rem;
+
+            @media screen and (max-width: 768px) {
+              font-size: 0.6rem;
+              padding: 0.3rem 0.6rem;
+            }
+          }
+          @media screen and (max-width: 768px) {
+            gap: 0.3rem;
           }
         }
 
@@ -341,6 +381,11 @@ $border-color: var(--border-color);
             font-size: 1.4rem;
 
             border-bottom-right-radius: calc($slide-radius - $content-margin);
+
+            @media screen and (max-width: 768px) {
+              font-size: 1rem;
+              border-bottom-left-radius: calc($slide-radius - $content-margin);
+            }
           }
         }
       }

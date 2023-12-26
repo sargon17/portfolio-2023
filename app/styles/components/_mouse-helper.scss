@@ -35,6 +35,10 @@ $text-color: var(--text-color);
   z-index: 10000;
   overflow: hidden;
 
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+
   transition: width $t-normal $t-easing, height $t-normal $t-easing, opacity $t-normal $t-easing,
     transform $t-normal $t-easing, mix-blend-mode $t-normal $t-easing;
 
