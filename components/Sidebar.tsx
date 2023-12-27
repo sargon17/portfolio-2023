@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import ThemeSwitcher from "./ThemeSwitcher";
 import Button from "./Button";
+import OpenToWork from "./OpenToWork";
 
 import { motion } from "framer-motion";
 
@@ -108,6 +109,7 @@ export default function Sidebar() {
         <ThemeSwitcher />
       </nav>
       <div className="sidebar__title">
+        <OpenToWork />
         <h1
           onMouseEnter={() => {
             dispatch(setDimension({ width: 100, height: 100 }));
