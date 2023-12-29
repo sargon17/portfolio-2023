@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
+import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function Contacts() {
   return (
@@ -148,10 +149,30 @@ type ContactLinkProps = {
 const ContactLink = ({ children, link, onHover, onUnhover, isHovered }: ContactLinkProps) => {
   const dispatch = useDispatch();
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobile(false);
+      } else {
+        setIsMobile(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   let blur = 0;
 
   if (isHovered === false) {
-    blur = 2;
+    blur = isMobile ? 0 : 2;
   }
 
   const linkVariants = {
