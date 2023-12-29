@@ -12,20 +12,26 @@ import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 import { handleScrollToElement } from "@/utils/utils";
+import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
 
   const [isOpened, setIsOpened] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setIsOpened(true);
+        setIsMobile(false);
       } else {
         setIsOpened(false);
+        setIsMobile(true);
       }
     };
+
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
@@ -63,35 +69,37 @@ export default function Sidebar() {
       initial="initial"
       animate={isOpened ? "opened" : "closed"}
     >
-      <div
-        className="sidebar__status"
-        onClick={() => {
-          setIsOpened(!isOpened);
-        }}
-      >
-        <motion.svg
-          width="8"
-          height="14"
-          viewBox="0 0 8 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          initial={{
-            rotate: 0,
-          }}
-          animate={{
-            rotate: isOpened ? 180 : 0,
+      {isMobile && (
+        <div
+          className="sidebar__status"
+          onClick={() => {
+            setIsOpened(!isOpened);
           }}
         >
-          <path
-            d="M1 12.84L5.87354 7.96646C6.44909 7.39091 6.44909 6.44909 5.87354 5.87354L1 1"
-            stroke="#AEAEAE"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </motion.svg>
-      </div>
+          <motion.svg
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            initial={{
+              rotate: 0,
+            }}
+            animate={{
+              rotate: isOpened ? 180 : 0,
+            }}
+          >
+            <path
+              d="M1 12.84L5.87354 7.96646C6.44909 7.39091 6.44909 6.44909 5.87354 5.87354L1 1"
+              stroke="#AEAEAE"
+              strokeWidth="1.5"
+              strokeMiterlimit="10"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </motion.svg>
+        </div>
+      )}
 
       <nav className="sidebar__nav">
         <Button
@@ -138,7 +146,9 @@ export default function Sidebar() {
             dispatch(setDimension({ width: 10, height: 10 }));
             dispatch(setContent(""));
           }}
+          className="sidebar__title__name"
         >
+          {/* {isMobile ? "MT" : "Mykhaylo Tymofyeyev"} */}
           Mykhaylo Tymofyeyev
         </h1>
       </div>

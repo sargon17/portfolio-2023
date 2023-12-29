@@ -15,7 +15,7 @@ $mobile-sidebar-width: 45px;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100lvh;
+  height: 100dvh;
 
   @media screen and (max-width: 768px) {
     background-color: $background--20;
@@ -79,6 +79,9 @@ $mobile-sidebar-width: 45px;
       text-orientation: mixed;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
+
+      @media screen and (max-width: 768px) {
+      }
     }
   }
 }
