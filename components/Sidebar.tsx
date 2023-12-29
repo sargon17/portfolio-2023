@@ -104,12 +104,15 @@ export default function Sidebar() {
         >
           contacts
         </Button>
-        {/* <Button className="sidebar__nav__button">contacts</Button> */}
 
         <ThemeSwitcher />
       </nav>
       <div className="sidebar__title">
-        <OpenToWork />
+        <OpenToWork
+          onClick={() => {
+            handleScrollToElement("#_contacts");
+          }}
+        />
         <h1
           onMouseEnter={() => {
             dispatch(setDimension({ width: 100, height: 100 }));
