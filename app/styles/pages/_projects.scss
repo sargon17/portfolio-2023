@@ -2,7 +2,7 @@
   --multicolor-title-color: var(--gray-800);
   --contest-text-color: var(--gray-200);
 
-  --border-color: #ffffff1d;
+  --border-color: #ffffff0b;
 
   // --x-pos: 50;
   // --y-pox: 50;
@@ -12,7 +12,7 @@
 [data-theme="pink"] {
   --multicolor-title-color: var(--gray-200);
   --contest-text-color: var(--gray-800);
-  --border-color: #0000001d;
+  --border-color: #0000000b;
 }
 
 $title-color: var(--multicolor-title-color);
@@ -296,7 +296,6 @@ $border-color: var(--border-color);
           }
 
           p {
-            font-size: 1.2rem;
             font-weight: 300;
             color: $text-main;
             margin-bottom: 1rem;
@@ -379,7 +378,6 @@ $border-color: var(--border-color);
         }
 
         p {
-          font-size: 1.2rem;
           // font-weight: 300;
           color: $text-main;
           margin-bottom: 1rem;
