@@ -3,6 +3,14 @@
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   padding: 1.875rem;
+  width: max-content;
+
+  @media screen and (max-width: 768px) {
+    padding: 1.875rem 0;
+    transform: rotate(-90deg);
+    writing-mode: horizontal-tb;
+    text-orientation: unset;
+  }
 
   & > div {
     position: relative;
@@ -26,6 +34,10 @@
       overflow: hidden;
       border: none;
       cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        padding: 0.5rem 1rem;
+      }
 
       & > .effects {
         position: absolute;
@@ -63,6 +75,9 @@
         font-style: italic;
         font-size: 1.125rem;
         font-weight: 300;
+
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }
