@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ThemeSwitcher from "./ThemeSwitcher";
 import Button from "./Button";
@@ -16,11 +16,27 @@ import { handleScrollToElement } from "@/utils/utils";
 export default function Sidebar() {
   const dispatch = useDispatch();
 
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsOpened(true);
+      } else {
+        setIsOpened(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const sidebarVariants = {
     initial: {
-      x: -100,
+      x: isOpened ? 0 : -100,
     },
 
     opened: {

@@ -66,13 +66,12 @@
       }
     }
   }
-}
-
-.button {
-  --rotation: rotateY(calc(var(--mx) * 30deg)) rotateX(calc(var(--my) * -30deg));
-  --scale: scale(1);
-  transform: var(--rotation) var(--scale);
-  transition: transform 100ms ease;
+  button {
+    --rotation: rotateY(calc(var(--mx) * 30deg)) rotateX(calc(var(--my) * -30deg));
+    --scale: scale(1);
+    transform: var(--rotation) var(--scale);
+    transition: transform 100ms ease;
+  }
 }
 
 .button:hover {
@@ -90,6 +89,8 @@
 
   filter: saturate(150%);
   mix-blend-mode: exclusion;
+
+  opacity: 0.4;
 }
 
 .holographic::after {
@@ -99,10 +100,12 @@
 
   background-image: var(--stripes), var(--rainbow);
   background-blend-mode: screen;
-  background-size: 250%, 200%;
+  background-size: 350%, 300%;
   background-position: calc(60% - var(--mx) * 20%) 50%, calc(55% - var(--my) * 10%) 50%;
 
   mix-blend-mode: difference;
+
+  animation: moveHolo 4s infinite ease-in-out alternate;
 }
 
 .glare {
@@ -111,4 +114,24 @@
     #fff6,
     transparent
   );
+  opacity: 0.4;
+  animation: moveGlare 2s infinite linear;
+}
+
+@keyframes moveHolo {
+  0% {
+    background-position: calc(10% + var(--mx) * 20%) 50%, calc(15% + var(--my) * 10%) 50%;
+  }
+  100% {
+    background-position: calc(90% - var(--mx) * 20%) 50%, calc(95% - var(--my) * 10%) 50%;
+  }
+}
+
+@keyframes moveGlare {
+  0% {
+    background-position: calc(50% + var(--mx) * 50%) calc(50% + var(--my) * 50%);
+  }
+  100% {
+    background-position: calc(50% - var(--mx) * 50%) calc(50% - var(--my) * 50%);
+  }
 }
