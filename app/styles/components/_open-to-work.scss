@@ -9,12 +9,12 @@
 
     & > div {
       position: absolute;
-      inset: -6rem;
+      inset: -6rem -2rem;
 
       & > .holographic {
         filter: blur(15px) invert(1);
         position: absolute;
-        inset: 6rem;
+        inset: 6rem 2rem;
         opacity: 0.4;
       }
     }
