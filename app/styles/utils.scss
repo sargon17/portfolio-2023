@@ -30,3 +30,32 @@
     }
   }
 }
+
+.main {
+  &-background {
+    position: fixed;
+    width: 0;
+    height: 0;
+
+    svg {
+      width: 100vw;
+      height: 100dvh;
+
+      path {
+        fill: $accent;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100dvh;
+      background: $bottom-background--01;
+      z-index: 1;
+      backdrop-filter: blur(120px);
+    }
+  }
+}

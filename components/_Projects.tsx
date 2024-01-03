@@ -1,10 +1,8 @@
 "use client";
-import React, { use, useLayoutEffect } from "react";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { client } from "@/sanity/lib/client";
 
-import { textToLetters, getItemCenter } from "@/utils/utils";
-import { ScopesText } from "@/utils/animations";
+import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
 import { motion } from "framer-motion";
 
@@ -12,151 +10,300 @@ import { motion } from "framer-motion";
 import projectType from "@/types/project";
 
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/contexts/mouseStore";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
-export default function Projects() {
-  const getProjects = async () => {
-    const projects = await client.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      date,
-      description,
-      link,
-      "image": image.asset->url,
-      "video": video.asset->url,
-      tags,
+import Button from "./Button";
 
-    }`);
+import Chevron from "../public/chevron.svg";
+
+export default function Projects() {
+  const card = useRef<HTMLDivElement>(null);
+  const getProjects = async () => {
+    // get project data from a json file in the public folder
+    const projects: any = await fetch("/projects.json").then((res) => res.json());
     setProjects(projects);
+
+    if (projects && projects.length > 0) {
+      if (projects[0]) {
+        setActiveProject(projects[0]);
+      }
+    }
   };
   const [projects, setProjects] = useState<projectType[]>([]);
   const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const dispatch = useDispatch();
-  const mousePositionState = useSelector((state: RootState) => state.position.position);
 
   const page = useRef<HTMLDivElement>(null);
-  const link = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getProjects();
   }, []);
 
   useEffect(() => {
-    if (projects.length > 0) {
-      setActiveProject(projects[0]);
-    }
-  }, [projects]);
+    const cardMousePosition = (e: MouseEvent) => {
+      if (!card.current) return;
+      const itemTop = card.current?.getBoundingClientRect().top || 0;
+      const itemLeft = card.current?.getBoundingClientRect().left || 0;
 
-  useEffect(() => {
-    if (mousePositionState) {
-      setMousePosition(mousePositionState);
-    }
-  }, [mousePositionState]);
+      card.current.style.setProperty("--x-pos", `${e.clientX - itemLeft}`);
+      card.current.style.setProperty("--y-pos", `${e.clientY - itemTop}`);
+    };
 
-  // big title animation
-  // todo - refactor
-  useLayoutEffect(() => {
-    // get all the title letters
-    const title = page.current?.querySelector(".project__main-data__title h2");
-    if (!title) return;
+    window.addEventListener("mousemove", (e) => cardMousePosition(e));
 
-    const titleTop = title.getBoundingClientRect().top;
-    const titleBottom = title.getBoundingClientRect().bottom;
+    return () => {
+      window.removeEventListener("mousemove", (e) => cardMousePosition(e));
+    };
+  }, []);
 
-    if (mousePosition.y > titleTop - 20 && mousePosition.y < titleBottom + 20) {
-      const letters = title.querySelectorAll("span");
+  return (
+    <div
+      className="projects-page"
+      ref={page}
+    >
+      <div className="projects-page__navigation">
+        <Navigation
+          projects={projects}
+          activeProject={activeProject}
+          setActiveProject={setActiveProject}
+        />
+      </div>
+      <div className="project">
+        <div className="project__main-data">
+          <MulticolorTitle title={activeProject?.title || ""} />
+          <motion.div
+            className="project__main-data__year"
+            key={activeProject?._id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+          >
+            <p>{new Date(activeProject?.date || "").getFullYear()}</p>
+          </motion.div>
+        </div>
+        <div className="project__content">
+          <motion.a
+            key={activeProject?._id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
+            className="project__content__image"
+            href={activeProject?.link}
+            target="_blank"
+            rel="noreferrer"
+            onMouseEnter={() => {
+              dispatch(setDimension({ width: 100, height: 100 }));
+              dispatch(setContent("see it yourself"));
+            }}
+            onMouseLeave={() => {
+              dispatch(setDimension({ width: 10, height: 10 }));
+              dispatch(setContent(""));
+            }}
+          >
+            {activeProject?.video ? (
+              <video
+                src={activeProject?.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                src={activeProject?.image}
+                alt=""
+              />
+            )}
+          </motion.a>
+          <div
+            className="project__content__description"
+            ref={card}
+          >
+            <DescriptionCard activeProject={activeProject} />
+            <div className="project__content__description__tags">
+              {activeProject?.tags?.map((tag, index) => {
+                return (
+                  <motion.p
+                    key={tag + index + activeProject?._id}
+                    className="project__content__description__tags__item"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 0.9 + index * 0.1, duration: 0.5 },
+                    }}
+                  >
+                    {tag}
+                  </motion.p>
+                );
+              })}
+            </div>
+            {activeProject?.link && (
+              <>
+                <motion.a
+                  className="project__content__description__link"
+                  key={activeProject?._id}
+                  initial={{ opacity: 0 }}
+                  animate={{
+                    opacity: 1,
+                    transition: { delay: 1.2, duration: 0.5 },
+                  }}
+                  href={activeProject?.link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button
+                    onClick={() => {
+                      dispatch(setFixPosition({ x: 0, y: 0 }));
+                    }}
+                  >
+                    see it yourself
+                  </Button>
+                </motion.a>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-      if (letters) {
-        letters.forEach((letter, index) => {
-          // get the letters center
-          const { x: letterCenterX, y: letterCenterY } = getItemCenter(letter);
+const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-          const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
-          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+  if (!activeProject) return null;
 
-          // if mouse is 20px away from the letter or less
+  let clss = "project__content__description__card";
 
-          const minDistance = 200;
+  if (isExpanded) {
+    clss += " expanded";
+  }
 
-          const distance = Math.sqrt(
-            Math.pow(mousePosition.x - letterCenterX, 2) + Math.pow(mousePosition.y - letterCenterY, 2)
-          );
+  // check if the description is too long to show the read more button
+  if (activeProject?.description?.length > 500) {
+    clss += " read-more";
+  }
 
-          if (
-            mousePosition.x > letterCenterX - minDistance &&
-            mousePosition.x < letterCenterX + minDistance &&
-            mousePosition.y > letterCenterY - minDistance &&
-            mousePosition.y < letterCenterY + minDistance
-          ) {
-            // get the closest distance from the mouse to the letter
+  return (
+    // <div className="card-wrapper">
+    <motion.div
+      className={clss}
+      key={activeProject?._id}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 0.4, duration: 0.5 },
+      }}
+      exit={{
+        opacity: 0,
+        transition: { duration: 0.5 },
+      }}
+    >
+      <motion.div
+        className="card-content"
+        data-lenis-prevent={isExpanded}
+        key={activeProject?._id}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.6, duration: 0.5 },
+        }}
+        dangerouslySetInnerHTML={{ __html: activeProject?.description || "" }}
+      ></motion.div>
+      <div className="read-more__wrapper">
+        <motion.div
+          key={activeProject?._id}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: { delay: 0.7, duration: 0.5 },
+          }}
+          className="read-more__text"
+        >
+          {isExpanded ? (
+            <motion.p
+              onClick={() => setIsExpanded(!isExpanded)}
+              layoutId="card-read-more"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { delay: 0.7, duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.5 },
+              }}
+            >
+              close
+            </motion.p>
+          ) : (
+            <motion.p
+              onClick={() => setIsExpanded(!isExpanded)}
+              layoutId="card-read-more"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { delay: 0.7, duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.5 },
+              }}
+            >
+              read more
+            </motion.p>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
+    // </div>
+  );
+};
 
-            letter.animate(
-              [
-                {
-                  // color
-                  color: mixColors(accentColor, classicColor, 1 - distance / minDistance),
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          } else {
-            letter.animate(
-              [
-                {
-                  color: classicColor,
-                },
-              ],
-              {
-                duration: 1000,
-                fill: "forwards",
-              }
-            );
-          }
-        });
-      }
-    } else {
-      const letters = title.querySelectorAll("span");
+const MulticolorTitle = ({ title }: { title: string }) => {
+  const printTitle = (title: string) => {
+    const letters = textToLetters(title);
+    return letters.map((letter, index) => {
+      return (
+        <Letter
+          key={index}
+          letter={letter}
+          index={index}
+        />
+      );
+    });
+  };
 
-      if (letters) {
-        letters.forEach((letter, index) => {
-          const classicColor = getComputedStyle(document.documentElement).getPropertyValue("--title-color");
+  return (
+    <div className="project__main-data__title">
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.1, duration: 0.5 },
+        }}
+      >
+        {printTitle(title || "")}
+      </motion.h2>
+    </div>
+  );
+};
 
-          letter.animate(
-            [
-              {
-                color: classicColor,
-              },
-            ],
-            {
-              duration: 1000,
-              fill: "forwards",
-            }
-          );
-        });
-      }
-    }
-  }, [mousePosition]);
+const Letter = ({ letter, index }: { letter: string; index: number }) => {
+  const letterRef = useRef<HTMLSpanElement>(null);
 
-  // todo - refactor & move to utils
   const mixColors = (color1: string, color2: string, weight: number) => {
-    // mix the given colors
+    // mix two colors together with a weight from 0 to 1 (0 = color1, 1 = color2)
+
     const d2h = (d: number) => d.toString(16); // convert a decimal value to hex
     const h2d = (h: string) => parseInt(h, 16); // convert a hex value to decimal
 
     let color = "#";
 
     for (let i = 1; i <= 6; i += 2) {
-      const v1 = h2d(color1.substr(i, 2));
-      const v2 = h2d(color2.substr(i, 2));
+      const v1 = h2d(color1.substring(i, i + 2));
+      const v2 = h2d(color2.substring(i, i + 2));
       let val = d2h(Math.floor(v2 + (v1 - v2) * weight));
 
       while (val.length < 2) {
@@ -169,20 +316,150 @@ export default function Projects() {
     return color;
   };
 
-  const printTitle = (title: string) => {
-    const letters = textToLetters(title);
-    return letters.map((letter, index) => {
-      return <span key={index}>{letter}</span>;
-    });
+  useEffect(() => {
+    if (!letterRef.current) return;
+    const letterColorAnimation = (e: MouseEvent) => {
+      if (!letterRef.current) return;
+      // getting the colors from the css variables in the root
+      const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
+      const classicColor = getComputedStyle(document.documentElement).getPropertyValue(
+        "--multicolor-title-color"
+      );
+
+      // set the distance from the center of the letter to the mouse position to run the animation
+      const dist = window.innerWidth / 2;
+
+      // get the center of the letter
+      const { x: centerX, y: centerY } = getItemCenter(letterRef.current);
+
+      // get the distance from the mouse to the letter center (pythagoras)
+      const distance = getDistance(centerX, centerY, e.clientX, e.clientY);
+
+      if (distance < dist) {
+        // if the distance is less than the max distance, animate the letter color based on the distance
+        const factor = distance / dist;
+        letterRef.current.style.color = mixColors(accentColor, classicColor, 1 - factor);
+      } else {
+        letterRef.current.style.color = classicColor;
+      }
+    };
+
+    window.addEventListener("mousemove", (e) => letterColorAnimation(e));
+
+    return () => {
+      window.removeEventListener("mousemove", (e) => letterColorAnimation(e));
+    };
+  }, []);
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.05,
+          duration: 0.5,
+        },
+      };
+    },
   };
 
   return (
-    <div
-      className="projects-page"
-      ref={page}
-    >
-      <div className="navigation">
-        {projects.map((project) => {
+    <>
+      <motion.span
+        className="letter"
+        ref={letterRef}
+        custom={index}
+        variants={lettersVariants}
+        initial="initial"
+        animate="animate"
+        key={index}
+      >
+        {letter}
+      </motion.span>
+    </>
+  );
+};
+
+const Navigation = ({
+  projects,
+  activeProject,
+  setActiveProject,
+}: {
+  projects: projectType[];
+  activeProject: projectType | null;
+  setActiveProject: (project: projectType) => void;
+}) => {
+  const dispatch = useDispatch();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: -20,
+      maxHeight: 0,
+    },
+
+    closed: {
+      opacity: 0,
+      y: -20,
+      maxHeight: 0,
+
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+        delayChildren: 0,
+        delay: 0.3,
+      },
+
+      when: "afterChildren",
+    },
+
+    open: {
+      opacity: 1,
+      y: 0,
+      maxHeight: 200,
+
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+
+      when: "beforeChildren",
+    },
+  };
+
+  const childrenVariants = {
+    initial: {
+      opacity: 0,
+      y: -10,
+    },
+
+    closed: {
+      opacity: 0,
+      y: -10,
+    },
+
+    open: {
+      opacity: 1,
+      y: 0,
+
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
+  return (
+    <>
+      <div className="navigation navigation--desktop">
+        {projects.map((project, index) => {
           return (
             <div
               key={"nav" + project._id}
@@ -205,109 +482,74 @@ export default function Projects() {
                 dispatch(setContent(""));
               }}
             >
-              {project.title}
+              <span className="index">00{index + 1}/</span>
+              <span className="title">{project.title}</span>
             </div>
           );
         })}
       </div>
-      <div className="project">
-        <div className="project__main-data">
-          <div className="project__main-data__title">
-            <motion.h2
-              key={activeProject?._id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
-            >
-              {printTitle(activeProject?.title || "")}
-            </motion.h2>
-          </div>
-          <motion.div
-            className="project__main-data__year"
-            key={activeProject?._id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+      <div className="navigation navigation--mobile">
+        <div className="navigation__button">
+          <Button
+            onClick={() => {
+              setIsDropdownOpen(!isDropdownOpen);
+            }}
           >
-            <p>{new Date(activeProject?.date || "").getFullYear()}</p>
-          </motion.div>
+            {activeProject?.title}
+            <ChevronSVG isOpen={isDropdownOpen} />
+          </Button>
         </div>
-        <div className="project__content">
-          <motion.div
-            key={activeProject?._id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
-            className="project__content__image"
-          >
-            {activeProject?.video ? (
-              <video
-                src={activeProject?.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-            ) : (
-              <img
-                src={activeProject?.image}
-                alt=""
-              />
-            )}
-          </motion.div>
-          <div className="project__content__description">
-            <div>
-              <motion.p
-                key={activeProject?._id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.5 } }}
-              >
-                {activeProject?.description}
-              </motion.p>
-            </div>
-            <div className="project__content__description__tags">
-              {activeProject?.tags?.map((tag, index) => {
-                return (
-                  <motion.p
-                    key={tag}
-                    className="project__content__description__tags__item"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { delay: 0.9 + index * 0.1, duration: 0.5 } }}
-                  >
-                    {tag}
-                  </motion.p>
-                );
-              })}
-            </div>
-            {activeProject?.link && (
+        <motion.div
+          className="navigation__dropdown dropdown"
+          variants={variants}
+          initial="initial"
+          animate={isDropdownOpen ? "open" : "closed"}
+          exit="closed"
+        >
+          {projects.map((project, index) => {
+            return (
               <motion.div
-                className="project__content__description__link"
-                key={activeProject?._id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 1.2, duration: 0.5 } }}
-                ref={link}
-                onMouseEnter={() => {
-                  dispatch(setDimension({ width: 150, height: 30 }));
-
-                  const itemTop = link.current?.getBoundingClientRect().top || 0;
-                  const itemLeft = link.current?.getBoundingClientRect().left || 0;
-
-                  dispatch(setFixPosition({ x: itemLeft - 20, y: itemTop + window.scrollY - 5 }));
-                }}
-                onMouseLeave={() => {
-                  dispatch(setDimension({ width: 10, height: 10 }));
-                  dispatch(setFixPosition({ x: 0, y: 0 }));
+                key={"nav" + project._id}
+                className="option"
+                data-active={activeProject?._id === project._id}
+                variants={childrenVariants}
+                onClick={() => {
+                  setActiveProject(project);
+                  setIsDropdownOpen(false);
                 }}
               >
-                <a
-                  href={activeProject?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <ScopesText>see it yourself</ScopesText>
-                </a>
+                <span className="index">00{index + 1}/</span>
+                <span className="title">{project.title}</span>
               </motion.div>
-            )}
-          </div>
-        </div>
+            );
+          })}
+        </motion.div>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+type ChevronSVGProps = {
+  isOpen: boolean;
+};
+const ChevronSVG = ({ isOpen }: ChevronSVGProps) => {
+  return (
+    <motion.div
+      initial={{ rotate: 0 }}
+      animate={{ rotate: isOpen ? 180 : 0 }}
+    >
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 11 11"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.96876 3.9082H5.37293H3.03543C2.63543 3.9082 2.43543 4.39154 2.71876 4.67487L4.87709 6.8332C5.22293 7.17904 5.78543 7.17904 6.13126 6.8332L6.95209 6.01237L8.28959 4.67487C8.56876 4.39154 8.36876 3.9082 7.96876 3.9082Z"
+          fill="#9A9A9A"
+        />
+      </svg>
+    </motion.div>
+  );
+};

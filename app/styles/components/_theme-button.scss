@@ -1,23 +1,4 @@
-// VARIABLES
-:root {
-  --btn-background--hover: var(--gray-850);
-}
-[data-theme="light"] {
-  --btn-background--hover: var(--gray-150);
-}
-
-[data-theme="pink"] {
-  --btn-background--hover: var(--gray-150);
-}
-
-$btn-border-color: var(--background--70);
-$btn-background--hover: var(--btn-background--hover);
-
-$btn-radius: $radius;
-
-//----------------------------------------
-
-.button {
+.theme-button {
   border: none;
   border-radius: $btn-radius;
   background: $background;
@@ -35,8 +16,18 @@ $btn-radius: $radius;
   font-weight: 300;
   text-transform: lowercase;
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 
   cursor: pointer;
+
+  svg {
+    margin-top: 2px;
+  }
 
   &:hover {
     background: $btn-background--hover;

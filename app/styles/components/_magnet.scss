@@ -1,0 +1,17 @@
+.magnet {
+  border-radius: 100%;
+  width: 300px;
+  aspect-ratio: 1/1;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .magnet__inner {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

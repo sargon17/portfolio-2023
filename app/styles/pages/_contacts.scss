@@ -1,0 +1,89 @@
+:root {
+}
+
+[data-theme="light"] {
+}
+
+.contacts {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .huge-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    font-size: calc(1rem + 18vw);
+    font-weight: 300;
+    color: $text-accent;
+    margin: 0;
+
+    @media (max-width: 600px) {
+      font-size: calc(1rem + 12vw);
+    }
+  }
+
+  .contacts_info {
+    position: absolute;
+    bottom: 45%;
+    left: 60%;
+
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    @media screen and (max-width: 768px) {
+      left: 10%;
+      padding: 0 1rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+      font-weight: 300;
+      color: $text-accent;
+      margin: 0;
+    }
+
+    .links {
+      a {
+        padding: 0.5rem 0;
+        font-size: 1.25rem;
+
+        display: block;
+        position: relative;
+        width: fit-content;
+        &:nth-last-child(2) {
+          margin-top: 2rem;
+        }
+
+        .arrow {
+          position: absolute;
+          bottom: 2px;
+          left: -2rem;
+          fill: $text-accent;
+          transition: all $t-normal $t-easing;
+          pointer-events: none;
+
+          svg {
+            width: 24px;
+            height: 24px;
+
+            path {
+              stroke: $text-accent;
+            }
+          }
+        }
+
+        .text {
+          position: relative;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

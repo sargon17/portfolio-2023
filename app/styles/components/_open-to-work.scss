@@ -1,0 +1,152 @@
+.open-to-work {
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 1.875rem;
+  width: max-content;
+
+  @media screen and (max-width: 768px) {
+    padding: 1.875rem 0;
+    transform: rotate(-90deg);
+    writing-mode: horizontal-tb;
+    text-orientation: unset;
+  }
+
+  & > div {
+    position: relative;
+
+    & > div {
+      position: absolute;
+      inset: -6rem -2rem;
+
+      & > .holographic {
+        filter: blur(15px) invert(1);
+        position: absolute;
+        inset: 6rem 2rem;
+        opacity: 0.4;
+      }
+    }
+    & > button {
+      position: relative;
+      padding: 1rem 0.5rem;
+      border-radius: 0.5rem;
+      background-color: rgb(244 244 245);
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        padding: 0.5rem 1rem;
+      }
+
+      & > .effects {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.3s ease-in-out;
+
+        & > .holographic {
+          position: absolute;
+          inset: 0;
+        }
+
+        & > .glare {
+          position: absolute;
+          inset: 0;
+        }
+      }
+
+      & > .overlay {
+        position: absolute;
+        inset: 0.125rem;
+        border-radius: 0.5rem;
+        background-color: white;
+        opacity: 0.4;
+      }
+
+      & > .content {
+        position: relative;
+        color: rgb(15 23 42);
+
+        font-family: $font-accent;
+        font-size: 1.25rem;
+        font-style: italic;
+        font-size: 1.125rem;
+        font-weight: 300;
+
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  button {
+    --rotation: rotateY(calc(var(--mx) * 30deg)) rotateX(calc(var(--my) * -30deg));
+    --scale: scale(1);
+    transform: var(--rotation) var(--scale);
+    transition: transform 100ms ease;
+  }
+}
+
+.button:hover {
+  --scale: scale(1.05);
+}
+
+.holographic {
+  --stripes: repeating-linear-gradient(315deg, #000 6.66%, #fff 13.33%, #000 20%);
+  --rainbow: repeating-linear-gradient(115deg, #f87171, #fef08a, #86efac, #5eead4, #60a5fa, #e879f9, #fb7185);
+  background-image: var(--stripes), var(--rainbow);
+
+  background-blend-mode: screen;
+  background-size: 600%, 150%;
+  background-position: calc(40% + var(--mx) * 20%) 50%, calc(45% + var(--my) * 10%) 50%;
+
+  filter: saturate(150%);
+  mix-blend-mode: exclusion;
+
+  opacity: 0.4;
+}
+
+.holographic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: var(--stripes), var(--rainbow);
+  background-blend-mode: screen;
+  background-size: 350%, 300%;
+  background-position: calc(60% - var(--mx) * 20%) 50%, calc(55% - var(--my) * 10%) 50%;
+
+  mix-blend-mode: difference;
+
+  animation: moveHolo 4s infinite ease-in-out alternate;
+}
+
+.glare {
+  background-image: radial-gradient(
+    circle at calc(50% + var(--mx) * 50%) calc(50% + var(--my) * 50%),
+    #fff6,
+    transparent
+  );
+  opacity: 0.4;
+  animation: moveGlare 2s infinite linear;
+}
+
+@keyframes moveHolo {
+  0% {
+    background-position: calc(10% + var(--mx) * 20%) 50%, calc(15% + var(--my) * 10%) 50%;
+  }
+  100% {
+    background-position: calc(90% - var(--mx) * 20%) 50%, calc(95% - var(--my) * 10%) 50%;
+  }
+}
+
+@keyframes moveGlare {
+  0% {
+    background-position: calc(50% + var(--mx) * 50%) calc(50% + var(--my) * 50%);
+  }
+  100% {
+    background-position: calc(50% - var(--mx) * 50%) calc(50% - var(--my) * 50%);
+  }
+}
