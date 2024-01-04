@@ -1,0 +1,30 @@
+query getPage($uri: String) {
+  pageBy(uri: $uri) {
+    career {
+      heading
+      gallery {
+        photos {
+          srcSet(size: LARGE)
+          mediaDetails {
+            height
+            width
+          }
+          altText
+        }
+      }
+      openPositionsTitle
+      groupPhoto {
+        heading
+        photo {
+          altText
+          srcSet(size: LARGE)
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+      fieldGroupName
+    }
+  }
+}
