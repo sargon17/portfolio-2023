@@ -15,3 +15,30 @@ export async function getPreviewPostBySlug() {
   );
   return data.postBy;
 }
+
+export async function getPostBySlug(slug: string) {
+  const data = await fetchAPI(
+    `
+    query GetPost {
+  postBy(
+    uri: "${slug}"
+  ) {
+    date
+    content
+    title
+    featuredImage {
+      node {
+        altText
+        sourceUrl
+        mediaDetails {
+          width
+          height
+        }
+      }
+    }
+  }
+}
+  `
+  );
+  return data.postBy;
+}
