@@ -1,13 +1,19 @@
+"use client";
 import React from "react";
 
 import { useDispatch } from "react-redux";
 import { setPosition } from "@/contexts/features/mouse/mousePosition";
 
-// import Gradient from "../components/Gradient";
-
 import Sidebar from "@/components/Sidebar";
 import MainContainer from "@/components/MainContainer";
 import MouseHelper from "@/components/MouseHelper";
+
+import Slide from "@/components/Slide";
+
+import Hero from "@/components/_Hero";
+import Projects from "@/components/_Projects";
+import Contacts from "@/components/_Contacts";
+
 import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default function App() {
@@ -34,7 +40,23 @@ export default function App() {
           }}
         >
           <Sidebar />
-          <MainContainer />
+          <MainContainer>
+            <Slide id="_main">
+              <Hero />
+            </Slide>
+            {/* <Slide>
+        <h1>Skills</h1>
+      </Slide> */}
+            <Slide id="_projects">
+              <Projects />
+            </Slide>
+            <Slide id="_contacts">
+              <Contacts />
+            </Slide>
+            {/* <Slide>
+        <Experiments />
+      </Slide> */}
+          </MainContainer>
           <MouseHelper />
         </ReactLenis>
       </main>
