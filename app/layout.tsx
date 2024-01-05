@@ -2,6 +2,8 @@ import "./styles/global.scss";
 import "./globals.css";
 import clsx from "clsx";
 
+import Providers from "./Providers";
+
 import { Trirong } from "next/font/google";
 import { Libre_Franklin } from "next/font/google";
 
@@ -27,8 +29,10 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    // <Providers>
     <html lang="en">
       <body className={clsx(body.className, accent.className)}>{children}</body>
     </html>
+    // </Providers>
   );
 }
