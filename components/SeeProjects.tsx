@@ -5,7 +5,7 @@ import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 // next image
 import Image from "next/image";
 
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { handleScrollToElement } from "@/utils/utils";
 
@@ -22,7 +22,7 @@ export default function SeeProjects() {
   const singleProject2 = useRef<HTMLDivElement>(null);
   const singleProject3 = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (element.current && magnetBox.current) {
       if (isMouseOver) {
         const { x, y } = mousePosition;
@@ -134,7 +134,7 @@ export default function SeeProjects() {
     }
   }, [element, mousePosition, isMouseOverElement]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isMouseOverElement) {
       if (singleProject1.current && singleProject2.current && singleProject3.current) {
         singleProject1.current.animate(
@@ -176,7 +176,7 @@ export default function SeeProjects() {
     }
   }, [isMouseOverElement]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (window) {
       window.addEventListener("mousemove", (event) => {
         const { clientX, clientY } = event;

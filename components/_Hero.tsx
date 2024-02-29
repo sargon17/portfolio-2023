@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLayoutEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";

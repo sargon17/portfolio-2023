@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import { useSelector } from "react-redux";
-import { useLayoutEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
 import { motion } from "framer-motion";
@@ -27,7 +27,7 @@ export default function MouseHelper() {
     setScrollPosition(window.pageYOffset);
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (fixedPosition.x !== 0 && fixedPosition.y !== 0) {
       setIsPositionFixed(true);
     } else {
@@ -35,7 +35,7 @@ export default function MouseHelper() {
     }
   }, [fixedPosition]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (mouse.current) {
       mouse.current.animate(
         [
@@ -55,7 +55,7 @@ export default function MouseHelper() {
     }
   }, [mouseDimensionState]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isPositionFixed) {
       if (mouse.current) {
         mouse.current.animate(
