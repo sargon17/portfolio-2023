@@ -222,7 +222,7 @@ export default function SeeProjects() {
             ref={singleProject1}
           >
             <div className="see-projects__slides__slide__image">
-              <Image
+              <img
                 src="/edi.deseip.png"
                 alt="slide-1"
                 width={300}
@@ -235,7 +235,7 @@ export default function SeeProjects() {
             ref={singleProject2}
           >
             <div className="see-projects__slides__slide__image">
-              <Image
+              <img
                 src="/edi.deseip-1.png"
                 alt="slide-2"
                 width={300}
@@ -248,7 +248,7 @@ export default function SeeProjects() {
             ref={singleProject3}
           >
             <div className="see-projects__slides__slide__image">
-              <Image
+              <img
                 src="/edi.deseip-2.png"
                 alt="slide-2"
                 width={300}

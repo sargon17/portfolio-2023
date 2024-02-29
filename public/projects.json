@@ -1,6 +1,16 @@
 [
   {
     "_id": "prj01",
+    "title": "DEside Communication House",
+    "date": "2024-02-16",
+    "image": "",
+    "video": "https://kaylo.it//files/portfolio/video/deside/home.mp4",
+    "description": "<p>As part of DEside's rebranding, I developed an innovative website using Next.js, Framer Motion, SCSS, and WordPress. The site, designed for clients and talents, showcases our agency's services and creative capabilities through unique layouts and animations. This project reflects DEside's commitment to creativity and excellence, providing an engaging digital experience that stands out in the digital landscape.</p>",
+    "tags": ["Next.js", "Framer Motion", "SCSS", "WordPress", "Animations", "Engaging Design"],
+    "link": "https://deside.it/"
+  },
+  {
+    "_id": "prj02",
     "title": "Effetti Digitali Italiani",
     "date": "2023-09-08",
     "image": "",
@@ -16,10 +26,10 @@
       "ACF",
       "Typescript"
     ],
-    "link": "http://effettidigitali.it/"
+    "link": "https://effettidigitali.it/"
   },
   {
-    "_id": "prj02",
+    "_id": "prj03",
     "title": "Romeo e Giulietta",
     "date": "2023-01-08",
     "image": "https://romeoegiuliettaeventi.it/wp-content/uploads/2023/02/ResortAlForte_V2.jpg",

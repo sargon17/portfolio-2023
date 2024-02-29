@@ -293,4 +293,8 @@ const contactData = [
     name: "telegram",
     link: "https://t.me/Mykhaylo17",
   },
+  {
+    name: "x (twitter)",
+    link: "https://twitter.com/tymofyeyev_m",
+  },
 ];

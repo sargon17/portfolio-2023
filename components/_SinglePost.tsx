@@ -77,9 +77,9 @@ export default function SinglePost({ post }: { post: any }) {
             wheelMultiplier: 1.4,
           }}
           ref={container}
-          onScroll={(e: any) => {
-            readingIndicatorHandler(e);
-          }}
+          // onScroll={(e: any) => {
+          //   readingIndicatorHandler(e);
+          // }}
         >
           <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
         </ReactLenis>
