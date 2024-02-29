@@ -2,14 +2,13 @@ import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import { useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
 import { motion } from "framer-motion";
 
 export default function MouseHelper() {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isPositionFixed, setIsPositionFixed] = useState(false);
 
   const contentState = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
@@ -24,79 +23,28 @@ export default function MouseHelper() {
 
   function handleScroll(): any {
     // get the current scroll position
-    setScrollPosition(window.pageYOffset);
+    setScrollPosition(window.scrollY);
   }
 
-  useEffect(() => {
-    if (fixedPosition.x !== 0 && fixedPosition.y !== 0) {
-      setIsPositionFixed(true);
-    } else {
-      setIsPositionFixed(false);
-    }
-  }, [fixedPosition]);
-
-  useEffect(() => {
-    if (mouse.current) {
-      mouse.current.animate(
-        [
-          {
-            width: `${mouseDimensionState.width}px`,
-            height: `${mouseDimensionState.height}px`,
-          },
-        ],
-        {
-          duration: 300,
-          fill: "forwards",
-          delay: 10,
-          // bouncy easing
-          easing: "cubic-bezier(0.175, 0.885, 0.32, 1.175)",
-        }
-      );
-    }
-  }, [mouseDimensionState]);
-
-  useEffect(() => {
-    if (!isPositionFixed) {
-      if (mouse.current) {
-        mouse.current.animate(
-          [
-            {
-              transform: `translate(${10 + mousePositionState.x}px, ${
-                10 + mousePositionState.y + scrollPosition
-              }px)`,
-            },
-          ],
-          {
-            duration: 800,
-            fill: "forwards",
-            // delay: 10,
-          }
-        );
-      }
-    } else {
-      if (mouse.current) {
-        mouse.current.animate(
-          [
-            {
-              transform: `translate(${fixedPosition.x}px, ${fixedPosition.y}px)`,
-            },
-          ],
-          {
-            duration: 400,
-            fill: "forwards",
-            // delay: 10,
-          }
-        );
-      }
-    }
-  }, [mousePositionState, scrollPosition]);
-
   return (
-    <div
+    <motion.div
       className={clsx("mouse-helper", {
         "mouse-helper--active": contentState !== "",
       })}
       ref={mouse}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        x: mousePositionState.x,
+        y: mousePositionState.y + scrollPosition,
+        width: mouseDimensionState.width,
+        height: mouseDimensionState.height,
+      }}
+      transition={{
+        duration: 0.01,
+        width: { duration: 0.05, ease: "backInOut" },
+        height: { duration: 0.05, ease: "backInOut" },
+      }}
     >
       {contentState !== "" && (
         <div className="mouse-helper__content">
@@ -109,7 +57,7 @@ export default function MouseHelper() {
           </motion.p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

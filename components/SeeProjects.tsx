@@ -2,9 +2,6 @@ import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
-// next image
-import Image from "next/image";
-
 import { useState, useRef, useEffect } from "react";
 
 import { handleScrollToElement } from "@/utils/utils";
