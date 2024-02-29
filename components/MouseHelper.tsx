@@ -12,10 +12,7 @@ export default function MouseHelper() {
 
   const contentState = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
-
   const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
-
-  const fixedPosition = useSelector((state: RootState) => state.fixPosition.fixedPosition);
 
   const lenis = useLenis(handleScroll);
 
