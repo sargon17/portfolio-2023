@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
@@ -9,14 +9,12 @@ import { motion } from "framer-motion";
 // types
 import projectType from "@/types/project";
 
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
-import { setFixPosition } from "@/contexts/features/mouse/mouseFixedPosition";
 
 import Button from "./Button";
-
-import Chevron from "../public/chevron.svg";
 
 export default function Projects() {
   const card = useRef<HTMLDivElement>(null);
@@ -152,13 +150,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Button
-                    onClick={() => {
-                      dispatch(setFixPosition({ x: 0, y: 0 }));
-                    }}
-                  >
-                    see it yourself
-                  </Button>
+                  <Button>see it yourself</Button>
                 </motion.a>
               </>
             )}
@@ -320,6 +312,7 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
     if (!letterRef.current) return;
     const letterColorAnimation = (e: MouseEvent) => {
       if (!letterRef.current) return;
+
       // getting the colors from the css variables in the root
       const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent");
       const classicColor = getComputedStyle(document.documentElement).getPropertyValue(

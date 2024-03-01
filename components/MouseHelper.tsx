@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setScroll } from "@/contexts/features/mouse/scrollContent";
 
 export default function MouseHelper() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -13,6 +15,8 @@ export default function MouseHelper() {
   const contentState = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
   const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
+
+  const dispatch = useDispatch();
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -27,6 +31,7 @@ export default function MouseHelper() {
   function handleScroll(): any {
     // get the current scroll position
     setScrollPosition(window.scrollY);
+    dispatch(setScroll({ scroll: window.scrollY }));
   }
 
   return (
