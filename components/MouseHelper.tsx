@@ -2,10 +2,10 @@ import clsx from "clsx";
 import { useLenis } from "@studio-freight/react-lenis";
 
 import { useSelector } from "react-redux";
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "@/contexts/mouseStore";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function MouseHelper() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -14,9 +14,20 @@ export default function MouseHelper() {
   const mousePositionState = useSelector((state: RootState) => state.position.position);
   const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
 
-  const lenis = useLenis(handleScroll);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  const mouse = useRef<HTMLDivElement>(null);
+  const springConfig = { stiffness: 350, damping: 80 };
+
+  const xSpring = useSpring(x, { stiffness: springConfig.stiffness, damping: springConfig.damping });
+  const ySpring = useSpring(y, { stiffness: springConfig.stiffness, damping: springConfig.damping });
+
+  useEffect(() => {
+    x.set(mousePositionState.x);
+    y.set(mousePositionState.y + scrollPosition);
+  }, [mousePositionState, scrollPosition]);
+
+  const lenis = useLenis(handleScroll);
 
   function handleScroll(): any {
     // get the current scroll position
@@ -28,19 +39,27 @@ export default function MouseHelper() {
       className={clsx("mouse-helper", {
         "mouse-helper--active": contentState !== "",
       })}
-      ref={mouse}
+      style={
+        {
+          x: xSpring,
+          y: ySpring,
+          // width: mouseDimensionState.width,
+          // height: mouseDimensionState.height,
+        } as any
+      }
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        x: mousePositionState.x,
-        y: mousePositionState.y + scrollPosition,
+        // x: mousePositionState.x,
+        // y: mousePositionState.y + scrollPosition,
         width: mouseDimensionState.width,
         height: mouseDimensionState.height,
       }}
       transition={{
-        duration: 0.01,
-        width: { duration: 0.05, ease: "backInOut" },
-        height: { duration: 0.05, ease: "backInOut" },
+        duration: 0.5,
+
+        width: { duration: 0.3, ease: "anticipate" },
+        height: { duration: 0.3, ease: "anticipate" },
       }}
     >
       {contentState !== "" && (

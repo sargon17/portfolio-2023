@@ -30,7 +30,6 @@ $text-color: var(--text-color);
   background-color: $mouse-helper-color;
   pointer-events: none;
   mix-blend-mode: $blend-mode;
-  will-change: transform, width, height, opacity, mix-blend-mode;
   transform: translateZ(0);
   z-index: 10000;
   overflow: hidden;
@@ -39,8 +38,7 @@ $text-color: var(--text-color);
     display: none;
   }
 
-  transition: width $t-normal $t-easing, height $t-normal $t-easing, opacity $t-normal $t-easing,
-    transform $t-normal $t-easing, mix-blend-mode $t-normal $t-easing;
+  transition: mix-blend-mode $t-normal $t-easing;
 
   &--active {
     width: $mouse-helper-size--active;
