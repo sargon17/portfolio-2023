@@ -220,7 +220,7 @@ export default function SeeProjects() {
           >
             <div className="see-projects__slides__slide__image">
               <img
-                src="/edi.deseip.png"
+                src="/preview-3.jpg"
                 alt="slide-1"
                 width={300}
                 height={300}
@@ -233,7 +233,7 @@ export default function SeeProjects() {
           >
             <div className="see-projects__slides__slide__image">
               <img
-                src="/edi.deseip-1.png"
+                src="/preview-2.jpg"
                 alt="slide-2"
                 width={300}
                 height={300}
@@ -246,8 +246,8 @@ export default function SeeProjects() {
           >
             <div className="see-projects__slides__slide__image">
               <img
-                src="/edi.deseip-2.png"
-                alt="slide-2"
+                src="/preview-1.jpg"
+                alt="slide-3"
                 width={300}
                 height={300}
               />
