@@ -17,11 +17,6 @@ export default function MouseHelper() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { stiffness: 350, damping: 80 };
-
-  const xSpring = useSpring(x, { stiffness: springConfig.stiffness, damping: springConfig.damping });
-  const ySpring = useSpring(y, { stiffness: springConfig.stiffness, damping: springConfig.damping });
-
   useEffect(() => {
     x.set(mousePositionState.x);
     y.set(mousePositionState.y + scrollPosition);
@@ -41,23 +36,17 @@ export default function MouseHelper() {
       })}
       style={
         {
-          x: xSpring,
-          y: ySpring,
-          // width: mouseDimensionState.width,
-          // height: mouseDimensionState.height,
+          x: x,
+          y: y,
         } as any
       }
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        // x: mousePositionState.x,
-        // y: mousePositionState.y + scrollPosition,
         width: mouseDimensionState.width,
         height: mouseDimensionState.height,
       }}
       transition={{
-        duration: 0.5,
-
         width: { duration: 0.3, ease: "anticipate" },
         height: { duration: 0.3, ease: "anticipate" },
       }}
