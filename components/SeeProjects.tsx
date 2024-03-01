@@ -23,14 +23,12 @@ export default function SeeProjects() {
 
   const magnetSpringConfig = {
     stiffness: 100,
-    damping: 22,
+    damping: 12,
   };
 
   const xMagnetSpring = useSpring(0, magnetSpringConfig);
 
   const yMagnetSpring = useSpring(0, magnetSpringConfig);
-
-  const ySlides = useSpring(0, magnetSpringConfig);
 
   const xSlide1Spring = useSpring(0, magnetSpringConfig);
   const rotateSlide1Spring = useSpring(0, magnetSpringConfig);
@@ -84,8 +82,6 @@ export default function SeeProjects() {
           },
         ];
 
-        // ySlides.set(10 + yPercent * 40);
-
         xSlide1Spring.set(baseSingleTransforms[0].x + xPercent * 3);
         rotateSlide1Spring.set(baseSingleTransforms[0].rotate);
 
@@ -95,8 +91,6 @@ export default function SeeProjects() {
         xSlide3Spring.set(baseSingleTransforms[2].x + xPercent * -1);
         rotateSlide3Spring.set(baseSingleTransforms[2].rotate);
       } else {
-        // ySlides.set(-1);
-
         xSlide1Spring.set(0);
         rotateSlide1Spring.set(0);
 
@@ -147,10 +141,7 @@ export default function SeeProjects() {
             </p>
           </div>
         </div>
-        <motion.div
-          className="see-projects__slides"
-          // style={{ y: ySlides } as any}
-        >
+        <div className="see-projects__slides">
           <motion.div
             className="see-projects__slides__slide slide-1"
             style={
@@ -208,7 +199,7 @@ export default function SeeProjects() {
               />
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

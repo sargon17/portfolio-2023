@@ -35,7 +35,7 @@
       border-radius: calc($slide-radius / 2);
       position: absolute;
       top: 50%;
-      transition: opacity $t-2slow $t-easing, transform 0.1s $t-easing, rotate 0.2s $t-easing;
+      transition: opacity $t-2slow $t-easing, transform 0.01s $t-easing, rotate 0.1s $t-easing;
 
       @media screen and (max-width: 768px) {
         width: 60vw;
