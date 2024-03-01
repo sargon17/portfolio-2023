@@ -47,8 +47,8 @@ export default function MouseHelper() {
         height: mouseDimensionState.height,
       }}
       transition={{
-        width: { duration: 0.3, ease: "anticipate" },
-        height: { duration: 0.3, ease: "anticipate" },
+        width: { duration: 0.2, ease: "easeInOut" },
+        height: { duration: 0.2, ease: "easeInOut" },
       }}
     >
       {contentState !== "" && (
