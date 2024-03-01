@@ -1,13 +1,16 @@
 .see-projects {
   position: relative;
   cursor: pointer;
-  will-change: transform, opacity;
+  transition: transform 0.2 $t-easing;
+  width: 25vw;
+  height: 25vw;
 
   &__cta {
     position: absolute;
     top: 2.5vh;
     left: 50%;
-    transform: translateX(-50%);
+    top: 20%;
+    transform: translate(-50%, -50%);
     z-index: 1;
     transition: opacity $t-normal $t-easing;
 
@@ -24,13 +27,14 @@
   }
 
   &__slides {
+    transition: transform 0.2s $t-easing;
     &__slide {
       width: 25vw;
       overflow: hidden;
       border-radius: calc($slide-radius / 2);
-      position: relative;
-      transition: opacity $t-2slow $t-easing;
-      will-change: transform, opacity;
+      position: absolute;
+      top: 50%;
+      transition: opacity $t-2slow $t-easing, transform 0.1s $t-easing, rotate 0.2s $t-easing;
 
       @media screen and (max-width: 768px) {
         width: 60vw;
@@ -85,9 +89,9 @@
 }
 
 .magnet-animation-box {
-  //   border: 2px solid red;
+  // border: 2px solid red;
   border-radius: 100%;
-  width: 60vw;
+  width: 50vw;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;

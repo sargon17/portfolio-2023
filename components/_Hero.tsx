@@ -49,7 +49,8 @@ export default function Hero() {
           <SeeProjects />
         </div>
         <div className="hero__gradient">
-          <Gradient />
+          {" "}
+          <Gradient />{" "}
         </div>
         <div className="hero__content__text">
           <p>
