@@ -28,6 +28,7 @@
 
   &__slides {
     transition: transform 0.2s $t-easing;
+    transform: translateY(-100%);
     &__slide {
       width: 25vw;
       overflow: hidden;
