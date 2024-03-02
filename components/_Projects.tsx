@@ -4,12 +4,12 @@ import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // types
 import projectType from "@/types/project";
 
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
@@ -58,106 +58,111 @@ export default function Projects() {
   }, []);
 
   return (
-    <div
-      className="projects-page"
-      ref={page}
-    >
-      <div className="projects-page__navigation">
-        <Navigation
-          projects={projects}
-          activeProject={activeProject}
-          setActiveProject={setActiveProject}
-        />
-      </div>
-      <div className="project">
-        <div className="project__main-data">
-          <MulticolorTitle title={activeProject?.title || ""} />
-          <motion.div
-            className="project__main-data__year"
-            key={activeProject?._id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
-          >
-            <p>{new Date(activeProject?.date || "").getFullYear()}</p>
-          </motion.div>
+    <AnimatePresence mode="wait">
+      <div
+        className="projects-page"
+        ref={page}
+      >
+        <div className="projects-page__navigation">
+          <Navigation
+            projects={projects}
+            activeProject={activeProject}
+            setActiveProject={setActiveProject}
+          />
         </div>
-        <div className="project__content">
-          <motion.a
-            key={activeProject?._id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
-            className="project__content__image"
-            href={activeProject?.link}
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={() => {
-              dispatch(setDimension({ width: 100, height: 100 }));
-              dispatch(setContent("see it yourself"));
-            }}
-            onMouseLeave={() => {
-              dispatch(setDimension({ width: 10, height: 10 }));
-              dispatch(setContent(""));
-            }}
-          >
-            {activeProject?.video ? (
-              <video
-                src={activeProject?.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-            ) : (
-              <img
-                src={activeProject?.image}
-                alt=""
-              />
-            )}
-          </motion.a>
-          <div
-            className="project__content__description"
-            ref={card}
-          >
-            <DescriptionCard activeProject={activeProject} />
-            <div className="project__content__description__tags">
-              {activeProject?.tags?.map((tag, index) => {
-                return (
-                  <motion.p
-                    key={tag + index + activeProject?._id}
-                    className="project__content__description__tags__item"
+        <div className="project">
+          <div className="project__main-data">
+            <MulticolorTitle title={activeProject?.title || ""} />
+            <motion.div
+              className="project__main-data__year"
+              key={activeProject?._id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+            >
+              <p>{new Date(activeProject?.date || "").getFullYear()}</p>
+            </motion.div>
+          </div>
+          <div className="project__content">
+            <motion.a
+              key={activeProject?._id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
+              className="project__content__image"
+              href={activeProject?.link}
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => {
+                dispatch(setDimension({ width: 100, height: 100 }));
+                dispatch(setContent("see it yourself"));
+              }}
+              onMouseLeave={() => {
+                dispatch(setDimension({ width: 10, height: 10 }));
+                dispatch(setContent(""));
+              }}
+              layoutId={activeProject?._id + "image"}
+              exit={{ opacity: 0 }}
+            >
+              {activeProject?.video ? (
+                <video
+                  src={activeProject?.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={activeProject?.image}
+                  alt=""
+                />
+              )}
+            </motion.a>
+            <div
+              className="project__content__description"
+              ref={card}
+            >
+              <DescriptionCard activeProject={activeProject} />
+              <div className="project__content__description__tags">
+                {activeProject?.tags?.map((tag, index) => {
+                  return (
+                    <motion.p
+                      key={tag + index + activeProject?._id}
+                      className="project__content__description__tags__item"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        transition: { delay: 0.9 + index * 0.1, duration: 0.5 },
+                      }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {tag}
+                    </motion.p>
+                  );
+                })}
+              </div>
+              {activeProject?.link && (
+                <>
+                  <motion.a
+                    className="project__content__description__link"
+                    key={activeProject?._id}
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
-                      transition: { delay: 0.9 + index * 0.1, duration: 0.5 },
+                      transition: { delay: 1.2, duration: 0.5 },
                     }}
+                    href={activeProject?.link}
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    {tag}
-                  </motion.p>
-                );
-              })}
+                    <Button>see it yourself</Button>
+                  </motion.a>
+                </>
+              )}
             </div>
-            {activeProject?.link && (
-              <>
-                <motion.a
-                  className="project__content__description__link"
-                  key={activeProject?._id}
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    transition: { delay: 1.2, duration: 0.5 },
-                  }}
-                  href={activeProject?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Button>see it yourself</Button>
-                </motion.a>
-              </>
-            )}
           </div>
         </div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 }
 
@@ -183,6 +188,7 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
       className={clss}
       key={activeProject?._id}
       initial={{ opacity: 0 }}
+      layoutId="card"
       animate={{
         opacity: 1,
         transition: { delay: 0.4, duration: 0.5 },
@@ -259,7 +265,7 @@ const MulticolorTitle = ({ title }: { title: string }) => {
     return letters.map((letter, index) => {
       return (
         <Letter
-          key={index}
+          key={letter + index}
           letter={letter}
           index={index}
         />
@@ -372,6 +378,8 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         initial="initial"
         animate="animate"
         key={index}
+        layoutId={letter + index + "title" + index}
+        exit={{ opacity: 0, y: -20 }}
       >
         {letter}
       </motion.span>
