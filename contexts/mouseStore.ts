@@ -4,14 +4,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import contentReducer from "./features/mouse/mouseContent";
 import positionReducer from "./features/mouse/mousePosition";
 import dimensionReducer from "./features/mouse/mouseDimension";
-import fixPositionReducer from "./features/mouse/mouseFixedPosition";
+import scrollReducer from "./features/mouse/scrollContent";
 
 export const mouseStore = configureStore({
   reducer: {
     content: contentReducer,
     position: positionReducer,
     dimension: dimensionReducer,
-    fixPosition: fixPositionReducer,
+    scroll: scrollReducer,
   },
 });
 

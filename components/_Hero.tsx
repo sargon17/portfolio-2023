@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLayoutEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
@@ -49,7 +49,8 @@ export default function Hero() {
           <SeeProjects />
         </div>
         <div className="hero__gradient">
-          <Gradient />
+          {" "}
+          <Gradient />{" "}
         </div>
         <div className="hero__content__text">
           <p>
