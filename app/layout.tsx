@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Script from "next/script";
-import "./styles/global.scss";
+import "./../styles/global.scss";
 import "./globals.css";
 import clsx from "clsx";
 
