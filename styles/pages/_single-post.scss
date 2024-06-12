@@ -1,0 +1,195 @@
+.single-post {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 100%;
+  height: 100%;
+
+  &__side {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: $content-margin;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    &__image {
+      width: 100%;
+
+      overflow: hidden;
+      border-radius: calc($slide-radius - $content-margin);
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: relative;
+      }
+    }
+
+    &__title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding: 0 0.7rem;
+    }
+
+    &__date {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+      padding: 0 1.4rem;
+      max-width: 900px;
+
+      &:nth-child(1) {
+        margin-top: 0;
+      }
+    }
+
+    &__tags {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+      padding: 0 1.4rem;
+      max-width: 900px;
+
+      &:nth-child(1) {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    // overflow-x: hidden;
+    position: relative;
+
+    .divider {
+      --divider-height: 1%;
+
+      width: 1px;
+      height: 95%;
+      background-color: $border-color;
+
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translateY(-50%);
+
+      &::after {
+        content: "";
+        width: 1px;
+        height: var(--divider-height);
+        background-color: $text-accent;
+        position: absolute;
+        top: 0%;
+
+        opacity: 0.4;
+      }
+    }
+
+    .lenis {
+      height: 100%;
+      overflow-y: scroll;
+      padding: 10px;
+
+      &::scrollbar {
+        opacity: 0;
+      }
+
+      &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: transparent; /* make scrollbar transparent */
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent; /* make scrollbar transparent */
+      }
+
+      & > * {
+        padding-bottom: 2rem;
+      }
+    }
+
+    h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+      padding: 0 0.7rem;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      padding: 0 0.7rem;
+    }
+    p {
+      //   text-indent: 2rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+      padding: 0 1.4rem;
+      max-width: 900px;
+
+      &:nth-child(1) {
+        margin-top: 0;
+      }
+    }
+
+    mark.has-inline-color {
+      background-color: $accent !important;
+      color: $text-main;
+      position: relative;
+      line-height: 130%;
+    }
+
+    ul {
+      padding: 0 1.4rem;
+      max-width: 900px;
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    ol {
+      padding: 0 1.4rem;
+      max-width: 900px;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    a {
+      color: $accent;
+    }
+
+    figure {
+      width: 100%;
+      img {
+        border-radius: calc($slide-radius - $content-margin);
+        width: 100% !important;
+        height: 100% !important;
+        max-height: min(700px, 90svh) !important;
+        object-fit: cover;
+        object-position: center;
+        margin: 0;
+      }
+    }
+  }
+}

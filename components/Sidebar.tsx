@@ -12,7 +12,6 @@ import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 import { handleScrollToElement } from "@/utils/utils";
-import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -132,11 +131,11 @@ export default function Sidebar() {
         <ThemeSwitcher />
       </nav>
       <div className="sidebar__title">
-        <OpenToWork
+        {/* <OpenToWork
           onClick={() => {
             handleScrollToElement("#_contacts");
           }}
-        />
+        /> */}
         <h1
           onMouseEnter={() => {
             dispatch(setDimension({ width: 100, height: 100 }));

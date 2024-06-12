@@ -1,18 +1,13 @@
-"use client";
-import { Provider } from "react-redux";
-import { mouseStore } from "@/contexts/mouseStore";
-import { ThemeProvider } from "next-themes";
-
 import App from "./app";
+
+import Providers from "./Providers";
 
 export default async function Home() {
   // const projects: project[] = await getProjects();
 
   return (
-    <ThemeProvider>
-      <Provider store={mouseStore}>
-        <App />
-      </Provider>
-    </ThemeProvider>
+    <Providers>
+      <App />
+    </Providers>
   );
 }

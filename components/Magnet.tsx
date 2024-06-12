@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@/contexts/mouseStore";
@@ -37,13 +37,13 @@ export default function Magnet({
   }
 
   // update mouse position
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (mousePositionState) {
       setMousePosition(mousePositionState);
     }
   }, [mousePositionState]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (element.current && magnetZone.current) {
       if (isMouseOver) {
         // get the magnet zone dimensions

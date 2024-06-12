@@ -40,9 +40,15 @@
     svg {
       width: 100vw;
       height: 100dvh;
+      filter: url(#filter);
 
       path {
         fill: $accent;
+
+        &:nth-child(1),
+        &:nth-child(4) {
+          fill: $gradient-2;
+        }
       }
     }
 
