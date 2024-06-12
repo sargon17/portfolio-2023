@@ -5,6 +5,7 @@ import "./globals.css";
 import clsx from "clsx";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 import Providers from "./Providers";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // <Providers>
     <html lang="en">
       <SpeedInsights />
+      <Analytics />
       <head>
         <Script
           id="matomo-analytics"
