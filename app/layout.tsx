@@ -8,6 +8,14 @@ import { Analytics } from "@vercel/analytics/react";
 import { Trirong } from "next/font/google";
 import { Libre_Franklin } from "next/font/google";
 
+import AnimatedBackground from "@/components/AnimatedBackground";
+
+import Sidebar from "@/components/Sidebar";
+import MainContainer from "@/components/MainContainer";
+
+import Providers from "./Providers";
+import MouseProvider from "./MouseProvider";
+
 const accent = Trirong({
   subsets: ["latin-ext"],
   variable: "--font-accent",
@@ -30,12 +38,18 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // <Providers>
     <html lang="en">
       <SpeedInsights />
       <Analytics />
-      <body className={clsx(body.className, accent.className)}>{children}</body>
+      <body className={clsx(body.className, accent.className)}>
+        <Providers>
+          <MouseProvider>
+            <AnimatedBackground />
+            <Sidebar />
+            <MainContainer>{children}</MainContainer>
+          </MouseProvider>
+        </Providers>
+      </body>
     </html>
-    // </Providers>
   );
 }

@@ -1,14 +1,24 @@
-import App from "./app";
+import Slide from "@/components/Slide";
+import Hero from "@/components/_Hero";
+import Projects from "@/components/_Projects";
+import Contacts from "@/components/_Contacts";
 
-import Providers from "./Providers";
-
-import { getDataFromDatabase, getPage } from "@/notion";
+import { getDataFromDatabase } from "@/notion";
 
 export default async function Home() {
-  let data = await getDataFromDatabase();
+  let projects = await getDataFromDatabase();
+
   return (
-    <Providers>
-      <App projects={data} />
-    </Providers>
+    <>
+      <Slide id="_main">
+        <Hero />
+      </Slide>
+      <Slide id="_projects">
+        <Projects projects={projects} />
+      </Slide>
+      <Slide id="_contacts">
+        <Contacts />
+      </Slide>
+    </>
   );
 }

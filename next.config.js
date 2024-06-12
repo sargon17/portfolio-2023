@@ -9,8 +9,6 @@ const nextConfig = {
     includePaths: [path.join(__dirname, "styles")],
   },
 
-  output: "export",
-
   webpack: (config, options) => {
     const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.(".svg"));
 
