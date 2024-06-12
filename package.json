@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.15",
     "@reduxjs/toolkit": "^2.2.5",
     "@studio-freight/react-lenis": "^0.0.47",
     "@types/node": "20.14.2",
