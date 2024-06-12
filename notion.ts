@@ -1,5 +1,4 @@
 import { Client } from "@notionhq/client";
-import { get } from "http";
 import { cache } from "react";
 
 export const revalidate = 3600; // revalidate the data at most every hour
@@ -9,7 +8,7 @@ const dbId = process.env.NEXT_NOTION_DB_ID;
 
 const notion = new Client({ auth: notionKey });
 
-const getDataFromDatabase = async () => {
+const getDataFromDatabase = cache(async () => {
   if (!dbId) {
     throw new Error("Missing database ID, please add it to your environment variables");
   }
@@ -27,7 +26,7 @@ const getDataFromDatabase = async () => {
   let data = response.results;
 
   return data;
-};
+});
 
 const getPage = async (pageId: string) => {
   return await notion.pages.retrieve({ page_id: pageId });
