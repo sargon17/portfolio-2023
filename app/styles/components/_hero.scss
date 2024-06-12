@@ -49,14 +49,10 @@ $hero__gradient-margin: 1rem;
     width: max-content;
     &__title {
       font-weight: 100;
-      font-size: calc(2.34rem + 1vw);
+      font-size: clamp(2rem, 3vw, 5rem);
       line-height: 1;
       font-style: normal;
       margin-top: 1rem;
-
-      @media screen and (max-width: 768px) {
-        font-size: calc(1.5rem + 1vw);
-      }
 
       .row-2 {
         display: flex;

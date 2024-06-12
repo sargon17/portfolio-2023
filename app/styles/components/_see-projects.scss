@@ -16,7 +16,8 @@
 
     &__text {
       font-family: $font-accent;
-      font-size: 0.875rem;
+      // font-size: 0.875rem;
+      font-size: clamp(0.875rem, 1vw, 1.5rem);
       font-weight: 500;
       font-style: italic;
 
