@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
-import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function Contacts() {
   return (
