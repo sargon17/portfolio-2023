@@ -75,7 +75,7 @@ $mobile-sidebar-width: 45px;
     padding-top: 10rem;
 
     overflow: hidden;
-    h1 {
+    &__name {
       color: $text-main;
       text-transform: uppercase;
       font-size: 1rem;

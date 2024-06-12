@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 
-import Button from "./Button";
+import Button from "./ui/Button";
 
 import {
   getPostTitle,

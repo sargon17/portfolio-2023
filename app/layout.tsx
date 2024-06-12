@@ -8,10 +8,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { Trirong } from "next/font/google";
 import { Libre_Franklin } from "next/font/google";
 
-import AnimatedBackground from "@/components/AnimatedBackground";
+import AnimatedBackground from "@/components/ui/AnimatedBackground";
 
 import Sidebar from "@/components/Sidebar";
+import Navigation from "@/components/ui/Navigation";
 import MainContainer from "@/components/MainContainer";
+import ThemeSwitcher from "@/components/ui/theme/ThemeSwitcher";
+import MouseActivation from "@/components/ui/mouse/MouseActivation";
 
 import Providers from "./Providers";
 import MouseProvider from "./MouseProvider";
@@ -36,6 +39,24 @@ export const metadata = {
   },
 };
 
+const navigation = [
+  {
+    name: "main",
+    label: "main",
+    link: "#_main",
+  },
+  {
+    name: "projects",
+    label: "projects",
+    link: "#_projects",
+  },
+  {
+    name: "contacts",
+    label: "contacts",
+    link: "#_contacts",
+  },
+];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -45,7 +66,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <MouseProvider>
             <AnimatedBackground />
-            <Sidebar />
+            <Sidebar
+              bottom={
+                <MouseActivation
+                  onActive={{
+                    label: "call me kaylo",
+                    width: 100,
+                    height: 100,
+                  }}
+                  className="sidebar__title__name"
+                >
+                  Mykhaylo Tymofyeyev
+                </MouseActivation>
+              }
+            >
+              <Navigation navigation={navigation} />
+              <ThemeSwitcher />
+            </Sidebar>
             <MainContainer>{children}</MainContainer>
           </MouseProvider>
         </Providers>

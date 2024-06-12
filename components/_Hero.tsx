@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
-import Gradient from "./Gradient";
-import SeeProjects from "./SeeProjects";
+import Gradient from "./ui/Gradient";
+import SeeProjects from "./ui/SeeProjects";
 
 import { ScopesText } from "@/utils/animations";
 
