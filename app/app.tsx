@@ -16,7 +16,10 @@ import { ReactLenis } from "@studio-freight/react-lenis";
 
 import { motion } from "framer-motion";
 
-export default function App() {
+type AppProps = {
+  projects: any[];
+};
+export default function App(props: AppProps) {
   const dispatch = useDispatch();
 
   return (
@@ -35,7 +38,7 @@ export default function App() {
           root
           options={{
             smoothWheel: true,
-            duration: 1.8,
+            duration: 1.1,
             wheelMultiplier: 1.4,
           }}
         >
@@ -48,7 +51,7 @@ export default function App() {
         <h1>Skills</h1>
       </Slide> */}
             <Slide id="_projects">
-              <Projects />
+              <Projects projects={props.projects} />
             </Slide>
             <Slide id="_contacts">
               <Contacts />

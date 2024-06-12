@@ -2,12 +2,22 @@ import App from "./app";
 
 import Providers from "./Providers";
 
+import { getDataFromDatabase, getPage } from "@/notion";
+
 export default async function Home() {
-  // const projects: project[] = await getProjects();
+  let data = await getDataFromDatabase();
+
+  // for each project, get the page
+  data.forEach(async (project: any) => {
+    const page = await getPage(project.id);
+    console.log(page);
+  });
+
+  console.log(data[0]);
 
   return (
     <Providers>
-      <App />
+      <App projects={data} />
     </Providers>
   );
 }

@@ -16,31 +16,26 @@ import { setContent } from "@/contexts/features/mouse/mouseContent";
 
 import Button from "./Button";
 
-import Chevron from "../public/chevron.svg";
+import {
+  getPostTitle,
+  getPostDate,
+  getPostTags,
+  getPostLink,
+  getPostVideo,
+  getPostImage,
+  getPostDescription,
+} from "@/utils/notion";
 
-export default function Projects() {
+type ProjectsProps = {
+  projects: any[];
+};
+export default function Projects(props: ProjectsProps) {
   const card = useRef<HTMLDivElement>(null);
-  const getProjects = async () => {
-    // get project data from a json file in the public folder
-    const projects: any = await fetch("/projects.json").then((res) => res.json());
-    setProjects(projects);
-
-    if (projects && projects.length > 0) {
-      if (projects[0]) {
-        setActiveProject(projects[0]);
-      }
-    }
-  };
-  const [projects, setProjects] = useState<projectType[]>([]);
-  const [activeProject, setActiveProject] = useState<projectType | null>(projects[0] || null);
+  const [activeProject, setActiveProject] = useState<any | null>(props.projects[0] || null);
 
   const dispatch = useDispatch();
 
   const page = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    getProjects();
-  }, []);
 
   useEffect(() => {
     const cardMousePosition = (e: MouseEvent) => {
@@ -67,30 +62,30 @@ export default function Projects() {
       >
         <div className="projects-page__navigation">
           <Navigation
-            projects={projects}
+            projects={props.projects}
             activeProject={activeProject}
             setActiveProject={setActiveProject}
           />
         </div>
         <div className="project">
           <div className="project__main-data">
-            <MulticolorTitle title={activeProject?.title || ""} />
+            <MulticolorTitle title={getPostTitle(activeProject)} />
             <motion.div
               className="project__main-data__year"
-              key={activeProject?._id}
+              key={activeProject?.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
             >
-              <p>{new Date(activeProject?.date || "").getFullYear()}</p>
+              <p>{new Date(getPostDate(activeProject)).getFullYear()}</p>
             </motion.div>
           </div>
           <div className="project__content">
             <motion.a
-              key={activeProject?._id}
+              key={activeProject?.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
               className="project__content__image"
-              href={activeProject?.link}
+              href={getPostLink(activeProject)}
               target="_blank"
               rel="noreferrer"
               onMouseEnter={() => {
@@ -101,12 +96,12 @@ export default function Projects() {
                 dispatch(setDimension({ width: 10, height: 10 }));
                 dispatch(setContent(""));
               }}
-              layoutId={activeProject?._id + "image"}
+              layoutId={activeProject?.id + "image"}
               exit={{ opacity: 0 }}
             >
-              {activeProject?.video ? (
+              {getPostVideo(activeProject) ? (
                 <video
-                  src={activeProject?.video}
+                  src={getPostVideo(activeProject)}
                   autoPlay
                   loop
                   muted
@@ -114,7 +109,7 @@ export default function Projects() {
                 />
               ) : (
                 <img
-                  src={activeProject?.image}
+                  src={getPostImage(activeProject)}
                   alt=""
                 />
               )}
@@ -125,7 +120,7 @@ export default function Projects() {
             >
               <DescriptionCard activeProject={activeProject} />
               <div className="project__content__description__tags">
-                {activeProject?.tags?.map((tag, index) => {
+                {getPostTags(activeProject).map((tag: string, index: number) => {
                   return (
                     <motion.p
                       key={tag + index + activeProject?._id}
@@ -142,7 +137,7 @@ export default function Projects() {
                   );
                 })}
               </div>
-              {activeProject?.link && (
+              {getPostLink(activeProject) && (
                 <>
                   <motion.a
                     className="project__content__description__link"
@@ -152,7 +147,7 @@ export default function Projects() {
                       opacity: 1,
                       transition: { delay: 1.2, duration: 0.5 },
                     }}
-                    href={activeProject?.link}
+                    href={getPostLink(activeProject)}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -209,8 +204,9 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
           opacity: 1,
           transition: { delay: 0.6, duration: 0.5 },
         }}
-        dangerouslySetInnerHTML={{ __html: activeProject?.description || "" }}
-      ></motion.div>
+      >
+        <p>{getPostDescription(activeProject)}</p>
+      </motion.div>
       <div className="read-more__wrapper">
         <motion.div
           key={activeProject?._id}
@@ -394,11 +390,13 @@ const Navigation = ({
   activeProject,
   setActiveProject,
 }: {
-  projects: projectType[];
-  activeProject: projectType | null;
+  projects: any[];
+  activeProject: any | null;
   setActiveProject: (project: projectType) => void;
 }) => {
   const dispatch = useDispatch();
+
+  console.log(projects[0]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
@@ -465,16 +463,16 @@ const Navigation = ({
         {projects.map((project, index) => {
           return (
             <div
-              key={"nav" + project._id}
+              key={"nav" + project.id}
               className="navigation__item"
-              data-active={activeProject?._id === project._id}
+              data-active={activeProject.id === project.id}
               onClick={() => {
                 setActiveProject(project);
                 dispatch(setDimension({ width: 10, height: 10 }));
                 dispatch(setContent(""));
               }}
               onMouseEnter={() => {
-                const isActive = activeProject?._id === project._id;
+                const isActive = activeProject?.id === project.id;
                 if (!isActive) {
                   dispatch(setDimension({ width: 100, height: 100 }));
                   dispatch(setContent("see the project"));
@@ -486,7 +484,7 @@ const Navigation = ({
               }}
             >
               <span className="index">00{index + 1}/</span>
-              <span className="title">{project.title}</span>
+              <span className="title">{getPostTitle(project)}</span>
             </div>
           );
         })}
@@ -512,9 +510,9 @@ const Navigation = ({
           {projects.map((project, index) => {
             return (
               <motion.div
-                key={"nav" + project._id}
+                key={"nav" + project.id}
                 className="option"
-                data-active={activeProject?._id === project._id}
+                data-active={activeProject?.id === project.id}
                 variants={childrenVariants}
                 onClick={() => {
                   setActiveProject(project);
@@ -522,7 +520,7 @@ const Navigation = ({
                 }}
               >
                 <span className="index">00{index + 1}/</span>
-                <span className="title">{project.title}</span>
+                <span className="title">{getPostTitle(project)}</span>
               </motion.div>
             );
           })}
