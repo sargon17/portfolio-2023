@@ -4,6 +4,8 @@ import "./../styles/global.scss";
 import "./globals.css";
 import clsx from "clsx";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import Providers from "./Providers";
 
 import { Trirong } from "next/font/google";
@@ -33,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // <Providers>
     <html lang="en">
+      <SpeedInsights />
       <head>
         <Script
           id="matomo-analytics"
