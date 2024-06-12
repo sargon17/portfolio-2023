@@ -12,7 +12,6 @@ import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
 import { handleScrollToElement } from "@/utils/utils";
-import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function Sidebar() {
   const dispatch = useDispatch();

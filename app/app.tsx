@@ -1,6 +1,4 @@
 "use client";
-import React from "react";
-
 import { useDispatch } from "react-redux";
 import { setPosition } from "@/contexts/features/mouse/mousePosition";
 
