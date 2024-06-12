@@ -10,6 +10,8 @@ import { handleScrollToElement } from "@/utils/utils";
 
 import { motion, useAnimate, motionValue, useSpring, useMotionValueEvent } from "framer-motion";
 
+import Image from "next/image";
+
 export default function SeeProjects() {
   const dispatch = useDispatch();
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -153,11 +155,12 @@ export default function SeeProjects() {
             }
           >
             <div className="see-projects__slides__slide__image">
-              <img
+              <Image
                 src="/preview-3.jpg"
                 alt="slide-1"
                 width={300}
                 height={300}
+                objectFit="cover"
               />
             </div>
           </motion.div>
@@ -172,11 +175,12 @@ export default function SeeProjects() {
             }
           >
             <div className="see-projects__slides__slide__image">
-              <img
+              <Image
                 src="/preview-2.jpg"
                 alt="slide-2"
                 width={300}
                 height={300}
+                objectFit="cover"
               />
             </div>
           </motion.div>
@@ -191,11 +195,12 @@ export default function SeeProjects() {
             }
           >
             <div className="see-projects__slides__slide__image">
-              <img
+              <Image
                 src="/preview-1.jpg"
                 alt="slide-3"
                 width={300}
                 height={300}
+                objectFit="cover"
               />
             </div>
           </motion.div>
