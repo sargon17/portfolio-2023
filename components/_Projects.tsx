@@ -396,8 +396,6 @@ const Navigation = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log(projects[0]);
-
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const variants = {

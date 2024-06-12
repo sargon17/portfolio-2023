@@ -36,7 +36,7 @@ export default function SinglePost({ post }: { post: any }) {
   };
 
   useMotionValueEvent(progress, "change", (latestProgress) => {
-    console.log(latestProgress);
+    // console.log(latestProgress);
     if (!divider.current) return;
     divider.current.style.setProperty("--divider-height", latestProgress + "%");
   });
