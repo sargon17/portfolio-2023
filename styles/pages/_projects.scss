@@ -93,7 +93,7 @@ $border-color: var(--border-color);
       .button {
         border-top-left-radius: calc($slide-radius - $content-margin);
         text-transform: capitalize;
-        font-size: 1.2rem;
+        font-size: 1rem;
         padding: 0.5rem 1.5rem;
         display: flex;
         justify-content: flex-start;
@@ -112,7 +112,7 @@ $border-color: var(--border-color);
 
       .option {
         .index {
-          font-size: 1rem;
+          font-size: 0.8rem;
           font-weight: 200;
           margin-right: 0.2rem;
           color: $accent;
@@ -120,7 +120,7 @@ $border-color: var(--border-color);
         }
 
         .title {
-          font-size: 1.5rem;
+          font-size: 1rem;
           font-weight: 400;
           text-transform: capitalize;
         }
