@@ -145,7 +145,7 @@ $border-color: var(--border-color);
 
       &__title {
         font-size: 2rem;
-        font-weight: 700;
+        font-weight: 900;
         margin-bottom: 1rem;
         width: 100%;
         position: relative;
@@ -155,12 +155,11 @@ $border-color: var(--border-color);
           // font-size: 10vw;
           font-size: clamp(2rem, min(13vw, 15vh), 30rem);
 
-          font-weight: 700;
+          font-weight: 900;
           color: $title-color;
           color: $title-color;
           white-space: nowrap;
           text-wrap: nowrap;
-          overflow: hidden;
           line-height: 1.25;
           cursor: default;
 

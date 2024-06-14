@@ -4,10 +4,9 @@ import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, circOut, circInOut } from "framer-motion";
 
-import Tags from "./ui/tag/tags";
-import Tag from "./ui/tag/Tag";
+import Tags from "./ui/tag/Tags";
 
 // types
 import projectType from "@/types/project";
@@ -53,18 +52,21 @@ export default function Projects(props: ProjectsProps) {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      <div
-        className="projects-page"
-        ref={page}
-      >
-        <Navigation
-          projects={props.projects}
-          activeProject={activeProject}
-          setActiveProject={setActiveProject}
-        />
+    <div
+      className="projects-page"
+      ref={page}
+    >
+      <Navigation
+        projects={props.projects}
+        activeProject={activeProject}
+        setActiveProject={setActiveProject}
+      />
 
-        <div className="project">
+      <AnimatePresence>
+        <motion.div
+          className="project"
+          key={activeProject?.id}
+        >
           <div className="project__main-data">
             <MulticolorTitle title={getPost(activeProject).title} />
             <motion.div
@@ -77,40 +79,7 @@ export default function Projects(props: ProjectsProps) {
             </motion.div>
           </div>
           <div className="project__content">
-            <motion.a
-              key={activeProject?.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
-              className="project__content__image"
-              href={getPost(activeProject).link}
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={() => {
-                dispatch(setDimension({ width: 100, height: 100 }));
-                dispatch(setContent("see it yourself"));
-              }}
-              onMouseLeave={() => {
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
-              }}
-              layoutId={activeProject?.id + "image"}
-              exit={{ opacity: 0 }}
-            >
-              {getPost(activeProject).video ? (
-                <video
-                  src={getPost(activeProject).video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-              ) : (
-                <img
-                  src={getPost(activeProject).image}
-                  alt=""
-                />
-              )}
-            </motion.a>
+            <Media project={activeProject} />
             <div
               className="project__content__description"
               ref={card}
@@ -161,12 +130,53 @@ export default function Projects(props: ProjectsProps) {
               )}
             </div>
           </div>
-        </div>
-      </div>
-    </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
 
+type MediaProps = {
+  project: any;
+};
+const Media = (props: MediaProps) => {
+  return (
+    <MouseActivation
+      onActive={{
+        label: "see the project",
+        width: 100,
+        height: 100,
+      }}
+      className="project__content__image"
+    >
+      <motion.a
+        key={props.project?.id}
+        layoutId={props.project?.id + "image"}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
+        href={getPost(props.project).link}
+        target="_blank"
+        rel="noreferrer"
+        exit={{ opacity: 0 }}
+      >
+        {getPost(props.project).video ? (
+          <video
+            src={getPost(props.project).video}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img
+            src={getPost(props.project).image}
+            alt=""
+          />
+        )}
+      </motion.a>
+    </MouseActivation>
+  );
+};
 const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -355,7 +365,7 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   const lettersVariants = {
     initial: {
       opacity: 0,
-      y: 20,
+      y: -100,
     },
     animate: (index: number) => {
       return {
@@ -363,8 +373,21 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         y: 0,
 
         transition: {
-          delay: 0.1 + index * 0.05,
+          delay: 0.1 + index * 0.02,
           duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+    exit: (index: number) => {
+      return {
+        opacity: 0,
+        y: 100,
+
+        transition: {
+          delay: index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
         },
       };
     },
@@ -380,8 +403,7 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         initial="initial"
         animate="animate"
         key={index}
-        layoutId={letter + index + "title" + index}
-        exit={{ opacity: 0, y: -20 }}
+        exit="exit"
       >
         {letter}
       </motion.span>
