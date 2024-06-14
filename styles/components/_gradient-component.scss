@@ -11,6 +11,10 @@ $hero__gradient-margin: 1rem;
   overflow: hidden;
   border-radius: calc($slide-radius - $hero__gradient-margin);
 
+  @media screen and (max-width: 768px) {
+    height: calc(50vh - $hero__gradient-margin * 2);
+  }
+
   &::after {
     content: "";
     position: absolute;
@@ -18,20 +22,12 @@ $hero__gradient-margin: 1rem;
     left: 0;
     width: 100%;
     height: 100%;
-    // mix-blend-mode: overlay;
     z-index: 10;
   }
 
   svg {
     filter: blur(60px);
-    // border-radius: calc($slide-radius - $hero__gradient-margin);
-    // overflow: hidden;
-    // filter: url(#filter);
-
     path {
-      // [data-theme="dark"] & {
-      //   opacity: 0.8;
-      // }
       &:nth-child(1),
       &:nth-child(4) {
         fill: $gradient-bg;

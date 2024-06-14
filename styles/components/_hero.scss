@@ -141,12 +141,14 @@ $hero__gradient-margin: 1rem;
       }
 
       &--accent {
-        // color: $text-accent;
         font-weight: 900;
       }
 
       @media screen and (max-width: 768px) {
-        display: none;
+        right: auto;
+        left: 2rem;
+        width: 60vw;
+        top: 10%;
       }
     }
   }

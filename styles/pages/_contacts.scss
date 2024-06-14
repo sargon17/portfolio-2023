@@ -19,8 +19,12 @@
     color: $text-accent;
     margin: 0;
 
+    & > * {
+      filter: blur(15px);
+    }
+
     @media (max-width: 600px) {
-      font-size: calc(1rem + 12vw);
+      font-size: clamp(6rem, 15vw, 30rem);
     }
   }
 
