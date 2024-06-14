@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
-import { motion, AnimatePresence } from "framer-motion";
+// animations
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
+import SplitType from "split-type";
 
 import Tags from "./ui/tag/Tags";
 
@@ -62,14 +64,7 @@ export default function Projects(props: ProjectsProps) {
         >
           <div className="project__main-data">
             <MulticolorTitle title={getPost(activeProject).title} />
-            <motion.div
-              className="project__main-data__year"
-              key={activeProject?.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
-            >
-              <p>{new Date(getPost(activeProject).date).getFullYear()}</p>
-            </motion.div>
+            <Data project={activeProject} />
           </div>
           <div className="project__content">
             <Media project={activeProject} />
@@ -168,6 +163,68 @@ const Media = (props: MediaProps) => {
         )}
       </motion.a>
     </MouseActivation>
+  );
+};
+
+type DataProps = {
+  project: any;
+};
+
+const Data = (props: DataProps) => {
+  const text = new Date(getPost(props.project).date).getFullYear().toString().toString();
+  const chars = text.split("");
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: -40,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+    exit: (index: number) => {
+      return {
+        opacity: 0,
+        y: 40,
+
+        transition: {
+          delay: index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+  };
+
+  return (
+    <div className="project__main-data__year">
+      <div>
+        {chars.map((char, index) => {
+          return (
+            <motion.div
+              key={char + index}
+              className="year__char"
+              variants={lettersVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              custom={index}
+            >
+              {char}
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
@@ -395,7 +452,7 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         variants={lettersVariants}
         initial="initial"
         animate="animate"
-        key={index}
+        key={index + letter}
         exit="exit"
       >
         {letter}
