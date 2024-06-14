@@ -3,7 +3,7 @@ const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "wp.portfolio.kaylo.it"],
+    domains: ["localhost", "prod-files-secure.s3.us-west-2.amazonaws.com"],
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

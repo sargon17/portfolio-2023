@@ -1,5 +1,3 @@
-import { type } from "os";
-
 const textToLetters = (text: string): string[] => {
   return text.split("");
 };

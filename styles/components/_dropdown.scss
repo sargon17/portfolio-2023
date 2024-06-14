@@ -9,6 +9,7 @@ $dropdown-padding: 4px;
   border-radius: $radius;
   padding: $dropdown-padding;
   z-index: 1000;
+  transform-origin: 100% 0%;
 
   box-shadow: $dropdown-box-shadow;
 

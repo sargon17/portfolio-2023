@@ -29,12 +29,16 @@ const getPostDescription = (post: any) => {
   return post.properties["description"].rich_text[0].plain_text;
 };
 
-export {
-  getPostTitle,
-  getPostDate,
-  getPostTags,
-  getPostLink,
-  getPostVideo,
-  getPostImage,
-  getPostDescription,
+const getPost: any = (post: any) => {
+  return {
+    title: getPostTitle(post),
+    date: getPostDate(post),
+    tags: getPostTags(post),
+    link: getPostLink(post),
+    video: getPostVideo(post),
+    image: getPostImage(post),
+    description: getPostDescription(post),
+  };
 };
+
+export default getPost;

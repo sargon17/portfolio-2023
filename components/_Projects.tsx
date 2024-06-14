@@ -1,30 +1,24 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
-import { motion, AnimatePresence } from "framer-motion";
+// animations
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
+import SplitType from "split-type";
+
+import Tags from "./ui/tag/Tags";
 
 // types
 import projectType from "@/types/project";
 
-// import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setDimension } from "@/contexts/features/mouse/mouseDimension";
-import { setContent } from "@/contexts/features/mouse/mouseContent";
+import ProjectsNavigation from "./ui/projects/ProjectsNavigation";
+import MouseActivation from "./ui/mouse/MouseActivation";
 
-import Button from "./Button";
+import Button from "./ui/Button";
 
-import {
-  getPostTitle,
-  getPostDate,
-  getPostTags,
-  getPostLink,
-  getPostVideo,
-  getPostImage,
-  getPostDescription,
-} from "@/utils/notion";
+import getPost from "@/utils/notion";
 
 type ProjectsProps = {
   projects: any[];
@@ -32,8 +26,6 @@ type ProjectsProps = {
 export default function Projects(props: ProjectsProps) {
   const card = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<any | null>(props.projects[0] || null);
-
-  const dispatch = useDispatch();
 
   const page = useRef<HTMLDivElement>(null);
 
@@ -55,76 +47,37 @@ export default function Projects(props: ProjectsProps) {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      <div
-        className="projects-page"
-        ref={page}
-      >
-        <div className="projects-page__navigation">
-          <Navigation
-            projects={props.projects}
-            activeProject={activeProject}
-            setActiveProject={setActiveProject}
-          />
-        </div>
-        <div className="project">
+    <div
+      className="projects-page"
+      ref={page}
+    >
+      <Navigation
+        projects={props.projects}
+        activeProject={activeProject}
+        setActiveProject={setActiveProject}
+      />
+
+      <AnimatePresence>
+        <motion.div
+          className="project"
+          key={activeProject?.id}
+        >
           <div className="project__main-data">
-            <MulticolorTitle title={getPostTitle(activeProject)} />
-            <motion.div
-              className="project__main-data__year"
-              key={activeProject?.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
-            >
-              <p>{new Date(getPostDate(activeProject)).getFullYear()}</p>
-            </motion.div>
+            <MulticolorTitle title={getPost(activeProject).title} />
+            <Data project={activeProject} />
           </div>
           <div className="project__content">
-            <motion.a
-              key={activeProject?.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
-              className="project__content__image"
-              href={getPostLink(activeProject)}
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={() => {
-                dispatch(setDimension({ width: 100, height: 100 }));
-                dispatch(setContent("see it yourself"));
-              }}
-              onMouseLeave={() => {
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
-              }}
-              layoutId={activeProject?.id + "image"}
-              exit={{ opacity: 0 }}
-            >
-              {getPostVideo(activeProject) ? (
-                <video
-                  src={getPostVideo(activeProject)}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-              ) : (
-                <img
-                  src={getPostImage(activeProject)}
-                  alt=""
-                />
-              )}
-            </motion.a>
+            <Media project={activeProject} />
             <div
               className="project__content__description"
               ref={card}
             >
               <DescriptionCard activeProject={activeProject} />
-              <div className="project__content__description__tags">
-                {getPostTags(activeProject).map((tag: string, index: number) => {
+              <Tags className="project__content__tags">
+                {getPost(activeProject).tags.map((tag: string, index: number) => {
                   return (
                     <motion.p
                       key={tag + index + activeProject?._id}
-                      className="project__content__description__tags__item"
                       initial={{ opacity: 0 }}
                       animate={{
                         opacity: 1,
@@ -132,12 +85,18 @@ export default function Projects(props: ProjectsProps) {
                       }}
                       exit={{ opacity: 0 }}
                     >
-                      {tag}
+                      <Tags.Item
+                        key={tag}
+                        className="project__content__description__tags__item"
+                      >
+                        {tag}
+                      </Tags.Item>
                     </motion.p>
                   );
                 })}
-              </div>
-              {getPostLink(activeProject) && (
+              </Tags>
+
+              {getPost(activeProject).link && (
                 <>
                   <motion.a
                     className="project__content__description__link"
@@ -147,7 +106,8 @@ export default function Projects(props: ProjectsProps) {
                       opacity: 1,
                       transition: { delay: 1.2, duration: 0.5 },
                     }}
-                    href={getPostLink(activeProject)}
+                    exit={{ opacity: 0 }}
+                    href={getPost(activeProject).link}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -157,12 +117,115 @@ export default function Projects(props: ProjectsProps) {
               )}
             </div>
           </div>
-        </div>
-      </div>
-    </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
 
+type MediaProps = {
+  project: any;
+};
+const Media = (props: MediaProps) => {
+  return (
+    <MouseActivation
+      onActive={{
+        label: "see the project",
+        width: 100,
+        height: 100,
+      }}
+      className="project__content__image"
+    >
+      <motion.a
+        key={props.project?.id}
+        layoutId={props.project?.id + "image"}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
+        href={getPost(props.project).link}
+        target="_blank"
+        rel="noreferrer"
+        exit={{ opacity: 0 }}
+      >
+        {getPost(props.project).video ? (
+          <video
+            src={getPost(props.project).video}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img
+            src={getPost(props.project).image}
+            alt=""
+          />
+        )}
+      </motion.a>
+    </MouseActivation>
+  );
+};
+
+type DataProps = {
+  project: any;
+};
+
+const Data = (props: DataProps) => {
+  const text = new Date(getPost(props.project).date).getFullYear().toString().toString();
+  const chars = text.split("");
+
+  const lettersVariants = {
+    initial: {
+      opacity: 0,
+      y: -40,
+    },
+    animate: (index: number) => {
+      return {
+        opacity: 1,
+        y: 0,
+
+        transition: {
+          delay: 0.1 + index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+    exit: (index: number) => {
+      return {
+        opacity: 0,
+        y: 40,
+
+        transition: {
+          delay: index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+  };
+
+  return (
+    <div className="project__main-data__year">
+      <div>
+        {chars.map((char, index) => {
+          return (
+            <motion.div
+              key={char + index}
+              className="year__char"
+              variants={lettersVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              custom={index}
+            >
+              {char}
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -184,28 +247,38 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
     <motion.div
       className={clss}
       key={activeProject?._id}
-      initial={{ opacity: 0 }}
-      layoutId="card"
+      initial={{ opacity: 0, y: -40 }}
       animate={{
         opacity: 1,
-        transition: { delay: 0.4, duration: 0.5 },
+        y: 0,
+        transition: {
+          delay: 0.1,
+          duration: 0.5,
+          ease: "backOut",
+        },
       }}
       exit={{
         opacity: 0,
-        transition: { duration: 0.5 },
+        y: 40,
+        transition: {
+          delay: 0.1,
+          duration: 0.5,
+          ease: "backOut",
+        },
       }}
     >
       <motion.div
         className="card-content"
         data-lenis-prevent={isExpanded}
         key={activeProject?._id}
+        layout
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          transition: { delay: 0.6, duration: 0.5 },
+          transition: { delay: 0.8, duration: 0.5 },
         }}
       >
-        <p>{getPostDescription(activeProject)}</p>
+        <p>{getPost(activeProject).description}</p>
       </motion.div>
       <div className="read-more__wrapper">
         <motion.div
@@ -253,6 +326,7 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
         </motion.div>
       </div>
     </motion.div>
+
     // </div>
   );
 };
@@ -351,7 +425,7 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   const lettersVariants = {
     initial: {
       opacity: 0,
-      y: 20,
+      y: -100,
     },
     animate: (index: number) => {
       return {
@@ -359,8 +433,21 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         y: 0,
 
         transition: {
-          delay: 0.1 + index * 0.05,
+          delay: 0.1 + index * 0.02,
           duration: 0.5,
+          ease: "backOut",
+        },
+      };
+    },
+    exit: (index: number) => {
+      return {
+        opacity: 0,
+        y: 100,
+
+        transition: {
+          delay: index * 0.02,
+          duration: 0.5,
+          ease: "backOut",
         },
       };
     },
@@ -375,9 +462,8 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
         variants={lettersVariants}
         initial="initial"
         animate="animate"
-        key={index}
-        layoutId={letter + index + "title" + index}
-        exit={{ opacity: 0, y: -20 }}
+        key={index + letter}
+        exit="exit"
       >
         {letter}
       </motion.span>
@@ -385,170 +471,56 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   );
 };
 
-const Navigation = ({
-  projects,
-  activeProject,
-  setActiveProject,
-}: {
+// ! DEF
+type NavigationProps = {
   projects: any[];
   activeProject: any | null;
   setActiveProject: (project: projectType) => void;
-}) => {
-  const dispatch = useDispatch();
+};
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-
-  const variants = {
-    initial: {
-      opacity: 0,
-      y: -20,
-      maxHeight: 0,
-    },
-
-    closed: {
-      opacity: 0,
-      y: -20,
-      maxHeight: 0,
-
-      transition: {
-        staggerChildren: 0.1,
-        staggerDirection: -1,
-        delayChildren: 0,
-        delay: 0.3,
-      },
-
-      when: "afterChildren",
-    },
-
-    open: {
-      opacity: 1,
-      y: 0,
-      maxHeight: 200,
-
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
-
-      when: "beforeChildren",
-    },
-  };
-
-  const childrenVariants = {
-    initial: {
-      opacity: 0,
-      y: -10,
-    },
-
-    closed: {
-      opacity: 0,
-      y: -10,
-    },
-
-    open: {
-      opacity: 1,
-      y: 0,
-
-      transition: {
-        duration: 0.1,
-      },
-    },
-  };
-
+const Navigation = (props: NavigationProps) => {
   return (
-    <>
-      <div className="navigation navigation--desktop">
-        {projects.map((project, index) => {
+    <ProjectsNavigation>
+      <ProjectsNavigation.Desktop>
+        {props.projects.map((project, index) => {
           return (
-            <div
+            <MouseActivation
               key={"nav" + project.id}
-              className="navigation__item"
-              data-active={activeProject.id === project.id}
-              onClick={() => {
-                setActiveProject(project);
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
-              }}
-              onMouseEnter={() => {
-                const isActive = activeProject?.id === project.id;
-                if (!isActive) {
-                  dispatch(setDimension({ width: 100, height: 100 }));
-                  dispatch(setContent("see the project"));
-                }
-              }}
-              onMouseLeave={() => {
-                dispatch(setDimension({ width: 10, height: 10 }));
-                dispatch(setContent(""));
+              onActive={{
+                label: "see the project",
+                width: 100,
+                height: 100,
               }}
             >
-              <span className="index">00{index + 1}/</span>
-              <span className="title">{getPostTitle(project)}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="navigation navigation--mobile">
-        <div className="navigation__button">
-          <Button
-            onClick={() => {
-              setIsDropdownOpen(!isDropdownOpen);
-            }}
-          >
-            {activeProject?.title}
-            <ChevronSVG isOpen={isDropdownOpen} />
-          </Button>
-        </div>
-        <motion.div
-          className="navigation__dropdown dropdown"
-          variants={variants}
-          initial="initial"
-          animate={isDropdownOpen ? "open" : "closed"}
-          exit="closed"
-        >
-          {projects.map((project, index) => {
-            return (
-              <motion.div
-                key={"nav" + project.id}
-                className="option"
-                data-active={activeProject?.id === project.id}
-                variants={childrenVariants}
+              <ProjectsNavigation.DesktopButton
                 onClick={() => {
-                  setActiveProject(project);
-                  setIsDropdownOpen(false);
+                  props.setActiveProject(project);
                 }}
+                isActive={props.activeProject?.id === project.id}
               >
                 <span className="index">00{index + 1}/</span>
-                <span className="title">{getPostTitle(project)}</span>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </>
-  );
-};
-
-type ChevronSVGProps = {
-  isOpen: boolean;
-};
-const ChevronSVG = ({ isOpen }: ChevronSVGProps) => {
-  return (
-    <motion.div
-      initial={{ rotate: 0 }}
-      animate={{ rotate: isOpen ? 180 : 0 }}
-    >
-      <svg
-        width="11"
-        height="11"
-        viewBox="0 0 11 11"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M7.96876 3.9082H5.37293H3.03543C2.63543 3.9082 2.43543 4.39154 2.71876 4.67487L4.87709 6.8332C5.22293 7.17904 5.78543 7.17904 6.13126 6.8332L6.95209 6.01237L8.28959 4.67487C8.56876 4.39154 8.36876 3.9082 7.96876 3.9082Z"
-          fill="#9A9A9A"
-        />
-      </svg>
-    </motion.div>
+                <span className="title">{getPost(project).title}</span>
+              </ProjectsNavigation.DesktopButton>
+            </MouseActivation>
+          );
+        })}
+      </ProjectsNavigation.Desktop>
+      <ProjectsNavigation.Mobile label={getPost(props.activeProject).title}>
+        {props.projects.map((project, index) => {
+          return (
+            <ProjectsNavigation.MobileButton
+              key={"nav" + project.id}
+              onClick={() => {
+                props.setActiveProject(project);
+              }}
+              isActive={props.activeProject?.id === project.id}
+            >
+              <span className="index">00{index + 1}/</span>
+              <span className="title">{getPost(project).title}</span>
+            </ProjectsNavigation.MobileButton>
+          );
+        })}
+      </ProjectsNavigation.Mobile>
+    </ProjectsNavigation>
   );
 };

@@ -1,0 +1,30 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+
+  .tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $text-accent;
+    padding: 0.5rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    margin: 0 !important;
+    cursor: default;
+    background-color: $background--50;
+
+    & > * {
+      margin: 0;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      font-size: 0.6rem;
+      padding: 0.3rem 0.6rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    gap: 0.3rem;
+  }
+}

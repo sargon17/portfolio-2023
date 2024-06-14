@@ -13,9 +13,11 @@ const getDataFromDatabase = cache(async () => {
     throw new Error("Missing database ID, please add it to your environment variables");
   }
 
+  const numberOfProjects = 10;
+
   const response = await notion.databases.query({
     database_id: dbId,
-    page_size: 100,
+    page_size: numberOfProjects,
     sorts: [
       {
         property: "order",
