@@ -75,8 +75,6 @@ export default function Projects(props: ProjectsProps) {
               <DescriptionCard activeProject={activeProject} />
               <Tags className="project__content__tags">
                 {getPost(activeProject).tags.map((tag: string, index: number) => {
-                  console.log("here i am", tag);
-
                   return (
                     <motion.p
                       key={tag + index + activeProject?._id}
@@ -108,6 +106,7 @@ export default function Projects(props: ProjectsProps) {
                       opacity: 1,
                       transition: { delay: 1.2, duration: 0.5 },
                     }}
+                    exit={{ opacity: 0 }}
                     href={getPost(activeProject).link}
                     target="_blank"
                     rel="noreferrer"
@@ -248,25 +247,35 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
     <motion.div
       className={clss}
       key={activeProject?._id}
-      initial={{ opacity: 0 }}
-      layoutId="card"
+      initial={{ opacity: 0, y: -40 }}
       animate={{
         opacity: 1,
-        transition: { delay: 0.4, duration: 0.5 },
+        y: 0,
+        transition: {
+          delay: 0.1,
+          duration: 0.5,
+          ease: "backOut",
+        },
       }}
       exit={{
         opacity: 0,
-        transition: { duration: 0.5 },
+        y: 40,
+        transition: {
+          delay: 0.1,
+          duration: 0.5,
+          ease: "backOut",
+        },
       }}
     >
       <motion.div
         className="card-content"
         data-lenis-prevent={isExpanded}
         key={activeProject?._id}
+        layout
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          transition: { delay: 0.6, duration: 0.5 },
+          transition: { delay: 0.8, duration: 0.5 },
         }}
       >
         <p>{getPost(activeProject).description}</p>
@@ -317,6 +326,7 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
         </motion.div>
       </div>
     </motion.div>
+
     // </div>
   );
 };

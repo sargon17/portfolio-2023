@@ -37,10 +37,6 @@ export default function SeeProjects(props: SeeProjectsProps) {
     return media;
   }, [props.projects]);
 
-  useEffect(() => {
-    console.log(projectsMedia);
-  }, [projectsMedia]);
-
   const [scope, animate] = useAnimate();
 
   const [isMouseOverElement, setIsMouseOverElement] = useState(false);

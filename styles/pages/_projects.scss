@@ -277,6 +277,7 @@ $border-color: var(--border-color);
           font-size: 1rem;
           background-color: $background--10;
           backdrop-filter: blur(40px);
+          transform-origin: 100% 0%;
 
           border-radius: 1.25rem;
           overflow: hidden;
