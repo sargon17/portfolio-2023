@@ -125,8 +125,11 @@ $hero__gradient-margin: 1rem;
       right: 10vw;
       width: 16vw;
       pointer-events: none;
-      font-weight: 100;
+      font-weight: 200;
       transform: translateY(-50%);
+      color: white;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
 
       mix-blend-mode: difference;
 
@@ -138,8 +141,8 @@ $hero__gradient-margin: 1rem;
       }
 
       &--accent {
-        color: $text-accent;
-        font-weight: 500;
+        // color: $text-accent;
+        font-weight: 900;
       }
 
       @media screen and (max-width: 768px) {
