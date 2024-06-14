@@ -1,3 +1,5 @@
+import { get } from "http";
+
 const getPostTitle = (post: any) => {
   return post.properties["title"].title[0].plain_text;
 };
@@ -29,12 +31,26 @@ const getPostDescription = (post: any) => {
   return post.properties["description"].rich_text[0].plain_text;
 };
 
-export {
-  getPostTitle,
-  getPostDate,
-  getPostTags,
-  getPostLink,
-  getPostVideo,
-  getPostImage,
-  getPostDescription,
+const getPost: any = (post: any) => {
+  return {
+    title: getPostTitle(post),
+    date: getPostDate(post),
+    tags: getPostTags(post),
+    link: getPostLink(post),
+    video: getPostVideo(post),
+    image: getPostImage(post),
+    description: getPostDescription(post),
+  };
 };
+
+// export {
+//   getPostTitle,
+//   getPostDate,
+//   getPostTags,
+//   getPostLink,
+//   getPostVideo,
+//   getPostImage,
+//   getPostDescription,
+// };
+
+export default getPost;

@@ -19,15 +19,16 @@ import MouseActivation from "./ui/mouse/MouseActivation";
 
 import Button from "./ui/Button";
 
-import {
-  getPostTitle,
-  getPostDate,
-  getPostTags,
-  getPostLink,
-  getPostVideo,
-  getPostImage,
-  getPostDescription,
-} from "@/utils/notion";
+// import {
+//   getPostTitle,
+//   getPostDate,
+//   getPostTags,
+//   getPostLink,
+//   getPostVideo,
+//   getPostImage,
+//   getPostDescription,
+// } from "@/utils/notion";
+import getPost from "@/utils/notion";
 
 type ProjectsProps = {
   projects: any[];
@@ -71,14 +72,14 @@ export default function Projects(props: ProjectsProps) {
 
         <div className="project">
           <div className="project__main-data">
-            <MulticolorTitle title={getPostTitle(activeProject)} />
+            <MulticolorTitle title={getPost(activeProject).title} />
             <motion.div
               className="project__main-data__year"
               key={activeProject?.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
             >
-              <p>{new Date(getPostDate(activeProject)).getFullYear()}</p>
+              <p>{new Date(getPost(activeProject).date).getFullYear()}</p>
             </motion.div>
           </div>
           <div className="project__content">
@@ -87,7 +88,7 @@ export default function Projects(props: ProjectsProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.8 } }}
               className="project__content__image"
-              href={getPostLink(activeProject)}
+              href={getPost(activeProject).link}
               target="_blank"
               rel="noreferrer"
               onMouseEnter={() => {
@@ -101,9 +102,9 @@ export default function Projects(props: ProjectsProps) {
               layoutId={activeProject?.id + "image"}
               exit={{ opacity: 0 }}
             >
-              {getPostVideo(activeProject) ? (
+              {getPost(activeProject).video ? (
                 <video
-                  src={getPostVideo(activeProject)}
+                  src={getPost(activeProject).video}
                   autoPlay
                   loop
                   muted
@@ -111,7 +112,7 @@ export default function Projects(props: ProjectsProps) {
                 />
               ) : (
                 <img
-                  src={getPostImage(activeProject)}
+                  src={getPost(activeProject).image}
                   alt=""
                 />
               )}
@@ -122,7 +123,7 @@ export default function Projects(props: ProjectsProps) {
             >
               <DescriptionCard activeProject={activeProject} />
               <div className="project__content__description__tags">
-                {getPostTags(activeProject).map((tag: string, index: number) => {
+                {getPost(activeProject).tags.map((tag: string, index: number) => {
                   return (
                     <motion.p
                       key={tag + index + activeProject?._id}
@@ -139,7 +140,7 @@ export default function Projects(props: ProjectsProps) {
                   );
                 })}
               </div>
-              {getPostLink(activeProject) && (
+              {getPost(activeProject).link && (
                 <>
                   <motion.a
                     className="project__content__description__link"
@@ -149,7 +150,7 @@ export default function Projects(props: ProjectsProps) {
                       opacity: 1,
                       transition: { delay: 1.2, duration: 0.5 },
                     }}
-                    href={getPostLink(activeProject)}
+                    href={getPost(activeProject).link}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -207,7 +208,7 @@ const DescriptionCard = ({ activeProject }: { activeProject: projectType | null 
           transition: { delay: 0.6, duration: 0.5 },
         }}
       >
-        <p>{getPostDescription(activeProject)}</p>
+        <p>{getPost(activeProject).description}</p>
       </motion.div>
       <div className="read-more__wrapper">
         <motion.div
@@ -415,13 +416,13 @@ const Navigation = (props: NavigationProps) => {
                 isActive={props.activeProject?.id === project.id}
               >
                 <span className="index">00{index + 1}/</span>
-                <span className="title">{getPostTitle(project)}</span>
+                <span className="title">{getPost(project).title}</span>
               </ProjectsNavigation.DesktopButton>
             </MouseActivation>
           );
         })}
       </ProjectsNavigation.Desktop>
-      <ProjectsNavigation.Mobile label={getPostTitle(props.activeProject)}>
+      <ProjectsNavigation.Mobile label={getPost(props.activeProject).title}>
         {props.projects.map((project, index) => {
           return (
             <ProjectsNavigation.MobileButton
@@ -432,7 +433,7 @@ const Navigation = (props: NavigationProps) => {
               isActive={props.activeProject?.id === project.id}
             >
               <span className="index">00{index + 1}/</span>
-              <span className="title">{getPostTitle(project)}</span>
+              <span className="title">{getPost(project).title}</span>
             </ProjectsNavigation.MobileButton>
           );
         })}
