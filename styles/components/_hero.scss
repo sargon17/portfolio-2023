@@ -68,7 +68,7 @@ $hero__gradient-margin: 1rem;
           font-style: italic;
           color: $text-accent;
 
-          text-shadow: $accent-text-shadow;
+          animation: glow 10s ease-in-out infinite alternate;
         }
         .description {
           max-width: 13.375rem;
@@ -127,6 +127,9 @@ $hero__gradient-margin: 1rem;
       pointer-events: none;
       font-weight: 100;
       transform: translateY(-50%);
+
+      mix-blend-mode: difference;
+
       p {
         font-style: italic;
 
@@ -143,5 +146,41 @@ $hero__gradient-margin: 1rem;
         display: none;
       }
     }
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0px 1px 9px $text-accent;
+  }
+  10% {
+    text-shadow: 1px 0px 15px $text-accent;
+  }
+  20% {
+    text-shadow: -1px -1px 10px $text-accent;
+  }
+  30% {
+    text-shadow: 0px 1px 9px $text-accent;
+  }
+  40% {
+    text-shadow: 1px 1px 14px $text-accent;
+  }
+  50% {
+    text-shadow: -1px -1px 15px $text-accent;
+  }
+  60% {
+    text-shadow: 0px 0px 10px $text-accent;
+  }
+  70% {
+    text-shadow: 1px -1px 12px $text-accent;
+  }
+  80% {
+    text-shadow: -1px 1px 15px $text-accent;
+  }
+  90% {
+    text-shadow: 0px 0px 9px $text-accent;
+  }
+  100% {
+    text-shadow: 1px -1px 14px $text-accent;
   }
 }
