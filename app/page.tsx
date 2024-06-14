@@ -5,13 +5,15 @@ import Contacts from "@/components/_Contacts";
 
 import { getDataFromDatabase } from "@/notion";
 
+import SeeProjects from "@/components/ui/SeeProjects";
+
 export default async function Home() {
   let projects = await getDataFromDatabase();
 
   return (
     <>
       <Slide id="_main">
-        <Hero />
+        <Hero seeProjects={<SeeProjects projects={projects} />} />
       </Slide>
       <Slide id="_projects">
         <Projects projects={projects} />

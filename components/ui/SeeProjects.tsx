@@ -1,21 +1,45 @@
+"use client";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setContent } from "@/contexts/features/mouse/mouseContent";
-import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 import { RootState } from "@/contexts/mouseStore";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 import { handleScrollToElement } from "@/utils/utils";
 
-import { motion, useAnimate, motionValue, useSpring, useMotionValueEvent } from "framer-motion";
+import MouseActivation from "./mouse/MouseActivation";
+
+import { motion, useAnimate, useSpring } from "framer-motion";
+import { MotionValue } from "framer-motion";
+import getPost from "@/utils/notion";
 
 import Image from "next/image";
 
-export default function SeeProjects() {
-  const dispatch = useDispatch();
+type SeeProjectsProps = {
+  projects: any[];
+};
+export default function SeeProjects(props: SeeProjectsProps) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const mousePosition = useSelector((state: RootState) => state.position.position);
+
+  const projectsMedia = useMemo(() => {
+    let media: { url: string; type: string }[] = [];
+
+    for (let i = 2; i >= 0; i--) {
+      let prj = getPost(props.projects[i]);
+
+      if (prj.video) {
+        media = media ? [...media, { url: prj.video, type: "video" }] : [{ url: prj.video, type: "video" }];
+      }
+      if (prj.image) {
+        media = media ? [...media, { url: prj.image, type: "image" }] : [{ url: prj.image, type: "image" }];
+      }
+    }
+    return media;
+  }, [props.projects]);
+
+  useEffect(() => {
+    console.log(projectsMedia);
+  }, [projectsMedia]);
 
   const [scope, animate] = useAnimate();
 
@@ -75,7 +99,6 @@ export default function SeeProjects() {
           },
           {
             x: 0,
-
             rotate: 0,
           },
           {
@@ -112,100 +135,99 @@ export default function SeeProjects() {
       onMouseLeave={() => setIsMouseOver(false)}
       ref={scope}
     >
-      <motion.div
-        className="see-projects"
-        id="see-projects"
-        onMouseEnter={() => {
-          setIsMouseOverElement(true);
-          dispatch(setDimension({ width: 150, height: 150 }));
-          dispatch(setContent("See more"));
+      <MouseActivation
+        onActive={{
+          label: "see the projects",
+          width: 150,
+          height: 150,
         }}
-        onMouseLeave={() => {
-          setIsMouseOverElement(false);
-          dispatch(setDimension({ width: 10, height: 10 }));
-          dispatch(setContent(""));
-        }}
-        onClick={() => {
-          handleScrollToElement("#_projects");
-        }}
-        ref={element}
-        style={
-          {
-            x: xMagnetSpring,
-            y: yMagnetSpring,
-          } as any
-        }
       >
-        <div className="see-projects__cta">
-          <div className="see-projects__cta__text">
-            <p>
-              Give a look to my <span className="accent">Projects</span>
-            </p>
+        <motion.div
+          className="see-projects"
+          id="see-projects"
+          onMouseEnter={() => {
+            setIsMouseOverElement(true);
+          }}
+          onMouseLeave={() => {
+            setIsMouseOverElement(false);
+          }}
+          onClick={() => {
+            handleScrollToElement("#_projects");
+          }}
+          ref={element}
+          style={
+            {
+              x: xMagnetSpring,
+              y: yMagnetSpring,
+            } as any
+          }
+        >
+          <div className="see-projects__cta">
+            <div className="see-projects__cta__text">
+              <p>
+                Give a look to my <span className="accent">Projects</span>
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="see-projects__slides">
-          <motion.div
-            className="see-projects__slides__slide slide-1"
-            style={
-              {
-                x: xSlide1Spring,
-                y: "-20%",
-                rotate: rotateSlide1Spring,
-              } as any
-            }
-          >
-            <div className="see-projects__slides__slide__image">
-              <Image
-                src="/preview-3.jpg"
-                alt="slide-1"
-                width={300}
-                height={300}
-                objectFit="cover"
-              />
-            </div>
-          </motion.div>
-          <motion.div
-            className="see-projects__slides__slide slide-2 "
-            style={
-              {
-                x: xSlide2Spring,
-                y: "-20%",
-                rotate: rotateSlide2Spring,
-              } as any
-            }
-          >
-            <div className="see-projects__slides__slide__image">
-              <Image
-                src="/preview-2.jpg"
-                alt="slide-2"
-                width={300}
-                height={300}
-                objectFit="cover"
-              />
-            </div>
-          </motion.div>
-          <motion.div
-            className="see-projects__slides__slide slide-3"
-            style={
-              {
-                x: xSlide3Spring,
-                y: "-20%",
-                rotate: rotateSlide3Spring,
-              } as any
-            }
-          >
-            <div className="see-projects__slides__slide__image">
-              <Image
-                src="/preview-1.jpg"
-                alt="slide-3"
-                width={300}
-                height={300}
-                objectFit="cover"
-              />
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
+          <div className="see-projects__slides">
+            <Media
+              media={projectsMedia[0]}
+              x={xSlide1Spring}
+              rotate={rotateSlide1Spring}
+            />
+            <Media
+              media={projectsMedia[1]}
+              x={xSlide2Spring}
+              rotate={rotateSlide2Spring}
+            />
+            <Media
+              media={projectsMedia[2]}
+              x={xSlide3Spring}
+              rotate={rotateSlide3Spring}
+            />
+          </div>
+        </motion.div>
+      </MouseActivation>
     </div>
   );
 }
+
+type MediaProps = {
+  media: { url: string; type: string };
+  x: MotionValue<any>;
+  rotate: MotionValue<any>;
+};
+const Media = (props: MediaProps) => {
+  return (
+    <motion.div
+      className="see-projects__slides__slide slide-3"
+      style={
+        {
+          x: props.x,
+          y: "-20%",
+          rotate: props.rotate,
+        } as any
+      }
+    >
+      <div className="see-projects__slides__slide__image">
+        {props.media && props.media.type === "image" ? (
+          <Image
+            src={props.media.url}
+            alt="slide-3"
+            width={300}
+            height={300}
+            objectFit="cover"
+          />
+        ) : (
+          <video
+            src={props.media.url}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+};
