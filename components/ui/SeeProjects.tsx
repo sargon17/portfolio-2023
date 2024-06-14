@@ -4,8 +4,6 @@ import { RootState } from "@/contexts/mouseStore";
 
 import { useState, useRef, useEffect, useMemo } from "react";
 
-import { handleScrollToElement } from "@/utils/utils";
-
 import MouseActivation from "./mouse/MouseActivation";
 
 import { motion, useAnimate, useSpring } from "framer-motion";
@@ -14,12 +12,20 @@ import getPost from "@/utils/notion";
 
 import Image from "next/image";
 
+import { useLenis } from "@studio-freight/react-lenis";
+
 type SeeProjectsProps = {
   projects: any[];
 };
 export default function SeeProjects(props: SeeProjectsProps) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const mousePosition = useSelector((state: RootState) => state.position.position);
+
+  const lenis = useLenis();
+
+  const handleScrollToElement = (element: string) => {
+    lenis?.scrollTo(element);
+  };
 
   const projectsMedia = useMemo(() => {
     let media: { url: string; type: string }[] = [];
