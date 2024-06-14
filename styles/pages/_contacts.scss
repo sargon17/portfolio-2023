@@ -14,17 +14,22 @@
     bottom: 0;
     left: 0;
 
-    font-size: calc(1rem + 18vw);
     font-weight: 300;
     color: $text-accent;
     margin: 0;
 
-    & > * {
-      filter: blur(15px);
-    }
+    font-size: clamp(6rem, 15vw, 30rem);
 
+    // dont break the line
+    white-space: nowrap;
+
+    & > * {
+      filter: blur(10px);
+    }
     @media (max-width: 600px) {
-      font-size: clamp(6rem, 15vw, 30rem);
+      & > * {
+        filter: blur(5px);
+      }
     }
   }
 

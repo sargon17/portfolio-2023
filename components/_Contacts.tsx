@@ -47,6 +47,13 @@ const Letter = ({ letter, index }: { letter: string; index: number }) => {
   const letterRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
+    // if mobile block the animation
+    if (isMobile) {
+      return;
+    }
+
     if (!letterRef.current) return;
     const letterColorAnimation = (e: MouseEvent) => {
       if (!letterRef.current) return;
