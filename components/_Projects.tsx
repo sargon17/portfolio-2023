@@ -4,17 +4,12 @@ import { useState, useEffect, useRef } from "react";
 
 import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
-import { motion, AnimatePresence, circOut, circInOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import Tags from "./ui/tag/Tags";
 
 // types
 import projectType from "@/types/project";
-
-// import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setDimension } from "@/contexts/features/mouse/mouseDimension";
-import { setContent } from "@/contexts/features/mouse/mouseContent";
 
 import ProjectsNavigation from "./ui/projects/ProjectsNavigation";
 import MouseActivation from "./ui/mouse/MouseActivation";
@@ -29,8 +24,6 @@ type ProjectsProps = {
 export default function Projects(props: ProjectsProps) {
   const card = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<any | null>(props.projects[0] || null);
-
-  const dispatch = useDispatch();
 
   const page = useRef<HTMLDivElement>(null);
 
