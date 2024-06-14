@@ -1,17 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import { useDispatch } from "react-redux";
 import { setContent } from "@/contexts/features/mouse/mouseContent";
 import { setDimension } from "@/contexts/features/mouse/mouseDimension";
 
-import Gradient from "./Gradient";
-import SeeProjects from "./SeeProjects";
+import Gradient from "./ui/Gradient";
+import SeeProjects from "./ui/SeeProjects";
 
 import { ScopesText } from "@/utils/animations";
 
-export default function Hero() {
+type HeroProps = {
+  seeProjects: React.ReactNode;
+};
+
+export default function Hero(props: HeroProps) {
   const dispatch = useDispatch();
   const hero = useRef<HTMLDivElement>(null);
 
@@ -45,9 +49,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="hero__content">
-        <div className="hero__content__image">
-          <SeeProjects />
-        </div>
+        <div className="hero__content__image">{props.seeProjects}</div>
         <div className="hero__gradient">
           {" "}
           <Gradient />{" "}

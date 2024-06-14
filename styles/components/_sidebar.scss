@@ -20,6 +20,9 @@ $mobile-sidebar-width: 45px;
   @media screen and (max-width: 768px) {
     background-color: $background--20;
     backdrop-filter: blur(40px);
+
+    // refactor
+    display: none;
   }
 
   &__status {
@@ -75,7 +78,7 @@ $mobile-sidebar-width: 45px;
     padding-top: 10rem;
 
     overflow: hidden;
-    h1 {
+    &__name {
       color: $text-main;
       text-transform: uppercase;
       font-size: 1rem;

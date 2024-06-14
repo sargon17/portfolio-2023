@@ -8,31 +8,26 @@ type ThemeDropdownProps = {
 };
 export default function ThemeDropdown({ onChange, isOpen }: ThemeDropdownProps) {
   const variants = {
-    initial: {
-      opacity: 0,
-      y: -20,
-      maxHeight: 0,
-    },
+    initial: { scaleY: 0 },
 
     closed: {
-      opacity: 0,
-      y: -20,
-      maxHeight: 0,
+      scaleY: 0,
 
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.05,
         staggerDirection: -1,
         delayChildren: 0,
-        delay: 0.3,
+        delay: 0.2,
       },
 
       when: "afterChildren",
     },
 
     open: {
-      opacity: 1,
-      y: 0,
-      maxHeight: 200,
+      // opacity: 1,
+      // y: 0,
+      // maxHeight: 200,
+      scaleY: 1,
 
       transition: {
         staggerChildren: 0.05,
@@ -51,7 +46,10 @@ export default function ThemeDropdown({ onChange, isOpen }: ThemeDropdownProps) 
 
     closed: {
       opacity: 0,
-      y: -10,
+      // y: -10,
+      transition: {
+        duration: 0.1,
+      },
     },
 
     open: {
