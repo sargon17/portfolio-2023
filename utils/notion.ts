@@ -1,5 +1,3 @@
-import { get } from "http";
-
 const getPostTitle = (post: any) => {
   return post.properties["title"].title[0].plain_text;
 };
@@ -42,15 +40,5 @@ const getPost: any = (post: any) => {
     description: getPostDescription(post),
   };
 };
-
-// export {
-//   getPostTitle,
-//   getPostDate,
-//   getPostTags,
-//   getPostLink,
-//   getPostVideo,
-//   getPostImage,
-//   getPostDescription,
-// };
 
 export default getPost;

@@ -6,6 +6,9 @@ import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
 import { motion, AnimatePresence } from "framer-motion";
 
+import Tags from "./ui/tag/tags";
+import Tag from "./ui/tag/Tag";
+
 // types
 import projectType from "@/types/project";
 
@@ -19,15 +22,6 @@ import MouseActivation from "./ui/mouse/MouseActivation";
 
 import Button from "./ui/Button";
 
-// import {
-//   getPostTitle,
-//   getPostDate,
-//   getPostTags,
-//   getPostLink,
-//   getPostVideo,
-//   getPostImage,
-//   getPostDescription,
-// } from "@/utils/notion";
 import getPost from "@/utils/notion";
 
 type ProjectsProps = {
@@ -122,12 +116,13 @@ export default function Projects(props: ProjectsProps) {
               ref={card}
             >
               <DescriptionCard activeProject={activeProject} />
-              <div className="project__content__description__tags">
+              <Tags className="project__content__tags">
                 {getPost(activeProject).tags.map((tag: string, index: number) => {
+                  console.log("here i am", tag);
+
                   return (
                     <motion.p
                       key={tag + index + activeProject?._id}
-                      className="project__content__description__tags__item"
                       initial={{ opacity: 0 }}
                       animate={{
                         opacity: 1,
@@ -135,11 +130,17 @@ export default function Projects(props: ProjectsProps) {
                       }}
                       exit={{ opacity: 0 }}
                     >
-                      {tag}
+                      <Tags.Item
+                        key={tag}
+                        className="project__content__description__tags__item"
+                      >
+                        {tag}
+                      </Tags.Item>
                     </motion.p>
                   );
                 })}
-              </div>
+              </Tags>
+
               {getPost(activeProject).link && (
                 <>
                   <motion.a

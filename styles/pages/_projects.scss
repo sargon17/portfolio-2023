@@ -293,7 +293,7 @@ $border-color: var(--border-color);
             width: 100%;
           }
 
-          p {
+          & > p {
             font-weight: 300;
             color: $text-main;
             margin-bottom: 1rem;
@@ -375,7 +375,7 @@ $border-color: var(--border-color);
           left: 0%;
         }
 
-        p {
+        & > p {
           // font-weight: 300;
           color: $text-main;
           margin-bottom: 1rem;
@@ -386,34 +386,34 @@ $border-color: var(--border-color);
           }
         }
 
-        &__tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-          // margin: 0.2rem;
-          // margin-bottom: 0.2rem;
+        // &__tags {
+        //   display: flex;
+        //   flex-wrap: wrap;
+        //   gap: 0.6rem;
+        //   // margin: 0.2rem;
+        //   // margin-bottom: 0.2rem;
 
-          &__item {
-            font-size: 1rem;
-            font-weight: 100;
-            color: $text-secondary;
-            padding: 0.5rem 1rem;
-            border: 1px solid $border-color;
-            border-radius: 10px;
-            margin: 0 !important;
-            cursor: default;
+        //   &__item {
+        //     font-size: 1rem;
+        //     font-weight: 100;
+        //     color: $text-secondary;
+        //     padding: 0.5rem 1rem;
+        //     border: 1px solid $border-color;
+        //     border-radius: 10px;
+        //     margin: 0 !important;
+        //     cursor: default;
 
-            font-size: 1rem;
+        //     font-size: 1rem;
 
-            @media screen and (max-width: 768px) {
-              font-size: 0.6rem;
-              padding: 0.3rem 0.6rem;
-            }
-          }
-          @media screen and (max-width: 768px) {
-            gap: 0.3rem;
-          }
-        }
+        //     @media screen and (max-width: 768px) {
+        //       font-size: 0.6rem;
+        //       padding: 0.3rem 0.6rem;
+        //     }
+        //   }
+        //   @media screen and (max-width: 768px) {
+        //     gap: 0.3rem;
+        //   }
+        // }
 
         &__link {
           flex-grow: 1;
