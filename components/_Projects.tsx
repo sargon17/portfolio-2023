@@ -76,7 +76,7 @@ export default function Projects(props: ProjectsProps) {
               <Tags className="project__content__tags">
                 {getPost(activeProject).tags.map((tag: string, index: number) => {
                   return (
-                    <motion.p
+                    <motion.div
                       key={tag + index + activeProject?._id}
                       initial={{ opacity: 0 }}
                       animate={{
@@ -91,7 +91,7 @@ export default function Projects(props: ProjectsProps) {
                       >
                         {tag}
                       </Tags.Item>
-                    </motion.p>
+                    </motion.div>
                   );
                 })}
               </Tags>

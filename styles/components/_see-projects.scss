@@ -5,6 +5,11 @@
   width: 25vw;
   height: 25vw;
 
+  // hide on mobile
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+
   &__cta {
     position: absolute;
     top: 2.5vh;
