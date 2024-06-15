@@ -7,6 +7,8 @@ import { getDataFromDatabase } from "@/notion";
 
 import SeeProjects from "@/components/ui/SeeProjects";
 
+export const revalidate = 0; // do not revalidate the data
+
 export default async function Home() {
   let projects = await getDataFromDatabase();
 
