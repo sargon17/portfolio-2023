@@ -1,22 +1,3 @@
-// VARIABLES
-:root {
-  --btn-background--hover: var(--gray-850);
-}
-[data-theme="light"] {
-  --btn-background--hover: var(--gray-150);
-}
-
-[data-theme="pink"] {
-  --btn-background--hover: var(--gray-150);
-}
-
-$btn-border-color: var(--background--70);
-$btn-background--hover: var(--btn-background--hover);
-
-$btn-radius: $radius;
-
-//----------------------------------------
-
 .button {
   border: none;
   border-radius: $btn-radius;

@@ -2,23 +2,8 @@ $mouse-helper-size: 10px;
 $mouse-helper-size--active: 100px;
 $mouse-helper-color: $accent;
 
-:root {
-  --blend-mode: lighten;
-  --text-color: var(--text-accent);
-}
-
-[data-theme="light"] {
-  --blend-mode: darken;
-  --text-color: var(--gray-900);
-}
-
-[data-theme="pink"] {
-  --blend-mode: darken;
-  --text-color: var(--gray-900);
-}
-
-$blend-mode: var(--blend-mode);
-$text-color: var(--text-color);
+$blend-mode: var(--mouse-blend-mode);
+$text-color: var(--mouse-text-color);
 
 .mouse-helper {
   position: absolute;

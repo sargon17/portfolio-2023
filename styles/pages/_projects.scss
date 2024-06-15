@@ -1,20 +1,3 @@
-:root {
-  --multicolor-title-color: var(--gray-800);
-  --contest-text-color: var(--gray-200);
-
-  --border-color: #ffffff0b;
-
-  // --x-pos: 50;
-  // --y-pox: 50;
-}
-
-[data-theme="light"],
-[data-theme="pink"] {
-  --multicolor-title-color: var(--gray-200);
-  --contest-text-color: var(--gray-800);
-  --border-color: #0000000b;
-}
-
 $title-color: var(--multicolor-title-color);
 $contest-text-color: var(--contest-text-color);
 $content-margin: 1rem;
@@ -429,10 +412,15 @@ $border-color: var(--border-color);
           width: 100%;
 
           .button {
-            background-color: $accent;
+            background-color: $accent-btn-background;
             width: 100%;
             font-weight: 600;
             font-size: 1.4rem;
+            color: $accent-btn-text;
+
+            &:hover {
+              background-color: $accent-btn-background--hover;
+            }
 
             border-bottom-right-radius: calc($slide-radius - $content-margin);
 

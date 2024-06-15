@@ -112,9 +112,21 @@ const themes = [
     color2: "#3d3ddb",
   },
   {
-    label: "pink",
+    label: "candy pink",
     value: "pink",
     color1: "#f7fafc",
     color2: "#ff44d6",
+  },
+  {
+    label: "fresh lemon",
+    value: "fresh-lemon",
+    color1: "#416858",
+    color2: "#f1ff58",
+  },
+  {
+    label: "nordic sunset",
+    value: "nordic-sunset",
+    color1: "#216b88",
+    color2: "#BE4236",
   },
 ];
