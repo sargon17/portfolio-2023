@@ -12,6 +12,8 @@ import { setScroll } from "@/contexts/features/mouse/scrollContent";
 export default function MouseHelper() {
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  const distanceFromMouse = 20;
+
   const contentState = useSelector((state: RootState) => state.content.content);
   const mousePositionState = useSelector((state: RootState) => state.position.position);
   const mouseDimensionState = useSelector((state: RootState) => state.dimension.dimension);
@@ -22,8 +24,8 @@ export default function MouseHelper() {
   const y = useMotionValue(0);
 
   useEffect(() => {
-    x.set(mousePositionState.x);
-    y.set(mousePositionState.y + scrollPosition);
+    x.set(mousePositionState.x + distanceFromMouse);
+    y.set(mousePositionState.y + scrollPosition + distanceFromMouse);
   }, [mousePositionState, scrollPosition]);
 
   const lenis = useLenis(handleScroll);
@@ -52,6 +54,7 @@ export default function MouseHelper() {
         height: mouseDimensionState.height,
       }}
       transition={{
+        duration: 0.1,
         width: { duration: 0.3, ease: "backOut" },
         height: { duration: 0.3, ease: "backOut" },
       }}
