@@ -118,7 +118,7 @@ const themes = [
     color2: "#ff44d6",
   },
   {
-    label: "fresh lemon",
+    label: "fresh lime",
     value: "fresh-lemon",
     color1: "#416858",
     color2: "#f1ff58",
