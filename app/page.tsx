@@ -7,9 +7,8 @@ import { getDataFromDatabase } from "@/notion";
 
 import SeeProjects from "@/components/ui/SeeProjects";
 
-// reavilite the data once a year
-
-export const revalidate = 365 * 24 * 60 * 60; // do not revalidate the data
+// reavilite the data once a hour
+export const revalidate = 3599;
 
 export default async function Home() {
   let projects = await getDataFromDatabase();
