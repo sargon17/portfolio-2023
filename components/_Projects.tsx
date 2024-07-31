@@ -6,7 +6,8 @@ import { textToLetters, getItemCenter, getDistance } from "@/utils/utils";
 
 // animations
 import { motion, AnimatePresence, useAnimate } from "framer-motion";
-import SplitType from "split-type";
+
+import DescriptionBox from "./ui/projects/DescriptionBox";
 
 import Tags from "./ui/tag/Tags";
 
@@ -72,7 +73,7 @@ export default function Projects(props: ProjectsProps) {
               className="project__content__description"
               ref={card}
             >
-              <DescriptionCard activeProject={activeProject} />
+              <DescriptionBox activeProject={activeProject} />
               <Tags className="project__content__tags">
                 {getPost(activeProject).tags.map((tag: string, index: number) => {
                   return (
@@ -224,110 +225,6 @@ const Data = (props: DataProps) => {
         })}
       </div>
     </div>
-  );
-};
-const DescriptionCard = ({ activeProject }: { activeProject: projectType | null }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
-  if (!activeProject) return null;
-
-  let clss = "project__content__description__card";
-
-  if (isExpanded) {
-    clss += " expanded";
-  }
-
-  // check if the description is too long to show the read more button
-  if (activeProject?.description?.length > 500) {
-    clss += " read-more";
-  }
-
-  return (
-    // <div className="card-wrapper">
-    <motion.div
-      className={clss}
-      key={activeProject?._id}
-      initial={{ opacity: 0, y: -40 }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        transition: {
-          delay: 0.1,
-          duration: 0.5,
-          ease: "backOut",
-        },
-      }}
-      exit={{
-        opacity: 0,
-        y: 40,
-        transition: {
-          delay: 0.1,
-          duration: 0.5,
-          ease: "backOut",
-        },
-      }}
-    >
-      <motion.div
-        className="card-content"
-        data-lenis-prevent={isExpanded}
-        key={activeProject?._id}
-        layout
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: { delay: 0.8, duration: 0.5 },
-        }}
-      >
-        <p>{getPost(activeProject).description}</p>
-      </motion.div>
-      <div className="read-more__wrapper">
-        <motion.div
-          key={activeProject?._id}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: { delay: 0.7, duration: 0.5 },
-          }}
-          className="read-more__text"
-        >
-          {isExpanded ? (
-            <motion.p
-              onClick={() => setIsExpanded(!isExpanded)}
-              layoutId="card-read-more"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: { delay: 0.7, duration: 0.5 },
-              }}
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.5 },
-              }}
-            >
-              close
-            </motion.p>
-          ) : (
-            <motion.p
-              onClick={() => setIsExpanded(!isExpanded)}
-              layoutId="card-read-more"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: { delay: 0.7, duration: 0.5 },
-              }}
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.5 },
-              }}
-            >
-              read more
-            </motion.p>
-          )}
-        </motion.div>
-      </div>
-    </motion.div>
-
-    // </div>
   );
 };
 
